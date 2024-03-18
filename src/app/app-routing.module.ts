@@ -12,21 +12,21 @@ import { ListaOsComponent } from './components/obrasSociales/lista-os/lista-os.c
 
 const routes: Routes = [
 
-    { path: '', component: LoginComponent },
+    {path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     {
       path: 'navigation', component: NavegacionComponent,
-      children: [
-        { path: 'lista', component: ListaPacienteComponent },
-        { path: 'detalle/:id', component: DetallePacienteComponent },
-        { path: 'editar/:id', component: EditarPacienteComponent },
-        { path: 'nuevo', component: NuevoPacienteComponent },
-        { path: 'auth/user', component: LoginComponent },
-        { path: 'lista-turnos', component: ListaTurnosComponent },
-        { path: 'lista-profesionales', component: ListaProfesionalesComponent },
-        { path: 'lista-os', component: ListaOsComponent },
-        { path: '**', redirectTo: '', pathMatch: 'full' },
-      ],
+    //   children: [
+    //     { path: 'lista', component: ListaPacienteComponent },F
+    //     { path: 'detalle/:id', component: DetallePacienteComponent },
+    //     { path: 'editar/:id', component: EditarPacienteComponent },
+    //     { path: 'nuevo', component: NuevoPacienteComponent },
+    //     { path: 'auth/user', component: LoginComponent },
+    //     { path: 'lista-turnos', component: ListaTurnosComponent },
+    //     { path: 'lista-profesionales', component: ListaProfesionalesComponent },
+    //     { path: 'lista-os', component: ListaOsComponent },
+    //     { path: '**', redirectTo: '', pathMatch: 'full' },
+    //   ],
     }
   
   ];
