@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
     ) {
         this.form = this.builder.group({
             username: [''],
-            email: [''],
             password: ['']
         });
     }
@@ -38,7 +37,6 @@ export class LoginComponent implements OnInit {
     // ingreso de usuario ...
     ingresar(): void {
         const username = this.form.get('username')?.value;
-        const email = this.form.get('email')?.value;
         const password = this.form.get('password')?.value;
         //const user: User = new User(email,username, password, null);
 

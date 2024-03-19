@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+
+
 import { LoginComponent } from './components/login/login.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
 import { DetallePacienteComponent } from './components/pacientes/detalle-paciente/detalle-paciente.component';
@@ -49,6 +53,8 @@ import { NgToastModule } from 'ng-angular-popup';
     imports: [
         BrowserModule,
         AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
         ReactiveFormsModule,
         MatButtonModule,
         MatCardModule,
