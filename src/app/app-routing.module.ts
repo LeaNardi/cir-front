@@ -9,6 +9,7 @@ import { NuevoPacienteComponent } from './components/pacientes/nuevo-paciente/nu
 import { ListaTurnosComponent } from './components/turnos/lista-turnos/lista-turnos.component';
 import { ListaProfesionalesComponent } from './components/profesionales/lista-profesionales/lista-profesionales.component';
 import { ListaOsComponent } from './components/obrasSociales/lista-os/lista-os.component';
+import { ListaUsuariosComponent } from './components/users/lista-usuarios/lista-usuarios.component';
 
 const routes: Routes = [
 
@@ -25,6 +26,7 @@ const routes: Routes = [
         { path: 'lista-turnos', component: ListaTurnosComponent },
         { path: 'lista-profesionales', component: ListaProfesionalesComponent },
         { path: 'lista-os', component: ListaOsComponent },
+        { path: 'lista-usuarios', component: ListaUsuariosComponent },
         { path: '**', redirectTo: '', pathMatch: 'full' },
       ],
     }

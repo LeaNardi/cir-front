@@ -3,44 +3,61 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 
 @Component({
-  selector: 'app-navegacion',
-  templateUrl: './navegacion.component.html',
-  styleUrls: ['./navegacion.component.css']
+    selector: 'app-navegacion',
+    templateUrl: './navegacion.component.html',
+    styleUrls: ['./navegacion.component.css']
 })
 export class NavegacionComponent implements OnInit {
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit(): void {
-  }
-  @ViewChild('sidenav') sidenav: MatSidenav | undefined ;
+    ngOnInit(): void {
+    }
+    @ViewChild('sidenav') sidenav: MatSidenav | undefined;
 
-  // barra de navegacion
-  Turnos = [ { name:"Turnos Reservados",
-              url: "lista-turnos"}
-           ];
-  
-  Pacientes = [ { name:"Listado Pacientes",
-                  url: "lista" }
-              ];
+    // barra de navegacion
+    Usuarios = [{
+        name: "Usuarios",
+        url: "lista-usuarios"
+    }
+    ];
 
-  Profesionales = [ { name:"Listado Profesionales",
-                      url: "lista-profesionales"}
-                  ];
+    Turnos = [{
+        name: "Turnos Reservados",
+        url: "lista-turnos"
+    }
+    ];
 
-  OS = [ { name:"Listado Obras Sociales",
-           url: "lista-os"}
-       ];
+    Pacientes = [{
+        name: "Listado Pacientes",
+        url: "lista"
+    }
+    ];
 
-  Login = [{ name:"Cerrar sesion",
-             url:"" }
-          ];
+    Profesionales = [{
+        name: "Listado Profesionales",
+        url: "lista-profesionales"
+    }
+    ];
 
-  // declaracion de variables ...
-  siExpandir = true;
-  mostrarMenuTurnos: boolean = false;
-  mostrarMenuPacientes: boolean = false;
-  mostrarMenuProfesionales: boolean = false;
-  mostrarMenuOS: boolean = false;
+    OS = [{
+        name: "Listado Obras Sociales",
+        url: "lista-os"
+    }
+    ];
+
+    Login = [{
+        name: "Cerrar sesion",
+        url: ""
+    }
+    ];
+
+    // declaracion de variables ...
+    siExpandir = true;
+    mostrarMenuTurnos: boolean = false;
+    mostrarMenuPacientes: boolean = false;
+    mostrarMenuProfesionales: boolean = false;
+    mostrarMenuOS: boolean = false;
+    mostrarMenuUsuarios: boolean = false;
 
 }

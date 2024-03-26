@@ -33,6 +33,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { NgToastModule } from 'ng-angular-popup';
+import { ListaUsuariosComponent } from './components/users/lista-usuarios/lista-usuarios.component';
 
 
 
@@ -48,7 +49,9 @@ import { NgToastModule } from 'ng-angular-popup';
         NuevoPacienteComponent,
         ListaOsComponent,
         ListaProfesionalesComponent,
-        ListaTurnosComponent
+        ListaTurnosComponent,
+        ListaUsuariosComponent,
+        ListaUsuariosComponent
     ],
     imports: [
         BrowserModule,
