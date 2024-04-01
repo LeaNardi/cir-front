@@ -1,0 +1,60 @@
+<div>
+    <h2 mat-dialog-title>Usuario</h2> 
+    <div mat-dialog-content>
+        <div  class="container">           
+            <form novalidate #f="ngForm">
+                <div class= "form-group">                                
+                    <mat-form-field appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input matInput type="text" class="form-control" id="username" name="username"
+                        [(ngModel)]= "data.username" required>
+                    </mat-form-field>
+                </div>
+
+                <div class= "form-group">                                
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="text" class="form-control" id="email" name="email"
+                        [(ngModel)]= "data.email" required>
+                    </mat-form-field>
+                </div>
+
+                <div class= "form-group">                                
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="text" class="form-control" id="Password" name="password"
+                        [(ngModel)]= "data.password" required>
+                    </mat-form-field>
+                </div>
+
+                <div class= "form-group"> 
+                    <mat-form-field appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput type="text" class="form-control" id="nombre" name="nombre"
+                    [(ngModel)]= "data.name" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Apellido</mat-label>
+                        <input matInput type="text" class="form-control" id="apellido" name="apellido"
+                            [(ngModel)]= "data.surname" required>
+                    </mat-form-field>
+                </div>
+
+                <div class= "form-group">                                
+                    <mat-form-field appearance="outline">
+                        <mat-label>DNI</mat-label>
+                        <input matInput type="text" class="form-control" id="DNI" name="DNI"
+                        [(ngModel)]= "data.dni" required>
+                    </mat-form-field>
+                </div>  
+            </form> 
+        </div>  
+    </div>
+    <div mat-dialog-actions>
+        <div class="botones">
+            <button mat-raised-button color="basic" (click)="cancelar()">Cancelar</button>
+        </div>
+    </div>
+</div> 
+
+    

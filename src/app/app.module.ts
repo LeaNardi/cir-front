@@ -33,7 +33,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { NgToastModule } from 'ng-angular-popup';
+import { FormsModule } from '@angular/forms';
 import { ListaUsuariosComponent } from './components/users/lista-usuarios/lista-usuarios.component';
+import { NuevoUsuarioComponent } from './components/users/nuevo-usuario/nuevo-usuario.component';
+import { DetalleUsuarioComponent } from './components/users/detalle-usuario/detalle-usuario.component';
 
 
 
@@ -51,7 +54,9 @@ import { ListaUsuariosComponent } from './components/users/lista-usuarios/lista-
         ListaProfesionalesComponent,
         ListaTurnosComponent,
         ListaUsuariosComponent,
-        ListaUsuariosComponent
+        ListaUsuariosComponent,
+        NuevoUsuarioComponent,
+        DetalleUsuarioComponent
     ],
     imports: [
         BrowserModule,
@@ -73,6 +78,7 @@ import { ListaUsuariosComponent } from './components/users/lista-usuarios/lista-
         MatTableModule,
         MatToolbarModule,
         NgToastModule,
+        FormsModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
