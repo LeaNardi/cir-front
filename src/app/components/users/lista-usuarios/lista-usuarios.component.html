@@ -53,8 +53,8 @@
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let row">
                 <a><button mat-raised-button color="basic" (click)="verUsuario(row.id)"> Ver </button></a>
-                <!-- <a><button mat-raised-button color="primary" (click)="modificarUsuario(row.id)"> Modificar </button></a>
-                <a><button mat-raised-button color="warn" (click)="deleteUsuario(row.dni)"> Eliminar </button></a> -->
+                <!-- <a><button mat-raised-button color="primary" (click)="modificarUsuario(row.id)"> Modificar </button></a> -->
+                <a><button mat-raised-button color="warn" (click)="deleteUsuario(row.id)"> Eliminar </button></a>
             </td>
         </ng-container>
 
