@@ -10,6 +10,7 @@ import { User } from '../../../interfaces/user';
 import { NuevoUsuarioComponent } from '../nuevo-usuario/nuevo-usuario.component';
 import { DetalleUsuarioComponent } from '../detalle-usuario/detalle-usuario.component';
 import swal from 'sweetalert2';
+import { EditarUsuarioComponent } from '../editar-usuario/editar-usuario.component';
 
 
 @Component({
@@ -96,8 +97,6 @@ export class ListaUsuariosComponent implements OnInit {
                 }
             });
     }
-
-    // Eliminar pacientes
 
     // Eliminar pacientes
     deleteUsuario(id: number) {
@@ -210,6 +209,10 @@ export class ListaUsuariosComponent implements OnInit {
     // ver informacion de Usuario ...
     verUsuario(id: number) {
         let dialogRef = this.dialog.open(DetalleUsuarioComponent, { data: { id: id }, width: '40%' })
+    }
+
+    editarUsuario(id: number) {
+        let dialogRef = this.dialog.open(EditarUsuarioComponent, { data: { id: id }, width: '40%' })
     }
 
 }

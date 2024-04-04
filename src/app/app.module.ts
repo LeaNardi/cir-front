@@ -37,6 +37,7 @@ import { FormsModule } from '@angular/forms';
 import { ListaUsuariosComponent } from './components/users/lista-usuarios/lista-usuarios.component';
 import { NuevoUsuarioComponent } from './components/users/nuevo-usuario/nuevo-usuario.component';
 import { DetalleUsuarioComponent } from './components/users/detalle-usuario/detalle-usuario.component';
+import { EditarUsuarioComponent } from './components/users/editar-usuario/editar-usuario.component';
 
 
 
@@ -56,7 +57,8 @@ import { DetalleUsuarioComponent } from './components/users/detalle-usuario/deta
         ListaUsuariosComponent,
         ListaUsuariosComponent,
         NuevoUsuarioComponent,
-        DetalleUsuarioComponent
+        DetalleUsuarioComponent,
+        EditarUsuarioComponent
     ],
     imports: [
         BrowserModule,

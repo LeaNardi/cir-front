@@ -15,7 +15,6 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     addUser(user: User): Observable<User> {
-        console.log("AddUser called:");
         console.log(user);
 
         return this.http.post<User>(`${this.userURL}add`, user);
@@ -33,8 +32,10 @@ export class UserService {
         return this.http.delete<void>(`${this.userURL}delete/${id}`);
     }
 
-    // ingreso de usuario ...
-    // ingresar(user: User): Observable<User> {
-    //     return this.http.post<User>(`${this.userURL}/auth/signin`, user);
-    // }
+    updateUser(id:number, user: User): Observable<User> {
+        console.log(user);
+
+        return this.http.put<User>(`${this.userURL}update/${id}`, user);
+    }
+
 }
