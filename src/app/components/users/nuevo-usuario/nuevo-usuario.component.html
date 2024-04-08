@@ -7,7 +7,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Username</mat-label>
                         <input matInput type="text" class="form-control" id="username" name="username"
-                        [(ngModel)]= "data.username" required>
+                        [(ngModel)]= "usuario.username" required>
                     </mat-form-field>
                 </div>
 
@@ -15,7 +15,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Email</mat-label>
                         <input matInput type="text" class="form-control" id="email" name="email"
-                        [(ngModel)]= "data.email" required>
+                        [(ngModel)]= "usuario.email" required>
                     </mat-form-field>
                 </div>
 
@@ -23,7 +23,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Password</mat-label>
                         <input matInput type="text" class="form-control" id="Password" name="password"
-                        [(ngModel)]= "data.password" required>
+                        [(ngModel)]= "usuario.password" required>
                     </mat-form-field>
                 </div>
 
@@ -31,12 +31,12 @@
                     <mat-form-field appearance="outline">
                     <mat-label>Nombre</mat-label>
                     <input matInput type="text" class="form-control" id="nombre" name="nombre"
-                    [(ngModel)]= "data.name" required>
+                    [(ngModel)]= "usuario.name" required>
                     </mat-form-field>
                     <mat-form-field appearance="outline">
                         <mat-label>Apellido</mat-label>
                         <input matInput type="text" class="form-control" id="apellido" name="apellido"
-                            [(ngModel)]= "data.surname" required>
+                            [(ngModel)]= "usuario.surname" required>
                     </mat-form-field>
                 </div>
 
@@ -44,7 +44,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>DNI</mat-label>
                         <input matInput type="text" class="form-control" id="DNI" name="DNI"
-                        [(ngModel)]= "data.dni" required>
+                        [(ngModel)]= "usuario.dni" required>
                     </mat-form-field>
                 </div>
 
@@ -53,8 +53,8 @@
     </div>
     <div mat-dialog-actions>
         <div class="botones">
-            <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
             <button mat-raised-button color="basic" (click)="cancelar()">Cancelar</button>
+            <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
         </div>
     </div>
 </div>

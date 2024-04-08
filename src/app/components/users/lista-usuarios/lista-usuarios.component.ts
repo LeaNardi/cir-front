@@ -65,38 +65,22 @@ export class ListaUsuariosComponent implements OnInit {
         );
     }
 
-    openDialog() {
-        let dialogRef = this.dialog.open(NuevoUsuarioComponent, {
-            data: {
-                '': String,
-                '': String,
-                '': String,
-                '': String,
-                '': String,
-                '': String,
-            }
-        });
+    
 
-        dialogRef.afterClosed().subscribe(user => {
-            if (user != undefined)
-                this.onCreate(user);
-        });
-    }
+    // crearUsuario(user: User): void {
 
-    onCreate(user: User): void {
-
-        this.userService.addUser(user).subscribe(
-            {
-                next: data => {
-                    this.toast.success({ detail: "Mensaje exitoso", summary: "Usuario creado con exito", duration: 3000 })
-                    this.router.navigate(['/navigation/lista-usuarios']);
-                },
-                error: err => {
-                    this.toast.error({ detail: "Mensaje de Error", summary: "Error al crear usuario", duration: 3000 })
-                    this.router.navigate(['/navigation/lista-usuarios']);
-                }
-            });
-    }
+    //     this.userService.addUser(user).subscribe(
+    //         {
+    //             next: data => {
+    //                 this.toast.success({ detail: "Mensaje exitoso", summary: "Usuario creado con exito", duration: 3000 })
+    //                 this.router.navigate(['/navigation/lista-usuarios']);
+    //             },
+    //             error: err => {
+    //                 this.toast.error({ detail: "Mensaje de Error", summary: "Error al crear usuario", duration: 3000 })
+    //                 this.router.navigate(['/navigation/lista-usuarios']);
+    //             }
+    //         });
+    // }
 
     // Eliminar pacientes
     deleteUsuario(id: number) {
@@ -132,12 +116,12 @@ export class ListaUsuariosComponent implements OnInit {
 
     //   dialogRef.afterClosed().subscribe(pac => {
     //     if (pac != undefined)
-    //       this.onCreate(pac);
+    //       this.crearUsuario(pac);
     //   });
     // }
 
     // // Metodo que crea paciente luego de cerrar la ventana Modal y actualizo filas
-    // onCreate(pac: Paciente): void {
+    // crearUsuario(pac: Paciente): void {
     //   const paciente = new Paciente(pac.dni,
     //     pac.nombre,
     //     pac.apellido,
@@ -213,6 +197,15 @@ export class ListaUsuariosComponent implements OnInit {
 
     editarUsuario(id: number) {
         let dialogRef = this.dialog.open(EditarUsuarioComponent, { data: { id: id }, width: '40%' })
+    }
+
+    crearUsuario() {
+        let dialogRef = this.dialog.open(NuevoUsuarioComponent, { width: '40%' });
+
+        // dialogRef.afterClosed().subscribe(user => {
+        //     if (user != undefined)
+        //         this.crearUsuario(user);
+        // });
     }
 
 }
