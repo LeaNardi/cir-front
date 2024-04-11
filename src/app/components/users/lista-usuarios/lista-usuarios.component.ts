@@ -190,22 +190,25 @@ export class ListaUsuariosComponent implements OnInit {
     //     });
     // }
 
-    // ver informacion de Usuario ...
     verUsuario(id: number) {
         let dialogRef = this.dialog.open(DetalleUsuarioComponent, { data: { id: id }, width: '40%' })
+        dialogRef.afterClosed().subscribe( () => {
+            this.cargarPacientes();
+        })
     }
 
     editarUsuario(id: number) {
         let dialogRef = this.dialog.open(EditarUsuarioComponent, { data: { id: id }, width: '40%' })
+        dialogRef.afterClosed().subscribe( () => {
+            this.cargarPacientes();
+        })
     }
 
     crearUsuario() {
         let dialogRef = this.dialog.open(NuevoUsuarioComponent, { width: '40%' });
-
-        // dialogRef.afterClosed().subscribe(user => {
-        //     if (user != undefined)
-        //         this.crearUsuario(user);
-        // });
+        dialogRef.afterClosed().subscribe( () => {
+            this.cargarPacientes();
+        })
     }
 
 }

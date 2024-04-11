@@ -45,6 +45,7 @@ export class NuevoUsuarioComponent implements OnInit {
         console.log(this.usuario);
         this.userService.addUser(this.usuario).subscribe({
             next: res => {
+                console.log(res)
             },
             error: err => {
             }

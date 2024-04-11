@@ -39,6 +39,8 @@ export class DetalleUsuarioComponent implements OnInit {
     verUsuario(id: number) {
         this.userService.getUser(id).subscribe({
             next: res => {
+                console.log(res)
+
                 this.usuario.id = res.id;
                 this.usuario.username = res.username;
                 this.usuario.email = res.email;

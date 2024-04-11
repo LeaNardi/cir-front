@@ -61,6 +61,7 @@ export class EditarUsuarioComponent implements OnInit {
         console.log(this.usuario);
         this.userService.updateUser(this.data.id, this.usuario).subscribe({
             next: res => {
+                console.log(res)
             },
             error: err => {
             }
