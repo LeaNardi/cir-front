@@ -8,10 +8,26 @@
     <mat-sidenav #sidenav class="sidenav content mat-elevation-z8" mode="side" opened="true">
         <mat-nav-list>
 
+            <!--Item Mi Perfil-->
+
+            <mat-list-item (click)="mostrarMenuMiPerfil = !mostrarMenuMiPerfil" class="item">
+                <mat-icon mat-list-icon>person</mat-icon>
+                <span class="full-width" *ngIf="siExpandir"> Mi Perfil </span>
+                <mat-icon class="expansorPacientes" [ngClass]="{'rotated' : mostrarMenuMiPerfil}"
+                    *ngIf="siExpandir">expand_more</mat-icon>
+            </mat-list-item>
+
+            <div class="submenuPacientes" [ngClass]="{'expandir' : mostrarMenuMiPerfil}" *ngIf="siExpandir">
+                <mat-list-item *ngFor="let item of MiPerfil" class="subItem">
+                    <mat-icon class="circle">circle</mat-icon>
+                    <span [routerLink]="item.url">{{ item.name }}</span>
+                </mat-list-item>
+            </div>
+
             <!--Item y subItems de Usuarios-->
 
             <mat-list-item (click)="mostrarMenuUsuarios = !mostrarMenuUsuarios" class="item">
-                <mat-icon mat-list-icon>event</mat-icon>
+                <mat-icon mat-list-icon>group</mat-icon>
                 <span class="full-width" *ngIf="siExpandir"> Usuarios </span>
                 <mat-icon class="expansorUsuarios" [ngClass]="{'rotated' : mostrarMenuUsuarios}"
                     *ngIf="siExpandir">expand_more</mat-icon>
@@ -44,7 +60,7 @@
             <!--Item y subItems de pacientes-->
 
             <mat-list-item (click)="mostrarMenuPacientes = !mostrarMenuPacientes" class="item">
-                <mat-icon mat-list-icon>person</mat-icon>
+                <mat-icon mat-list-icon>group</mat-icon>
                 <span class="full-width" *ngIf="siExpandir"> Pacientes </span>
                 <mat-icon class="expansorPacientes" [ngClass]="{'rotated' : mostrarMenuPacientes}"
                     *ngIf="siExpandir">expand_more</mat-icon>

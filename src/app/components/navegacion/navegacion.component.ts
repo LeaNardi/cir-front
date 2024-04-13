@@ -16,6 +16,12 @@ export class NavegacionComponent implements OnInit {
     @ViewChild('sidenav') sidenav: MatSidenav | undefined;
 
     // barra de navegacion
+    MiPerfil = [{
+        name: "Mis datos",
+        url: ""
+    }
+    ];
+
     Usuarios = [{
         name: "Usuarios",
         url: "lista-usuarios"
@@ -54,6 +60,7 @@ export class NavegacionComponent implements OnInit {
 
     // declaracion de variables ...
     siExpandir = true;
+    mostrarMenuMiPerfil: boolean = false;
     mostrarMenuTurnos: boolean = false;
     mostrarMenuPacientes: boolean = false;
     mostrarMenuProfesionales: boolean = false;
