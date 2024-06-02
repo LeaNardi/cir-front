@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
-    endpoint: 'http://localhost:8080/',
+    production: true,
+    endpoint: 'ec2-54-234-47-225.compute-1.amazonaws.com:8080/',
 };
