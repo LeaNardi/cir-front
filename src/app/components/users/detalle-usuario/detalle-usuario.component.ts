@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { User } from '../../../interfaces/user';
+import { UserDTO } from '../../../interfaces/user';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { UserService } from '../../../services/user.service';
     styleUrl: './detalle-usuario.component.css'
 })
 export class DetalleUsuarioComponent implements OnInit {
-    usuario: User;
+    usuario: UserDTO;
 
     constructor(private userService: UserService,
         @Inject(MAT_DIALOG_DATA) public data: { id: number },
@@ -20,10 +20,10 @@ export class DetalleUsuarioComponent implements OnInit {
             id: 0,
             username: "",
             email: "",
-            password: "",
             name: "",
             surname: "",
             dni: "",
+            roles_ids: [1]
         }
     }
 
@@ -44,7 +44,6 @@ export class DetalleUsuarioComponent implements OnInit {
                 this.usuario.id = res.id;
                 this.usuario.username = res.username;
                 this.usuario.email = res.email;
-                this.usuario.password = res.password;
                 this.usuario.name = res.name;
                 this.usuario.surname = res.surname;
                 this.usuario.dni = res.dni;

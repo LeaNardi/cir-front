@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { User } from '../../../interfaces/user';
+import { UserCreateDTO } from '../../../interfaces/user';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { UserService } from '../../../services/user.service';
     styleUrl: './nuevo-usuario.component.css'
 })
 export class NuevoUsuarioComponent implements OnInit {
-    usuario: User;
+    usuario: UserCreateDTO;
 
     public insertar: any;
 
@@ -18,13 +18,13 @@ export class NuevoUsuarioComponent implements OnInit {
         // @Inject(MAT_DIALOG_DATA) public data: User
         ) {
             this.usuario = {
-                id: 0,
                 username: "",
                 email: "",
                 password: "",
                 name: "",
                 surname: "",
                 dni: "",
+                roles_ids: [1]
             }
          }
 

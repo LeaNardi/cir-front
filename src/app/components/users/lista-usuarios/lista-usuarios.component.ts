@@ -6,7 +6,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { UserService } from '../../../services/user.service';
-import { User } from '../../../interfaces/user';
+import { UserDTO } from '../../../interfaces/user';
 import { NuevoUsuarioComponent } from '../nuevo-usuario/nuevo-usuario.component';
 import { DetalleUsuarioComponent } from '../detalle-usuario/detalle-usuario.component';
 import swal from 'sweetalert2';
@@ -19,11 +19,11 @@ import { EditarUsuarioComponent } from '../editar-usuario/editar-usuario.compone
     styleUrl: './lista-usuarios.component.css'
 })
 export class ListaUsuariosComponent implements OnInit {
-    elementUsers: User[] = [];
+    elementUsers: UserDTO[] = [];
     displayedColumns = ['Usuario', 'Email', 'Nombre', 'Apellido', 'DNI', 'Acciones'];
-    dataSource = new MatTableDataSource<User>(this.elementUsers)
+    dataSource = new MatTableDataSource<UserDTO>(this.elementUsers)
 
-    @ViewChild(MatTable) tabla!: MatTable<User>;
+    @ViewChild(MatTable) tabla!: MatTable<UserDTO>;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
@@ -55,7 +55,7 @@ export class ListaUsuariosComponent implements OnInit {
         this.userService.getUsers().subscribe(
             {
                 next: users => {
-                    this.dataSource.data = users as User[];
+                    this.dataSource.data = users as UserDTO[];
                     console.log(users);
                 },
                 error: err => {

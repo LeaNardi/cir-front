@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../interfaces/user';
+import { UserDTO, UserCreateDTO, UserUpdateDTO } from '../interfaces/user';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -14,16 +14,16 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    getUsers(): Observable<User[]> {
-        return this.http.get<User[]>(`${this.userURL}getall`);
+    getUsers(): Observable<UserDTO[]> {
+        return this.http.get<UserDTO[]>(`${this.userURL}getall`);
     }
 
-    getUser(id: number): Observable<User> {
-        return this.http.get<User>(`${this.userURL}get/${id}`);
+    getUser(id: number): Observable<UserDTO> {
+        return this.http.get<UserDTO>(`${this.userURL}get/${id}`);
     }
     
-    addUser(user: User): Observable<User> {
-        return this.http.post<User>(`${this.userURL}add`, user);
+    addUser(user: UserCreateDTO): Observable<String> {
+        return this.http.post<String>(`${this.userURL}add`, user);
     }
 
 
@@ -31,7 +31,7 @@ export class UserService {
         return this.http.delete<void>(`${this.userURL}delete/${id}`);
     }
 
-    updateUser(id:number, user: User): Observable<User> {
-        return this.http.put<User>(`${this.userURL}update/${id}`, user);
+    updateUser(id:number, user: UserUpdateDTO): Observable<String> {
+        return this.http.put<String>(`${this.userURL}update/${id}`, user);
     }
 }

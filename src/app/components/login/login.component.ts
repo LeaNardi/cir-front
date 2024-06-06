@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { Observable, of } from 'rxjs';
-import { User } from '../../interfaces/user';
+import { UserAuthDTO } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
     form: FormGroup;
 
-    users$: Observable<User[]> = of([]);
+    users$: Observable<UserAuthDTO[]> = of([]);
     problem: Boolean = false;
 
     constructor(
