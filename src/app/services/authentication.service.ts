@@ -33,10 +33,10 @@ export class AuthenticationService {
     const role = decodedToken.roles;
 
     if (!token) return false;
-    this.setSession(token);
-    this.setUserId(sub);
-    this.setUserRole(role);
-    this.setIsLoggedIn();
+    // this.setSession(token);
+    // this.setUserId(sub);
+    // this.setUserRole(role);
+    // this.setIsLoggedIn();
     return true;
   }
 

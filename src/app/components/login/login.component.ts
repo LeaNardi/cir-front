@@ -5,6 +5,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { Observable, of } from 'rxjs';
 import { UserAuthDTO } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
     selector: 'app-login',
@@ -20,9 +21,8 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private builder: FormBuilder,
-        private service: UserService,
         private router: Router,
-        private toast: NgToastService
+        private auth: AuthenticationService,
     ) {
         this.form = this.builder.group({
             username: [''],
@@ -35,12 +35,16 @@ export class LoginComponent implements OnInit {
     }
 
     // ingreso de usuario ...
-    ingresar(): void {
+    async ingresar(): Promise<void> {
         const username = this.form.get('username')?.value;
         const password = this.form.get('password')?.value;
         //const user: User = new User(email,username, password, null);
-
-        this.router.navigate(['navigation']);
+        const token = await this.auth.login(this.form.value);
+        if (token) {
+            this.router.navigate(['navigation'])
+        } else {
+            console.log("Incorrect username or password.")
+        };
 
     }
 
