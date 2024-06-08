@@ -28,15 +28,6 @@ export interface UserCreateDTO {
     roles_ids: number[]
 }
 
-export interface UserUpdateDTO {
-    username: string; 
-    email: string;
-    name: string;
-    surname: string;
-    dni: string;
-    roles_ids: number[]
-}
-
 export interface UserAuthDTO {
     username: string; 
     password: string;

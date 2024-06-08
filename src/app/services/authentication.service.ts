@@ -33,10 +33,10 @@ export class AuthenticationService {
     const role = decodedToken.roles;
 
     if (!token) return false;
-    // this.setSession(token);
-    // this.setUserId(sub);
+    this.setSession(token);
+    this.setUserName(sub);
     // this.setUserRole(role);
-    // this.setIsLoggedIn();
+    this.setIsLoggedIn();
     return true;
   }
 
@@ -54,8 +54,8 @@ export class AuthenticationService {
   }
 
 
-  setUserId(id : string){
-    localStorage.setItem('Id', id);
+  setUserName(username : string){
+    localStorage.setItem('Username', username);
   }
 
   setUserRole(role : string){
@@ -70,8 +70,8 @@ export class AuthenticationService {
     return localStorage.getItem('Role');
   }
 
-  getUserId(){
-    return localStorage.getItem('Id');
+  getUserName(){
+    return localStorage.getItem('Username');
   }
 
   isAdmin(){
@@ -102,8 +102,8 @@ export class AuthenticationService {
 
   resetSession() {
     localStorage.removeItem('session');
-    localStorage.removeItem('Id');
-    localStorage.removeItem('Role');
+    localStorage.removeItem('Username');
+    // localStorage.removeItem('Role');
     localStorage.removeItem('IsLoggedIn');
     this.loggedIn = false;
   }

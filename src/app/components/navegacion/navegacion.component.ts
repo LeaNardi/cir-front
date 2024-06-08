@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { AuthenticationService } from '../../services/authentication.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,7 +11,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class NavegacionComponent implements OnInit {
 
-    constructor() { }
+    constructor(private auth: AuthenticationService, private router: Router) { }
 
     ngOnInit(): void {
     }
@@ -18,7 +20,7 @@ export class NavegacionComponent implements OnInit {
     // barra de navegacion
     MiPerfil = [{
         name: "Mis datos",
-        url: ""
+        url: "miusuario"
     }
     ];
 
@@ -67,4 +69,14 @@ export class NavegacionComponent implements OnInit {
     mostrarMenuOS: boolean = false;
     mostrarMenuUsuarios: boolean = false;
 
+    async logout() {
+        const token = await this.auth.resetSession();
+        this.router.navigate(['/login']); 
+      }
+    
+      confirmarSalir() {
+        if (confirm('¿Estás seguro que deseas salir?')) {
+            this.logout(); // Llama a la función logout si se confirma la salida
+        }
+    }
 }

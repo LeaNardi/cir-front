@@ -111,10 +111,8 @@
 
             <!-- Menu logout -->
             <div class="logout">
-                <mat-list-item *ngFor="let item of Login">
-                    <mat-icon mat-list-icon class="logouticon">logout</mat-icon>
-                    <span [routerLink]="item.url">{{ item.name }}</span>
-                </mat-list-item>
+                <button class="Salir" mat-raised-button color="primary" type="button" (click)="confirmarSalir()">Cerrar
+                    Sesión</button>
             </div>
 
         </mat-nav-list>

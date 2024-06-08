@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { UserUpdateDTO } from '../../../interfaces/user';
+import { UserDTO } from '../../../interfaces/user';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -11,12 +11,13 @@ import { UserService } from '../../../services/user.service';
   styleUrl: './editar-usuario.component.css'
 })
 export class EditarUsuarioComponent implements OnInit {
-    usuario: UserUpdateDTO;
+    usuario: UserDTO;
 
     constructor(private userService: UserService,
         @Inject(MAT_DIALOG_DATA) public data: { id: number },
         public dialogRef: MatDialogRef<EditarUsuarioComponent>) {
         this.usuario = {
+            id: 0,
             username: "",
             email: "",
             name: "",
@@ -42,6 +43,7 @@ export class EditarUsuarioComponent implements OnInit {
     verUsuario(id: number) {
         this.userService.getUser(id).subscribe({
             next: res => {
+                this.usuario.id = res.id;
                 this.usuario.username = res.username;
                 this.usuario.email = res.email;
                 this.usuario.name = res.name;

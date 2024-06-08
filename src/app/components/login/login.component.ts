@@ -41,9 +41,11 @@ export class LoginComponent implements OnInit {
         //const user: User = new User(email,username, password, null);
         const token = await this.auth.login(this.form.value);
         if (token) {
-            this.router.navigate(['navigation'])
+            this.problem = false;
+            this.router.navigate(['navigation']);
         } else {
-            console.log("Incorrect username or password.")
+            console.log("Incorrect username or password.");
+            this.problem = true;
         };
 
     }
