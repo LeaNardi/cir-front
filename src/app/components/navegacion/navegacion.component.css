@@ -76,20 +76,6 @@ mat-icon {
     transform: rotate(0deg);
 }
 
-.submenuUsuarios {
-    overflow-y: hidden;
-    transition: transform 300ms ease;
-    transform: scaleY(0);
-    transform-origin: top;
-    padding-left: 15px;
-    font-size: 1rem;
-    height: 0;
-  }
-
-.submenuUsuarios.expandir{
-    transform: scaleY(1);
-    height: auto;
-}
 
 /* Comportamiento de items Turnos */
 .expansorTurnos {
@@ -100,20 +86,6 @@ mat-icon {
     transform: rotate(0deg);
 }
 
-.submenuTurnos {
-    overflow-y: hidden;
-    transition: transform 300ms ease;
-    transform: scaleY(0);
-    transform-origin: top;
-    padding-left: 15px;
-    font-size: 1rem;
-    height: 0;
-  }
-
-.submenuTurnos.expandir{
-    transform: scaleY(1);
-    height: auto;
-}
 
 /* Comportamiento de items pacientes */
 .expansorPacientes {
@@ -124,20 +96,7 @@ mat-icon {
     transform: rotate(0deg);
 }
 
-.submenuPacientes {
-    overflow-y: hidden;
-    transition: transform 300ms ease;
-    transform: scaleY(0);
-    transform-origin: top;
-    padding-left: 15px;
-    font-size: 1rem;
-    height: 0;
-  }
 
-.submenuPacientes.expandir{
-    transform: scaleY(1);
-    height: auto;
-}
 
 /* Comportamiento de items Profesionales */
 .expansorProfesionales {
@@ -148,20 +107,6 @@ mat-icon {
     transform: rotate(0deg);
 }
 
-.submenuProfesionales {
-    overflow-y: hidden;
-    transition: transform 300ms ease;
-    transform: scaleY(0);
-    transform-origin: top;
-    padding-left: 15px;
-    font-size: 1rem;
-    height: 0;
-  }
-
-.submenuProfesionales.expandir{
-    transform: scaleY(1);
-    height: auto;
-}
 
 /* Comportamiento de items Obra Social */
 .expansorOS {
@@ -172,20 +117,6 @@ mat-icon {
     transform: rotate(0deg);
 }
 
-.submenuOS {
-    overflow-y: hidden;
-    transition: transform 300ms ease;
-    transform: scaleY(0);
-    transform-origin: top;
-    padding-left: 15px;
-    font-size: 1rem;
-    height: 0;
-  }
-
-.submenuOS.expandir{
-    transform: scaleY(1);
-    height: auto;
-}
 
 /* Items de configuracion (navbar bottom) */
 .config{

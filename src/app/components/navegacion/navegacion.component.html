@@ -12,102 +12,44 @@
 
             <!--Item Mi Perfil-->
 
-            <mat-list-item (click)="mostrarMenuMiPerfil = !mostrarMenuMiPerfil" class="item">
+            <mat-list-item class="item">
                 <mat-icon mat-list-icon>person</mat-icon>
-                <span class="full-width" *ngIf="siExpandir"> Mi Perfil </span>
-                <mat-icon class="expansorPacientes" [ngClass]="{'rotated' : mostrarMenuMiPerfil}"
-                    *ngIf="siExpandir">expand_more</mat-icon>
+                <span class="full-width" routerLink="miusuario"> Mi Perfil </span>
             </mat-list-item>
+            <!-- <mat-icon class="circle">circle</mat-icon> -->
 
-            <div class="submenuPacientes" [ngClass]="{'expandir' : mostrarMenuMiPerfil}" *ngIf="siExpandir">
-                <mat-list-item *ngFor="let item of MiPerfil" class="subItem">
-                    <mat-icon class="circle">circle</mat-icon>
-                    <span [routerLink]="item.url">{{ item.name }}</span>
-                </mat-list-item>
-            </div>
 
             <!--Item y subItems de Usuarios-->
 
-            <mat-list-item (click)="mostrarMenuUsuarios = !mostrarMenuUsuarios" class="item">
+            <mat-list-item class="item">
                 <mat-icon mat-list-icon>group</mat-icon>
-                <span class="full-width" *ngIf="siExpandir"> Usuarios </span>
-                <mat-icon class="expansorUsuarios" [ngClass]="{'rotated' : mostrarMenuUsuarios}"
-                    *ngIf="siExpandir">expand_more</mat-icon>
+                <span class="full-width" routerLink="lista-usuarios"> Usuarios </span>
             </mat-list-item>
 
-            <div class="submenuUsuarios" [ngClass]="{'expandir' : mostrarMenuUsuarios}" *ngIf="siExpandir">
-                <mat-list-item *ngFor="let item of Usuarios" class="subItem">
-                    <mat-icon class="circle">circle</mat-icon>
-                    <span [routerLink]="item.url">{{ item.name }}</span>
-                </mat-list-item>
-            </div>
 
             <!--Item y subItems de Turnos-->
 
-            <mat-list-item (click)="mostrarMenuTurnos = !mostrarMenuTurnos" class="item">
+            <mat-list-item class="item">
                 <mat-icon mat-list-icon>event</mat-icon>
-                <span class="full-width" *ngIf="siExpandir"> Turnos </span>
-                <mat-icon class="expansorTurnos" [ngClass]="{'rotated' : mostrarMenuTurnos}"
-                    *ngIf="siExpandir">expand_more</mat-icon>
+                <span class="full-width" routerLink="lista-turnos"> Turnos </span>
             </mat-list-item>
-
-            <div class="submenuTurnos" [ngClass]="{'expandir' : mostrarMenuTurnos}" *ngIf="siExpandir">
-                <mat-list-item *ngFor="let item of Turnos" class="subItem">
-                    <mat-icon class="circle">circle</mat-icon>
-                    <span [routerLink]="item.url">{{ item.name }}</span>
-                </mat-list-item>
-            </div>
-
-
-            <!--Item y subItems de pacientes-->
-
-            <mat-list-item (click)="mostrarMenuPacientes = !mostrarMenuPacientes" class="item">
-                <mat-icon mat-list-icon>group</mat-icon>
-                <span class="full-width" *ngIf="siExpandir"> Pacientes </span>
-                <mat-icon class="expansorPacientes" [ngClass]="{'rotated' : mostrarMenuPacientes}"
-                    *ngIf="siExpandir">expand_more</mat-icon>
-            </mat-list-item>
-
-            <div class="submenuPacientes" [ngClass]="{'expandir' : mostrarMenuPacientes}" *ngIf="siExpandir">
-                <mat-list-item *ngFor="let item of Pacientes" class="subItem">
-                    <mat-icon class="circle">circle</mat-icon>
-                    <span [routerLink]="item.url">{{ item.name }}</span>
-                </mat-list-item>
-            </div>
 
 
             <!--Item y subItems de profesionales-->
 
-            <mat-list-item (click)="mostrarMenuProfesionales = !mostrarMenuProfesionales" class="item">
+            <mat-list-item class="item">
                 <mat-icon mat-list-icon>group</mat-icon>
-                <span class="full-width" *ngIf="siExpandir"> Profesionales </span>
-                <mat-icon class="expansorProfesionales" [ngClass]="{'rotated' : mostrarMenuProfesionales}"
-                    *ngIf="siExpandir">expand_more</mat-icon>
+                <span class="full-width" routerLink="lista-profesionales"> Profesionales </span>
+
             </mat-list-item>
-
-            <div class="submenuProfesionales" [ngClass]="{'expandir' : mostrarMenuProfesionales}" *ngIf="siExpandir">
-                <mat-list-item *ngFor="let item of Profesionales" class="subItem">
-                    <mat-icon class="circle">circle</mat-icon>
-                    <span [routerLink]="item.url">{{ item.name }}</span>
-                </mat-list-item>
-            </div>
-
 
             <!--Item y subItems de obras sociales-->
 
-            <mat-list-item (click)="mostrarMenuOS = !mostrarMenuOS" class="item">
+            <mat-list-item class="item">
                 <mat-icon mat-list-icon>folder</mat-icon>
-                <span class="full-width" *ngIf="siExpandir"> Obras sociales </span>
-                <mat-icon class="expansorOS" [ngClass]="{'rotated' : mostrarMenuOS}"
-                    *ngIf="siExpandir">expand_more</mat-icon>
-            </mat-list-item>
+                <span class="full-width" routerLink="lista-os"> Obras sociales </span>
 
-            <div class="submenuOS" [ngClass]="{'expandir' : mostrarMenuOS}" *ngIf="siExpandir">
-                <mat-list-item *ngFor="let item of OS" class="subItem">
-                    <mat-icon class="circle">circle</mat-icon>
-                    <span [routerLink]="item.url">{{ item.name }}</span>
-                </mat-list-item>
-            </div>
+            </mat-list-item>
 
             <!-- Menu logout -->
             <div class="logout">

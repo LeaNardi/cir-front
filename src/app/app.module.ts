@@ -11,10 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { LoginComponent } from './components/login/login.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
-import { DetallePacienteComponent } from './components/pacientes/detalle-paciente/detalle-paciente.component';
-import { EditarPacienteComponent } from './components/pacientes/editar-paciente/editar-paciente.component';
-import { ListaPacienteComponent } from './components/pacientes/lista-paciente/lista-paciente.component';
-import { NuevoPacienteComponent } from './components/pacientes/nuevo-paciente/nuevo-paciente.component';
 import { ListaOsComponent } from './components/obrasSociales/lista-os/lista-os.component';
 import { ListaProfesionalesComponent } from './components/profesionales/lista-profesionales/lista-profesionales.component';
 import { ListaTurnosComponent } from './components/turnos/lista-turnos/lista-turnos.component';
@@ -48,10 +44,6 @@ import { MiusuarioComponent } from './components/miusuario/miusuario.component';
         AppComponent,
         LoginComponent,
         NavegacionComponent,
-        DetallePacienteComponent,
-        EditarPacienteComponent,
-        ListaPacienteComponent,
-        NuevoPacienteComponent,
         ListaOsComponent,
         ListaProfesionalesComponent,
         ListaTurnosComponent,
