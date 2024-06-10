@@ -2,6 +2,7 @@
 mat-toolbar {
     background: #002b5c;
     color: white;
+    justify-content: center;
 }
 
 /* Estilos de navegacion side nav */
@@ -54,67 +55,6 @@ mat-icon {
     border: none;
     align-items: center;
     overflow: hidden;
-}
-
-/* subItems de navbar */
-.subItem{
-    border: none;
-    background-color: transparent;
-    color:#000000;
-    display:flex;
-    align-items: center;
-    size:0.3rem;
-    overflow: hidden;
-}
-
-/* Comportamiento de items Usuarios */
-.expansorUsuarios {
-    transition: 300ms ease-in-out;
-    transform: rotate(180deg);
-}
-.expansorUsuarios.rotated {
-    transform: rotate(0deg);
-}
-
-
-/* Comportamiento de items Turnos */
-.expansorTurnos {
-    transition: 300ms ease-in-out;
-    transform: rotate(180deg);
-}
-.expansorTurnos.rotated {
-    transform: rotate(0deg);
-}
-
-
-/* Comportamiento de items pacientes */
-.expansorPacientes {
-    transition: 300ms ease-in-out;
-    transform: rotate(180deg);
-}
-.expansorPacientes.rotated {
-    transform: rotate(0deg);
-}
-
-
-
-/* Comportamiento de items Profesionales */
-.expansorProfesionales {
-    transition: 300ms ease-in-out;
-    transform: rotate(180deg);
-}
-.expansorProfesionales.rotated {
-    transform: rotate(0deg);
-}
-
-
-/* Comportamiento de items Obra Social */
-.expansorOS {
-    transition: 300ms ease-in-out;
-    transform: rotate(180deg);
-}
-.expansorOS.rotated {
-    transform: rotate(0deg);
 }
 
 

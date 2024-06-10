@@ -14,7 +14,7 @@ export class MiusuarioComponent implements OnInit {
 
     constructor(private userService: UserService, private auth: AuthenticationService) {
         this.usuario = {
-            id: 0,
+            userId: 0,
             username: "",
             email: "",
             name: "",
@@ -51,7 +51,7 @@ export class MiusuarioComponent implements OnInit {
     verUsuario(username: string) {
         this.userService.getMyUser(username).subscribe({
             next: res => {
-                this.usuario.id = res.id;
+                this.usuario.userId = res.userId;
                 this.usuario.username = res.username;
                 this.usuario.email = res.email;
                 this.usuario.name = res.name;
@@ -66,7 +66,7 @@ export class MiusuarioComponent implements OnInit {
 
     editarUsuario() {
         console.log(this.usuario);
-        this.userService.updateUser(this.usuario.id, this.usuario).subscribe({
+        this.userService.updateUser(this.usuario.userId, this.usuario).subscribe({
             next: res => {
                 const username = this.auth.getUserName();
                 if (username) {

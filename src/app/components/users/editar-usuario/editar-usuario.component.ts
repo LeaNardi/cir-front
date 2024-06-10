@@ -17,7 +17,7 @@ export class EditarUsuarioComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: { id: number },
         public dialogRef: MatDialogRef<EditarUsuarioComponent>) {
         this.usuario = {
-            id: 0,
+            userId: 0,
             username: "",
             email: "",
             name: "",
@@ -43,7 +43,7 @@ export class EditarUsuarioComponent implements OnInit {
     verUsuario(id: number) {
         this.userService.getUser(id).subscribe({
             next: res => {
-                this.usuario.id = res.id;
+                this.usuario.userId = res.userId;
                 this.usuario.username = res.username;
                 this.usuario.email = res.email;
                 this.usuario.name = res.name;
