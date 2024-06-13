@@ -5,12 +5,17 @@ mat-toolbar {
     justify-content: center;
 }
 
+a {
+  text-decoration: none;
+  color: unset;
+}
+
 /* Estilos de navegacion side nav */
 .sidenav {
     width: 80%;
     border-right: none;
-    background: white; 
-    overflow: hidden; 
+    background: white;
+    overflow: hidden;
 }
 
 /* Contenido de los componentes*/

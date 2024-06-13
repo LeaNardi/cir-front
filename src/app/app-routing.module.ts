@@ -17,7 +17,6 @@ const routes: Routes = [
       children: [
           { path: 'miusuario', component: MiusuarioComponent },
           { path: 'lista-usuarios', component: ListaUsuariosComponent },
-          { path: 'auth/user', component: LoginComponent },
           { path: 'lista-turnos', component: ListaTurnosComponent },
           { path: 'lista-profesionales', component: ListaProfesionalesComponent },
           { path: 'lista-os', component: ListaOsComponent },
