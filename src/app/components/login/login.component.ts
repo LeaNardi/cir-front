@@ -15,6 +15,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 export class LoginComponent implements OnInit {
 
     form: FormGroup;
+    hidePassword: boolean = true;
+
 
     users$: Observable<UserAuthDTO[]> = of([]);
     problem: Boolean = false;
@@ -50,6 +52,8 @@ export class LoginComponent implements OnInit {
 
     }
 
-
+    togglePasswordVisibility(): void {
+        this.hidePassword = !this.hidePassword; // Cambiar el valor de la variable para ocultar o mostrar la contraseña
+      }
 
 }

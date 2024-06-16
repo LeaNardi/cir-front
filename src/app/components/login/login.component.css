@@ -46,4 +46,25 @@ mat-card-content {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
+
+.card {
+    width: 80%;
+    text-align: center;
+    padding: 20px;
+    border-radius: 30px;
+}
+
+.Usuario {
+    margin-bottom: 10px;
+    width: 60%;
+    min-width: 300px;
+
+}
+
+.Contraseña {
+    margin-bottom: 10px;
+    width: 60%;
+    min-width: 300px;
+
+}

@@ -1,0 +1,19 @@
+.search {
+    cursor: pointer;
+    margin-left:5px;
+    margin-right:5px;
+}
+
+.edit {
+    cursor: pointer;
+    color: #622fe4;
+    margin-left:5px;
+    margin-right:5px;
+}
+
+.delete {
+    cursor: pointer;
+    color: #e4593e;
+    margin-left:5px;
+    margin-right:5px;
+}
