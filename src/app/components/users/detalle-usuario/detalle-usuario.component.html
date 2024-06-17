@@ -7,7 +7,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Username</mat-label>
                         <input matInput type="text" class="form-control" id="username" name="username"
-                        [(ngModel)]= "usuario.username" required>
+                        [(ngModel)]= "usuario.username" [readonly]="editDisabled" required>
                     </mat-form-field>
                 </div>
 
@@ -15,7 +15,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Email</mat-label>
                         <input matInput type="text" class="form-control" id="email" name="email"
-                        [(ngModel)]= "usuario.email" required>
+                        [(ngModel)]= "usuario.email" [readonly]="editDisabled" required>
                     </mat-form-field>
                 </div>
 
@@ -23,7 +23,7 @@
                     <mat-form-field appearance="outline">
                     <mat-label>Nombre</mat-label>
                     <input matInput type="text" class="form-control" id="nombre" name="nombre"
-                    [(ngModel)]= "usuario.name" required>
+                    [(ngModel)]= "usuario.name" [readonly]="editDisabled" required>
                     </mat-form-field>
                 </div>
 
@@ -31,7 +31,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Apellido</mat-label>
                         <input matInput type="text" class="form-control" id="apellido" name="apellido"
-                            [(ngModel)]= "usuario.surname" required>
+                            [(ngModel)]= "usuario.surname" [readonly]="editDisabled" required>
                     </mat-form-field>
                 </div>
 
@@ -39,7 +39,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>DNI</mat-label>
                         <input matInput type="text" class="form-control" id="DNI" name="DNI"
-                        [(ngModel)]= "usuario.dni" required>
+                        [(ngModel)]= "usuario.dni" [readonly]="editDisabled" required>
                     </mat-form-field>
                 </div>  
             </form> 

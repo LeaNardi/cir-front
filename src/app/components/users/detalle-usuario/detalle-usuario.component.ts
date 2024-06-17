@@ -12,6 +12,7 @@ import { UserService } from '../../../services/user.service';
 })
 export class DetalleUsuarioComponent implements OnInit {
     usuario: UserDTO;
+    editDisabled = true;
 
     constructor(private userService: UserService,
         @Inject(MAT_DIALOG_DATA) public data: { id: number },
