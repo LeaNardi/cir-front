@@ -7,6 +7,7 @@ import { ListaProfesionalesComponent } from './components/profesionales/lista-pr
 import { ListaOsComponent } from './components/obrasSociales/lista-os/lista-os.component';
 import { ListaUsuariosComponent } from './components/users/lista-usuarios/lista-usuarios.component';
 import { MiusuarioComponent } from './components/miusuario/miusuario.component';
+import { ListaRolesComponent } from './components/roles/lista-roles/lista-roles.component';
 
 const routes: Routes = [
 
@@ -16,6 +17,7 @@ const routes: Routes = [
       path: 'navigation', component: NavegacionComponent,
       children: [
           { path: 'miusuario', component: MiusuarioComponent },
+          { path: 'lista-roles', component: ListaRolesComponent },
           { path: 'lista-usuarios', component: ListaUsuariosComponent },
           { path: 'lista-turnos', component: ListaTurnosComponent },
           { path: 'lista-profesionales', component: ListaProfesionalesComponent },

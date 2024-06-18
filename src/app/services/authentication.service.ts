@@ -30,12 +30,12 @@ export class AuthenticationService {
     const decodedToken = helper.decodeToken(token);
     console.log(decodedToken)
     const sub = decodedToken.sub;
-    const role = decodedToken.roles;
+    const role = decodedToken.role;
 
     if (!token) return false;
     this.setSession(token);
     this.setUserName(sub);
-    // this.setUserRole(role);
+    this.setUserRole(role);
     this.setIsLoggedIn();
     return true;
   }

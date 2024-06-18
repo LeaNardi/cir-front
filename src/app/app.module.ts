@@ -35,6 +35,7 @@ import { NuevoUsuarioComponent } from './components/users/nuevo-usuario/nuevo-us
 import { DetalleUsuarioComponent } from './components/users/detalle-usuario/detalle-usuario.component';
 import { EditarUsuarioComponent } from './components/users/editar-usuario/editar-usuario.component';
 import { MiusuarioComponent } from './components/miusuario/miusuario.component';
+import { ListaRolesComponent } from './components/roles/lista-roles/lista-roles.component';
 
 
 
@@ -52,7 +53,8 @@ import { MiusuarioComponent } from './components/miusuario/miusuario.component';
         NuevoUsuarioComponent,
         DetalleUsuarioComponent,
         EditarUsuarioComponent,
-        MiusuarioComponent
+        MiusuarioComponent,
+        ListaRolesComponent
     ],
     imports: [
         BrowserModule,

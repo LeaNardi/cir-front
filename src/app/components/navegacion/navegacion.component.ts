@@ -10,10 +10,12 @@ import { Router } from '@angular/router';
     styleUrls: ['./navegacion.component.css']
 })
 export class NavegacionComponent implements OnInit {
+    role: String | null = "paciente";
 
     constructor(private auth: AuthenticationService, private router: Router) { }
 
     ngOnInit(): void {
+        this.role = this.auth.getUserRole();
     }
     @ViewChild('sidenav') sidenav: MatSidenav | undefined;
 

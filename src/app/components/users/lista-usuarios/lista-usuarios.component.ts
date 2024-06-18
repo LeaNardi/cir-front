@@ -65,22 +65,6 @@ export class ListaUsuariosComponent implements OnInit {
         );
     }
 
-    
-
-    // crearUsuario(user: User): void {
-
-    //     this.userService.addUser(user).subscribe(
-    //         {
-    //             next: data => {
-    //                 this.toast.success({ detail: "Mensaje exitoso", summary: "Usuario creado con exito", duration: 3000 })
-    //                 this.router.navigate(['/navigation/lista-usuarios']);
-    //             },
-    //             error: err => {
-    //                 this.toast.error({ detail: "Mensaje de Error", summary: "Error al crear usuario", duration: 3000 })
-    //                 this.router.navigate(['/navigation/lista-usuarios']);
-    //             }
-    //         });
-    // }
 
     // Eliminar pacientes
     deleteUsuario(id: number) {
@@ -111,84 +95,7 @@ export class ListaUsuariosComponent implements OnInit {
         }
       })
     }
-    // Ventana modal para crear paciente
-
-
-    //   dialogRef.afterClosed().subscribe(pac => {
-    //     if (pac != undefined)
-    //       this.crearUsuario(pac);
-    //   });
-    // }
-
-    // // Metodo que crea paciente luego de cerrar la ventana Modal y actualizo filas
-    // crearUsuario(pac: Paciente): void {
-    //   const paciente = new Paciente(pac.dni,
-    //     pac.nombre,
-    //     pac.apellido,
-    //     pac.localidad,
-    //     pac.direccion,
-    //     pac.telefono);
-
-    //   this.pacienteService.save(paciente).subscribe(
-    //     {
-    //       next: data => {
-    //         this.toast.success({ detail: "Mensaje exitoso", summary: "Paciente creado con exito", duration: 3000 })
-    //         this.router.navigate(['/navigation/lista']);
-    //       },
-    //       error: err => {
-    //         this.toast.error({ detail: "Mensaje de Error", summary: "Error al crear paciente", duration: 3000 })
-    //         this.router.navigate(['/navigation/lista']);
-    //       }
-    //     });
-    // }
-
-    // // creacion de ventana pop y llama a actualizar paciente ...
-    // modificarPaciente(id: number) {
-    //   this.pacienteService.getPatientDetailById(id).subscribe({
-    //     next: res => {
-    //       this.pacientes.push(res);
-    //       console.log(res);
-
-    //       let dialogRef = this.dialog.open(EditarPacientesComponent, {
-    //         data: {
-    //           id: res.id,
-    //           dni: res.dni,
-    //           nombre: res.nombre,
-    //           apellido: res.apellido,
-    //           localidad: res.localidad,
-    //           direccion: res.direccion,
-    //           telefono: res.telefono
-    //         },
-    //         width: '40%'
-    //       })
-
-    //       dialogRef.afterClosed().subscribe(pac => {
-    //         if (pac != undefined)
-    //           this.onUpdate(pac.id, pac);
-    //       });
-    //     },
-
-    //     error: err => {
-    //       this.toast.error({ detail: "Mensaje de Error", summary: "No se pudo actaulizar el paciente", duration: 3000 });
-    //       this.cargarPacientes();
-    //     }
-    //   });
-    // }
-
-    // // actualiza paciente ...
-    // onUpdate(id: number, pac: Paciente) {
-    //   this.pacienteService.update(id, pac).subscribe(
-    //     {
-    //       next: data => {
-    //         this.toast.success({ detail: "Mensaje exitoso", summary: "Paciente actualizado con exito", duration: 3000 });
-    //         this.cargarPacientes();
-    //       },
-    //       error: err => {
-    //         this.toast.error({ detail: "Mensaje de Error", summary: "No se pudo actaulizar el paciente", duration: 3000 });
-    //         this.cargarPacientes();
-    //       }
-    //     });
-    // }
+   
 
     verUsuario(id: number) {
         let dialogRef = this.dialog.open(DetalleUsuarioComponent, { data: { id: id }, width: '40%' })
