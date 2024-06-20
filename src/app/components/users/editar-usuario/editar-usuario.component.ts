@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { UserDTO } from '../../../interfaces/user';
 import { UserService } from '../../../services/user.service';
+import { RoleDTO } from '../../../interfaces/role';
+import { RoleService } from '../../../services/role.service';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -12,8 +14,11 @@ import { UserService } from '../../../services/user.service';
 })
 export class EditarUsuarioComponent implements OnInit {
     usuario: UserDTO;
+    roles: RoleDTO[] = [];
+
 
     constructor(private userService: UserService,
+        private roleService: RoleService, 
         @Inject(MAT_DIALOG_DATA) public data: { id: number },
         public dialogRef: MatDialogRef<EditarUsuarioComponent>) {
         this.usuario = {
@@ -23,11 +28,17 @@ export class EditarUsuarioComponent implements OnInit {
             name: "",
             surname: "",
             dni: "",
-            roles_ids: [1]
+            role_id: 0,
         }
     }
 
     ngOnInit(): void {
+        this.roleService.getRoles().subscribe({
+            next: roles => {
+                this.roles = roles;
+                console.log(this.roles);
+            }
+        });
         this.verUsuario(this.data.id);
     }
 
@@ -49,6 +60,7 @@ export class EditarUsuarioComponent implements OnInit {
                 this.usuario.name = res.name;
                 this.usuario.surname = res.surname;
                 this.usuario.dni = res.dni;
+                this.usuario.role_id =  res.role_id;
             },
             error: err => {
             }
@@ -58,7 +70,16 @@ export class EditarUsuarioComponent implements OnInit {
 
     editarUsuario() {
         console.log(this.usuario);
-        this.userService.updateUser(this.data.id, this.usuario).subscribe({
+        const userDTO : UserDTO = {
+            userId: this.usuario.userId,
+            username: this.usuario.username, 
+            email: this.usuario.email,
+            name: this.usuario.name,
+            surname: this.usuario.surname,
+            dni: this.usuario.dni,
+            role_id: this.usuario.role_id,
+        }
+        this.userService.updateUser(this.data.id, userDTO).subscribe({
             next: res => {
                 console.log(res)
             },

@@ -20,7 +20,7 @@ export class MiusuarioComponent implements OnInit {
             name: "",
             surname: "",
             dni: "",
-            roles_ids: [1]
+            role_id: 0
         }
     }
 
@@ -57,6 +57,7 @@ export class MiusuarioComponent implements OnInit {
                 this.usuario.name = res.name;
                 this.usuario.surname = res.surname;
                 this.usuario.dni = res.dni;
+                this.usuario.role_id = res.role_id;
             },
             error: err => {
             }

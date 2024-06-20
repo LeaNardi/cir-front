@@ -36,6 +36,7 @@ import { DetalleUsuarioComponent } from './components/users/detalle-usuario/deta
 import { EditarUsuarioComponent } from './components/users/editar-usuario/editar-usuario.component';
 import { MiusuarioComponent } from './components/miusuario/miusuario.component';
 import { ListaRolesComponent } from './components/roles/lista-roles/lista-roles.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -77,6 +78,7 @@ import { ListaRolesComponent } from './components/roles/lista-roles/lista-roles.
         MatToolbarModule,
         NgToastModule,
         FormsModule,
+        MatSelectModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
