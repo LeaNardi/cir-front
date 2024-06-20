@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserDTO } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { RoleService } from '../../services/role.service';
+import { RoleDTO } from '../../interfaces/role';
 
 @Component({
     selector: 'app-miusuario',
@@ -11,8 +13,9 @@ import { AuthenticationService } from '../../services/authentication.service';
 export class MiusuarioComponent implements OnInit {
     usuario: UserDTO;
     editDisabled = true;
+    roles: RoleDTO[] = [];
 
-    constructor(private userService: UserService, private auth: AuthenticationService) {
+    constructor(private userService: UserService, private roleService: RoleService, private auth: AuthenticationService) {
         this.usuario = {
             userId: 0,
             username: "",
@@ -25,6 +28,12 @@ export class MiusuarioComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.roleService.getRoles().subscribe({
+            next: roles => {
+                this.roles = roles;
+                console.log(this.roles);
+            }
+        });
         const username = this.auth.getUserName();
         if (username) {
             this.verUsuario(username);
@@ -57,7 +66,7 @@ export class MiusuarioComponent implements OnInit {
                 this.usuario.name = res.name;
                 this.usuario.surname = res.surname;
                 this.usuario.dni = res.dni;
-                this.usuario.role_id = res.role_id;
+                this.usuario.role_id =  res.role_id;
             },
             error: err => {
             }

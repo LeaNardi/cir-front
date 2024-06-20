@@ -70,16 +70,7 @@ export class EditarUsuarioComponent implements OnInit {
 
     editarUsuario() {
         console.log(this.usuario);
-        const userDTO : UserDTO = {
-            userId: this.usuario.userId,
-            username: this.usuario.username, 
-            email: this.usuario.email,
-            name: this.usuario.name,
-            surname: this.usuario.surname,
-            dni: this.usuario.dni,
-            role_id: this.usuario.role_id,
-        }
-        this.userService.updateUser(this.data.id, userDTO).subscribe({
+        this.userService.updateUser(this.data.id, this.usuario).subscribe({
             next: res => {
                 console.log(res)
             },

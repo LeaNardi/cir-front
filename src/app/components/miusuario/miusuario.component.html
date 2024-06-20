@@ -41,7 +41,17 @@
                         <input matInput type="text" class="form-control" id="DNI" name="DNI"
                         [(ngModel)]= "usuario.dni" [disabled]="editDisabled" required>
                     </mat-form-field>
-                </div>  
+                </div> 
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Rol</mat-label>
+                        <mat-select [(ngModel)]= "usuario.role_id" name="role" disabled="true">
+                            <mat-option *ngFor="let role of roles" [value]="role.roleId">
+                                {{ role.role }} 
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> 
             </form> 
         </div>  
     </div>
