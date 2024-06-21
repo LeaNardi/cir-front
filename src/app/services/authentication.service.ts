@@ -103,7 +103,7 @@ export class AuthenticationService {
   resetSession() {
     localStorage.removeItem('session');
     localStorage.removeItem('Username');
-    // localStorage.removeItem('Role');
+    localStorage.removeItem('Role');
     localStorage.removeItem('IsLoggedIn');
     this.loggedIn = false;
   }

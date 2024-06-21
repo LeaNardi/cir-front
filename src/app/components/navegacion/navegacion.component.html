@@ -21,14 +21,14 @@
 
             <!--Item y subItems de Roles-->
 
-            <mat-list-item class="item" routerLink="/navigation/lista-roles">
+            <mat-list-item class="item" routerLink="/navigation/lista-roles" *ngIf="this.role == '1'">
                 <mat-icon mat-list-icon>group</mat-icon>
                 <a class="full-width"> Roles </a>
             </mat-list-item>
 
             <!--Item y subItems de Usuarios-->
 
-            <mat-list-item class="item" routerLink="/navigation/lista-usuarios">
+            <mat-list-item class="item" routerLink="/navigation/lista-usuarios" *ngIf="this.role == '1'">
                 <mat-icon mat-list-icon>group</mat-icon>
                 <a class="full-width"> Usuarios </a>
             </mat-list-item>
