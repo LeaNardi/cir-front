@@ -22,7 +22,7 @@ import { RoleDTO } from '../../../interfaces/role';
 })
 export class ListaUsuariosComponent implements OnInit {
     elementUsers: User[] = [];
-    displayedColumns = ['Usuario', 'Email', 'Nombre', 'Apellido', 'DNI', 'Role', 'Acciones'];
+    displayedColumns = ['Usuario', 'Nombre', 'Apellido', 'Role', 'Acciones'];
     dataSource = new MatTableDataSource<User>(this.elementUsers);
     roles: RoleDTO[] = [];
 

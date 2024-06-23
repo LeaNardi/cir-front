@@ -37,6 +37,9 @@ import { EditarUsuarioComponent } from './components/users/editar-usuario/editar
 import { MiusuarioComponent } from './components/miusuario/miusuario.component';
 import { ListaRolesComponent } from './components/roles/lista-roles/lista-roles.component';
 import { MatSelectModule } from '@angular/material/select';
+import { NuevoProfesionalComponent } from './components/profesionales/nuevo-profesional/nuevo-profesional.component';
+import { EditarProfesionalComponent } from './components/profesionales/editar-profesional/editar-profesional.component';
+import { DetalleProfesionalComponent } from './components/profesionales/detalle-profesional/detalle-profesional.component';
 
 
 
@@ -55,7 +58,10 @@ import { MatSelectModule } from '@angular/material/select';
         DetalleUsuarioComponent,
         EditarUsuarioComponent,
         MiusuarioComponent,
-        ListaRolesComponent
+        ListaRolesComponent,
+        NuevoProfesionalComponent,
+        EditarProfesionalComponent,
+        DetalleProfesionalComponent
     ],
     imports: [
         BrowserModule,
