@@ -5,11 +5,13 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { UserService } from '../../../services/user.service';
-import { User, UserDTO } from '../../../interfaces/user';
+import { ProfesionalService } from '../../../services/profesional.service';
+import { ProfesionalDTO } from '../../../interfaces/profesional';
 import swal from 'sweetalert2';
-import { RoleService } from '../../../services/role.service';
-import { RoleDTO } from '../../../interfaces/role';
+import { EspecialidadDTO } from '../../../interfaces/especialidad';
+import { EspecialidadService } from '../../../services/especialidad.service';
+import { TituloDTO } from '../../../interfaces/titulo';
+import { TituloService } from '../../../services/titulo.service';
 
 @Component({
   selector: 'app-lista-profesionales',
@@ -17,31 +19,39 @@ import { RoleDTO } from '../../../interfaces/role';
   styleUrl: './lista-profesionales.component.css'
 })
 export class ListaProfesionalesComponent implements OnInit {
-    elementUsers: User[] = [];
-    displayedColumns = ['Usuario', 'Nombre', 'Apellido', 'Role', 'Acciones'];
-    dataSource = new MatTableDataSource<User>(this.elementUsers);
-    roles: RoleDTO[] = [];
+    elementProfesionales: ProfesionalDTO[] = [];
+    displayedColumns = ['dni', 'Nombre', 'Apellido', 'Especialidad', 'Acciones'];
+    dataSource = new MatTableDataSource<ProfesionalDTO>(this.elementProfesionales);
+    especialidades: EspecialidadDTO[] = [];
+    titulos: TituloDTO[] = [];
 
-    @ViewChild(MatTable) tabla!: MatTable<UserDTO>;
+    @ViewChild(MatTable) tabla!: MatTable<ProfesionalDTO>;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor(private userService: UserService,
+    constructor(private profesionalService: ProfesionalService,
         public dialog: MatDialog,
         private toast: NgToastService,
         private router: Router,
         private changeDetectorRefs: ChangeDetectorRef,
-        private roleService: RoleService,
+        private especialidadService: EspecialidadService,
+        private tituloService: TituloService,
     ) { }
 
     ngOnInit(): void {
-        this.roleService.getRoles().subscribe({
-            next: roles => {
-                this.roles = roles;
-                console.log(this.roles);
+        this.especialidadService.getEspecialidades().subscribe({
+            next: especialidades => {
+                this.especialidades = especialidades;
+                console.log(this.especialidades);
             }
         });
-        this.cargarPacientes();
+        this.tituloService.getTitulos().subscribe({
+            next: titulos => {
+                this.titulos = titulos;
+                console.log(this.titulos);
+            }
+        });
+        this.cargarProfesionales();
     }
 
     // Paginacion de la tabla y filtrado
@@ -58,21 +68,30 @@ export class ListaProfesionalesComponent implements OnInit {
 
     // Cargar pacientes desde bdd
 
-    cargarPacientes(): void {
-        this.userService.getUsers().subscribe(
+    cargarProfesionales(): void {
+        this.profesionalService.getProfesionales().subscribe(
             {
-                next: users => {
-                    // this.dataSource.data = users as User[];
-                    console.log(users);
-                    this.dataSource.data = users.map((user) => {
+                next: profesionales => {
+                    // this.dataSource.data = profesionales as ProfesionalDTO[];
+                    console.log(profesionales);
+                    this.dataSource.data = profesionales.map((profesional) => {
                         return {
-                            userId: user.userId,
-                            username: user.username, 
-                            email: user.email,
-                            name: user.name,
-                            surname: user.surname,
-                            dni: user.dni,
-                            role: this.roles.filter(x => x.roleId == user.role_id)[0].role,
+                            dni: profesional.dni,
+                            nombre: profesional.nombre,
+                            apellido: profesional.apellido,
+                            email: profesional.email,
+                            direccion: profesional.direccion,
+                            telefono: profesional.telefono,
+                            fechaIngreso: profesional.fechaIngreso,
+                            especialidadId: profesional.especialidadId,
+                            tituloId: profesional.tituloId,
+                            formacionesComplementarias: profesional.formacionesComplementarias,
+                            publicacionesRevistas: profesional.publicacionesRevistas,
+                            presentacionesCongresos: profesional.presentacionesCongresos,
+                            experienciaLaboral: profesional.experienciaLaboral,
+
+                            // especialidad: this.especialidades.filter(x => x.especialidadId == profesional.especialidadId)[0].especialidad,
+                            // titulo: this.titulos.filter(x => x.tituloId == profesional.tituloId)[0].titulo,
                         };
                     })
                     console.log(this.dataSource.data);
@@ -85,8 +104,8 @@ export class ListaProfesionalesComponent implements OnInit {
     }
 
 
-    // Eliminar pacientes
-    deleteUsuario(id: number) {
+    // Eliminar profesionales
+    deleteProfesional(dni: string) {
         swal.fire({
             title: '¿Esta seguro?',
             text: "Confirme si desea eliminar al Paciente",
@@ -98,10 +117,10 @@ export class ListaProfesionalesComponent implements OnInit {
         })
             .then((result) => {
                 if (result.value) {
-                    this.userService.deleteUser(id).subscribe({
+                    this.profesionalService.deleteProfesional(dni).subscribe({
                         next: data => {
                             console.log(data);
-                            this.cargarPacientes();  //vuelve a cargar la lista luego de eliminar un paciente
+                            this.cargarProfesionales();  //vuelve a cargar la lista luego de eliminar un paciente
                             this.toast.success({ detail: "Mensaje exitoso", summary: "Usuario eliminado con exito", duration: 3000 });
                         },
 
@@ -116,26 +135,26 @@ export class ListaProfesionalesComponent implements OnInit {
     }
 
 
-    verUsuario(id: number) {
-        let dialogRef = this.dialog.open(DetalleUsuarioComponent, { data: { id: id }, width: '40%' })
-        dialogRef.afterClosed().subscribe(() => {
-            this.cargarPacientes();
-        })
-    }
+    // verUsuario(id: number) {
+    //     let dialogRef = this.dialog.open(DetalleUsuarioComponent, { data: { id: id }, width: '40%' })
+    //     dialogRef.afterClosed().subscribe(() => {
+    //         this.cargarProfesionales();
+    //     })
+    // }
 
-    editarUsuario(id: number) {
-        let dialogRef = this.dialog.open(EditarUsuarioComponent, { data: { id: id }, width: '40%' })
-        dialogRef.afterClosed().subscribe(() => {
-            this.cargarPacientes();
-        })
-    }
+    // editarUsuario(id: number) {
+    //     let dialogRef = this.dialog.open(EditarUsuarioComponent, { data: { id: id }, width: '40%' })
+    //     dialogRef.afterClosed().subscribe(() => {
+    //         this.cargarProfesionales();
+    //     })
+    // }
 
-    crearUsuario() {
-        let dialogRef = this.dialog.open(NuevoUsuarioComponent, { width: '40%' });
-        dialogRef.afterClosed().subscribe(() => {
-            this.cargarPacientes();
-        })
-    }
+    // crearUsuario() {
+    //     let dialogRef = this.dialog.open(NuevoUsuarioComponent, { width: '40%' });
+    //     dialogRef.afterClosed().subscribe(() => {
+    //         this.cargarProfesionales();
+    //     })
+    // }
 
 }
 

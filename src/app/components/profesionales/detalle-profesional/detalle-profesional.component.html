@@ -1,1 +1,140 @@
-<p>detalle-profesional works!</p>
+<div class="container mt-2">
+    <h1>Profesional</h1>
+
+
+    <div>
+        <div class="container">
+            <form novalidate #f="ngForm">
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>DNI</mat-label>
+                        <input matInput type="text" class="form-control" id="dni" name="dni"
+                            [(ngModel)]="profesional.dni" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+
+
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput type="text" class="form-control" id="nombre" name="nombre"
+                            [(ngModel)]="profesional.nombre" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Apellido</mat-label>
+                        <input matInput type="text" class="form-control" id="apellido" name="apellido"
+                            [(ngModel)]="profesional.apellido" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="text" class="form-control" id="email" name="email"
+                            [(ngModel)]="profesional.email" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+
+
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Dirección</mat-label>
+                        <input matInput type="text" class="form-control" id="direccion" name="direccion"
+                            [(ngModel)]="profesional.direccion" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput type="text" class="form-control" id="telefono" name="telefono"
+                            [(ngModel)]="profesional.telefono" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha de Ingreso</mat-label>
+                        <input matInput type="date" class="form-control" id="fechaIngreso" name="fechaIngreso"
+                            [(ngModel)]="formattedFechaIngreso" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Especialidad</mat-label>
+                        <mat-select [(ngModel)]="profesional.especialidadId" name="especialidad"
+                            [disabled]="editDisabled">
+                            <mat-option *ngFor="let esp of especialidades" [value]="esp.especialidadId">
+                                {{ esp.especialidad }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Titulo</mat-label>
+                        <mat-select [(ngModel)]="profesional.tituloId" name="titulo" [disabled]="editDisabled">
+                            <mat-option *ngFor="let titulo of titulos" [value]="titulo.tituloId">
+                                {{ titulo.titulo }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <h3>Formaciones Complementarias</h3>
+
+                    <div *ngFor="let formacion of profesional.formacionesComplementarias">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Formacion complementaria</mat-label>
+                            <input matInput type="text" class="form-control" id="formacion" name="formacion"
+                                [value]="formacion" [readonly]="editDisabled" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>Publicaciones en Revistas</h3>
+                    <ul>
+                        <li *ngFor="let publicacion of profesional.publicacionesRevistas">
+                            {{ publicacion }}
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Presentaciones en Congresos</h3>
+                    <ul>
+                        <li *ngFor="let presentacion of profesional.presentacionesCongresos">
+                            {{ presentacion }}
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li *ngFor="let experiencia of profesional.experienciaLaboral">
+                            {{ experiencia }}
+                        </li>
+                    </ul>
+                </div>
+
+
+
+            </form>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div class="botones">
+            <button mat-raised-button color="basic" routerLink="/navigation/lista-profesionales">Volver</button>
+        </div>
+    </div>
+</div>
