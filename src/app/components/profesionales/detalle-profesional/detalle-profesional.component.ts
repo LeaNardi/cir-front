@@ -63,26 +63,8 @@ export class DetalleProfesionalComponent implements OnInit {
     cargarProfesional(dni: string) {
         this.profesionalService.getProfesional(dni).subscribe({
             next: prof => {
-                // this.dataSource.data = profesionales as ProfesionalDTO[];
                 console.log(prof);
                 this.profesional = { ...prof };
-                // this.profesional.dni = prof.dni;
-                // this.profesional.nombre = prof.nombre;
-                // this.profesional.apellido = prof.apellido;
-                // this.profesional.email = prof.email;
-                // this.profesional.direccion = prof.direccion;
-                // this.profesional.telefono = prof.telefono;
-                // this.profesional.fechaIngreso = prof.fechaIngreso;
-                // this.profesional.especialidadId = prof.especialidadId;
-                // this.profesional.tituloId = prof.tituloId;
-                // this.profesional.formacionesComplementarias = prof.formacionesComplementarias;
-                // this.profesional.publicacionesRevistas = prof.publicacionesRevistas;
-                // this.profesional.presentacionesCongresos = prof.presentacionesCongresos;
-                // this.profesional.experienciaLaboral = prof.experienciaLaboral;
-
-                // especialidad: this.especialidades.filter(x => x.especialidadId == profesional.especialidadId)[0].especialidad,
-                // titulo: this.titulos.filter(x => x.tituloId == profesional.tituloId)[0].titulo,
-
             },
             error: err => {
                 console.log(err);

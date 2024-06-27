@@ -89,7 +89,7 @@
                 </div>
 
                 <div>
-                    <h3>Formaciones Complementarias</h3>
+                    <h2>Formaciones Complementarias</h2>
 
                     <div *ngFor="let formacion of profesional.formacionesComplementarias">
                         <mat-form-field appearance="outline">
@@ -101,30 +101,39 @@
                 </div>
 
                 <div>
-                    <h3>Publicaciones en Revistas</h3>
-                    <ul>
-                        <li *ngFor="let publicacion of profesional.publicacionesRevistas">
-                            {{ publicacion }}
-                        </li>
-                    </ul>
+                    <h2>Publicaciones en Revistas</h2>
+
+                    <div *ngFor="let publicacion of profesional.publicacionesRevistas">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Publicacion</mat-label>
+                            <input matInput type="text" class="form-control" id="publicacion" name="publicacion"
+                                [value]="publicacion" [readonly]="editDisabled" required>
+                        </mat-form-field>
+                    </div>
                 </div>
 
                 <div>
-                    <h3>Presentaciones en Congresos</h3>
-                    <ul>
-                        <li *ngFor="let presentacion of profesional.presentacionesCongresos">
-                            {{ presentacion }}
-                        </li>
-                    </ul>
+                    <h2>Presentaciones en Congresos</h2>
+                    <div *ngFor="let presentacion of profesional.presentacionesCongresos">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Presentación</mat-label>
+                            <input matInput type="text" class="form-control" id="presentacion" name="presentacion"
+                                [value]="presentacion" [readonly]="editDisabled" required>
+                        </mat-form-field>
+                    </div>
+
                 </div>
 
                 <div>
-                    <h3>Experiencia Laboral</h3>
-                    <ul>
-                        <li *ngFor="let experiencia of profesional.experienciaLaboral">
-                            {{ experiencia }}
-                        </li>
-                    </ul>
+                    <h2>Experiencia Laboral</h2>
+                    <div *ngFor="let experiencia of profesional.experienciaLaboral">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Presentación</mat-label>
+                            <input matInput type="text" class="form-control" id="experiencia" name="experiencia"
+                                [value]="experiencia" [readonly]="editDisabled" required>
+                        </mat-form-field>
+                    </div>
+
                 </div>
 
 
