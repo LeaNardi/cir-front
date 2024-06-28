@@ -43,6 +43,11 @@
                     </mat-form-field>
                 </div>
 
+                <div class="form-group" *ngIf="currentPage === 0">
+                    <span>Activo: </span>
+                    <mat-checkbox [checked]="profesional.activo" (change)="changeActivo()"
+                        [disabled]="editDisabled"></mat-checkbox>
+                </div>
 
 
                 <div class="form-group" *ngIf="currentPage === 0">
@@ -61,7 +66,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="form-group" *ngIf="currentPage === 1">
+                <div class="form-group" *ngIf="currentPage === 0">
                     <mat-form-field appearance="outline">
                         <mat-label>Fecha de Ingreso</mat-label>
                         <input matInput type="date" class="form-control" id="fechaIngreso" name="fechaIngreso"
@@ -108,7 +113,7 @@
                     <mat-icon fontIcon="add" class="add" matTooltip="Agregar" (click)="addFormacion()"></mat-icon>
                 </div>
 
-                <div class="form-group" *ngIf="currentPage === 2">
+                <div class="form-group" *ngIf="currentPage === 1">
                     <h2>Publicaciones en Revistas</h2>
                     <div
                         *ngFor="let publicacion of profesional.publicacionesRevistas; let i = index; trackBy: trackByFn">
@@ -123,7 +128,7 @@
                     <mat-icon fontIcon="add" class="add" matTooltip="Agregar" (click)="addPublicacion()"></mat-icon>
                 </div>
 
-                <div class="form-group" *ngIf="currentPage === 2">
+                <div class="form-group" *ngIf="currentPage === 1">
                     <h2>Presentaciones en Congresos</h2>
                     <div
                         *ngFor="let presentacion of profesional.presentacionesCongresos; let i = index; trackBy: trackByFn">
@@ -138,7 +143,7 @@
                     <mat-icon fontIcon="add" class="add" matTooltip="Agregar" (click)="addPresentacion()"></mat-icon>
                 </div>
 
-                <div class="form-group" *ngIf="currentPage === 2">
+                <div class="form-group" *ngIf="currentPage === 1">
                     <h2>Experiencia Laboral</h2>
                     <div *ngFor="let experiencia of profesional.experienciaLaboral; let i = index; trackBy: trackByFn">
                         <mat-form-field appearance="outline">

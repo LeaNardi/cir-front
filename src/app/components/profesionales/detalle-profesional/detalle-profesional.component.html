@@ -39,7 +39,10 @@
                     </mat-form-field>
                 </div>
 
-
+                <div class="form-group">
+                    <span>Activo: </span>
+                    <mat-checkbox [checked]="profesional.activo" [disabled]="editDisabled"></mat-checkbox>
+                </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="outline">

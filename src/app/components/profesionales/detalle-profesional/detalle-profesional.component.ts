@@ -34,6 +34,7 @@ export class DetalleProfesionalComponent implements OnInit {
             direccion: "",
             telefono: "",
             fechaIngreso: new Date(),
+            activo: true,
             especialidadId: 0,
             tituloId: 0,
             formacionesComplementarias: [""],

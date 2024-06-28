@@ -19,7 +19,7 @@ export class EditarProfesionalComponent implements OnInit {
     especialidades: EspecialidadDTO[] = [];
     titulos: TituloDTO[] = [];
     currentPage: number = 0;
-    totalPages: number = 3;
+    totalPages: number = 2;
 
     constructor(private profesionalService: ProfesionalService,
         private especialidadService: EspecialidadService,
@@ -36,6 +36,7 @@ export class EditarProfesionalComponent implements OnInit {
             direccion: "",
             telefono: "",
             fechaIngreso: new Date(),
+            activo: true,
             especialidadId: 0,
             tituloId: 0,
             formacionesComplementarias: [""],
@@ -135,6 +136,10 @@ export class EditarProfesionalComponent implements OnInit {
         if (newPage >= 0 && newPage < this.totalPages) {
             this.currentPage = newPage;
         }
+    }
+
+    changeActivo(): void {
+        this.profesional.activo = !this.profesional.activo
     }
 
     guardar(): void {

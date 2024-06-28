@@ -28,6 +28,7 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar'
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { NgToastModule } from 'ng-angular-popup';
 import { FormsModule } from '@angular/forms';
 import { ListaUsuariosComponent } from './components/users/lista-usuarios/lista-usuarios.component';
@@ -40,6 +41,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NuevoProfesionalComponent } from './components/profesionales/nuevo-profesional/nuevo-profesional.component';
 import { EditarProfesionalComponent } from './components/profesionales/editar-profesional/editar-profesional.component';
 import { DetalleProfesionalComponent } from './components/profesionales/detalle-profesional/detalle-profesional.component';
+import { ListaEspecialidadesComponent } from './components/especialidades/lista-especialidades/lista-especialidades.component';
 
 
 
@@ -61,7 +63,8 @@ import { DetalleProfesionalComponent } from './components/profesionales/detalle-
         ListaRolesComponent,
         NuevoProfesionalComponent,
         EditarProfesionalComponent,
-        DetalleProfesionalComponent
+        DetalleProfesionalComponent,
+        ListaEspecialidadesComponent
     ],
     imports: [
         BrowserModule,
@@ -85,6 +88,7 @@ import { DetalleProfesionalComponent } from './components/profesionales/detalle-
         NgToastModule,
         FormsModule,
         MatSelectModule,
+        MatCheckboxModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

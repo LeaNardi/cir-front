@@ -1,1 +1,171 @@
-<p>nuevo-profesional works!</p>
+<div class="container mt-2">
+    <h1>Nuevo Profesional</h1>
+
+    <div>
+        <mat-icon fontIcon="arrow_back" (click)="changePage(-1)" [class.disabled]="currentPage === 0"></mat-icon>
+        <mat-icon fontIcon="arrow_forward" (click)="changePage(1)"
+            [class.disabled]="currentPage >= totalPages - 1"></mat-icon>
+    </div>
+    <div>
+        <div class="container">
+            <form novalidate #f="ngForm">
+                <div class="form-group" *ngIf="currentPage === 0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>DNI</mat-label>
+                        <input matInput type="text" class="form-control" id="dni" name="dni"
+                            [(ngModel)]="profesional.dni" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+
+
+                <div class="form-group" *ngIf="currentPage === 0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput type="text" class="form-control" id="nombre" name="nombre"
+                            [(ngModel)]="profesional.nombre" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Apellido</mat-label>
+                        <input matInput type="text" class="form-control" id="apellido" name="apellido"
+                            [(ngModel)]="profesional.apellido" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="text" class="form-control" id="email" name="email"
+                            [(ngModel)]="profesional.email" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 0">
+                    <span>Activo: </span>
+                    <mat-checkbox [checked]="profesional.activo" (change)="changeActivo()"
+                        [disabled]="editDisabled"></mat-checkbox>
+                </div>
+
+
+                <div class="form-group" *ngIf="currentPage === 0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Dirección</mat-label>
+                        <input matInput type="text" class="form-control" id="direccion" name="direccion"
+                            [(ngModel)]="profesional.direccion" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput type="text" class="form-control" id="telefono" name="telefono"
+                            [(ngModel)]="profesional.telefono" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha de Ingreso</mat-label>
+                        <input matInput type="date" class="form-control" id="fechaIngreso" name="fechaIngreso"
+                            [(ngModel)]="formattedFechaIngreso" [readonly]="editDisabled" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Especialidad</mat-label>
+                        <mat-select [(ngModel)]="profesional.especialidadId" name="especialidad"
+                            [disabled]="editDisabled">
+                            <mat-option *ngFor="let esp of especialidades" [value]="esp.especialidadId">
+                                {{ esp.especialidad }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Titulo</mat-label>
+                        <mat-select [(ngModel)]="profesional.tituloId" name="titulo" [disabled]="editDisabled">
+                            <mat-option *ngFor="let titulo of titulos" [value]="titulo.tituloId">
+                                {{ titulo.titulo }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 1">
+                    <h2>Formaciones Complementarias</h2>
+                    <div
+                        *ngFor="let formacion of profesional.formacionesComplementarias; let i = index; trackBy: trackByFn">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Formacion complementaria</mat-label>
+                            <input matInput type="text" class="form-control" id="formacion" name="formacion-{{i}}"
+                                [(ngModel)]="profesional.formacionesComplementarias[i]" [readonly]="editDisabled"
+                                required>
+                        </mat-form-field>
+                        <mat-icon fontIcon="delete" class="delete" matTooltip="Eliminar"
+                            (click)="removeFormacion(i)"></mat-icon>
+                    </div>
+                    <mat-icon fontIcon="add" class="add" matTooltip="Agregar" (click)="addFormacion()"></mat-icon>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 1">
+                    <h2>Publicaciones en Revistas</h2>
+                    <div
+                        *ngFor="let publicacion of profesional.publicacionesRevistas; let i = index; trackBy: trackByFn">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Publicación</mat-label>
+                            <input matInput type="text" class="form-control" id="publicacion" name="publicacion-{{i}}"
+                                [(ngModel)]="profesional.publicacionesRevistas[i]" [readonly]="editDisabled" required>
+                        </mat-form-field>
+                        <mat-icon fontIcon="delete" class="delete" matTooltip="Eliminar"
+                            (click)="removePublicacion(i)"></mat-icon>
+                    </div>
+                    <mat-icon fontIcon="add" class="add" matTooltip="Agregar" (click)="addPublicacion()"></mat-icon>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 1">
+                    <h2>Presentaciones en Congresos</h2>
+                    <div
+                        *ngFor="let presentacion of profesional.presentacionesCongresos; let i = index; trackBy: trackByFn">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Presentación</mat-label>
+                            <input matInput type="text" class="form-control" id="presentacion" name="presentacion-{{i}}"
+                                [(ngModel)]="profesional.presentacionesCongresos[i]" [readonly]="editDisabled" required>
+                        </mat-form-field>
+                        <mat-icon fontIcon="delete" class="delete" matTooltip="Eliminar"
+                            (click)="removePresentacion(i)"></mat-icon>
+                    </div>
+                    <mat-icon fontIcon="add" class="add" matTooltip="Agregar" (click)="addPresentacion()"></mat-icon>
+                </div>
+
+                <div class="form-group" *ngIf="currentPage === 1">
+                    <h2>Experiencia Laboral</h2>
+                    <div *ngFor="let experiencia of profesional.experienciaLaboral; let i = index; trackBy: trackByFn">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Experiencia</mat-label>
+                            <input matInput type="text" class="form-control" id="experiencia" name="experiencia-{{i}}"
+                                [(ngModel)]="profesional.experienciaLaboral[i]" [readonly]="editDisabled" required>
+                        </mat-form-field>
+                        <mat-icon fontIcon="delete" class="delete" matTooltip="Eliminar"
+                            (click)="removeExperiencia(i)"></mat-icon>
+                    </div>
+                    <mat-icon fontIcon="add" class="add" matTooltip="Agregar" (click)="addExperiencia()"></mat-icon>
+                </div>
+
+
+
+            </form>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div class="botones">
+            <button mat-raised-button color="basic" routerLink="/navigation/lista-profesionales">Cancelar</button>
+            <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+        </div>
+    </div>
+</div>

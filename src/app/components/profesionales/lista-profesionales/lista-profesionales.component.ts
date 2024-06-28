@@ -20,7 +20,7 @@ import { TituloService } from '../../../services/titulo.service';
 })
 export class ListaProfesionalesComponent implements OnInit {
     elementProfesionales: ProfesionalDTO[] = [];
-    displayedColumns = ['dni', 'Nombre', 'Apellido', 'Especialidad', 'Acciones'];
+    displayedColumns = ['dni', 'Nombre', 'Apellido', 'Especialidad', 'Activo', 'Acciones'];
     dataSource = new MatTableDataSource<ProfesionalDTO>(this.elementProfesionales);
     especialidades: EspecialidadDTO[] = [];
     titulos: TituloDTO[] = [];
@@ -83,6 +83,7 @@ export class ListaProfesionalesComponent implements OnInit {
                             direccion: profesional.direccion,
                             telefono: profesional.telefono,
                             fechaIngreso: profesional.fechaIngreso,
+                            activo: profesional.activo,
                             especialidadId: profesional.especialidadId,
                             tituloId: profesional.tituloId,
                             formacionesComplementarias: profesional.formacionesComplementarias,
@@ -103,6 +104,10 @@ export class ListaProfesionalesComponent implements OnInit {
         );
     }
 
+    mostrarEspecialidad(especialidadId: number): string{
+        const especialidad = this.especialidades.filter(x => x.especialidadId == especialidadId)[0].especialidad;
+        return especialidad;
+    }
 
     // Eliminar profesionales
     deleteProfesional(dni: string) {

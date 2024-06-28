@@ -33,10 +33,16 @@
                 <td mat-cell *matCellDef="let row"> {{row.apellido}} </td>
             </ng-container>
 
-            <!-- Role Column -->
+            <!-- Especialidad Column -->
             <ng-container matColumnDef="Especialidad" class="columna">
                 <th mat-header-cell *matHeaderCellDef> Especialidad </th>
-                <td mat-cell *matCellDef="let row"> {{row.especialidadId}} </td>
+                <td mat-cell *matCellDef="let row"> {{mostrarEspecialidad(row.especialidadId)}} </td>
+            </ng-container>
+
+            <!-- Activo Column -->
+            <ng-container matColumnDef="Activo" class="columna">
+                <th mat-header-cell *matHeaderCellDef> Activo </th>
+                <td mat-cell *matCellDef="let row"> <mat-checkbox [checked]="row.activo" [disabled]="true"></mat-checkbox> </td>
             </ng-container>
 
             <!-- Borrar/Editar Column -->
