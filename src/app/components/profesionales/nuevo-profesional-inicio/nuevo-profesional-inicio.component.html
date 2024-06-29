@@ -1,0 +1,24 @@
+<div class="container mt-2">
+    <h1>Nuevo Profesional</h1>
+
+    <div>
+        <div class="container">
+            <form novalidate #f="ngForm">
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>DNI</mat-label>
+                        <input matInput type="text" class="form-control" id="dni" name="dni"
+                            [(ngModel)]="dni" required>
+                    </mat-form-field>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div class="botones">
+            <button mat-raised-button color="basic" routerLink="/navigation/lista-profesionales">Cancelar</button>
+            <button mat-raised-button color="primary" (click)="siguiente()">Siguiente</button>
+        </div>
+    </div>
+</div>

@@ -2,9 +2,13 @@
     <h1>Profesional</h1>
 
     <div>
-        <mat-icon fontIcon="arrow_back" (click)="changePage(-1)" [class.disabled]="currentPage === 0"></mat-icon>
+        <button mat-raised-button color="basic" type="button" (click)="changePage(-1)"
+        [disabled]="currentPage === 0">Anterior</button>
+    <button mat-raised-button color="basic" type="button" (click)="changePage(1)"
+        [disabled]="currentPage >= totalPages - 1">Siguiente</button>
+        <!-- <mat-icon fontIcon="arrow_back" (click)="changePage(-1)" [class.disabled]="currentPage === 0"></mat-icon>
         <mat-icon fontIcon="arrow_forward" (click)="changePage(1)"
-            [class.disabled]="currentPage >= totalPages - 1"></mat-icon>
+            [class.disabled]="currentPage >= totalPages - 1"></mat-icon> -->
     </div>
     <div>
         <div class="container">

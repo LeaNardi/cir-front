@@ -12,6 +12,7 @@ import { NuevoProfesionalComponent } from './components/profesionales/nuevo-prof
 import { DetalleProfesionalComponent } from './components/profesionales/detalle-profesional/detalle-profesional.component';
 import { EditarProfesionalComponent } from './components/profesionales/editar-profesional/editar-profesional.component';
 import { ListaEspecialidadesComponent } from './components/especialidades/lista-especialidades/lista-especialidades.component';
+import { NuevoProfesionalInicioComponent } from './components/profesionales/nuevo-profesional-inicio/nuevo-profesional-inicio.component';
 
 const routes: Routes = [
 
@@ -26,7 +27,8 @@ const routes: Routes = [
             { path: 'lista-turnos', component: ListaTurnosComponent },
             { path: 'lista-especialidades', component: ListaEspecialidadesComponent },
             { path: 'lista-profesionales', component: ListaProfesionalesComponent },
-            { path: 'agregar-profesional', component: NuevoProfesionalComponent },
+            { path: 'agregar-profesional', component: NuevoProfesionalInicioComponent },
+            { path: 'agregar-profesional/:dni', component: NuevoProfesionalComponent },
             { path: 'detalle-profesional/:dni', component: DetalleProfesionalComponent },
             { path: 'editar-profesional/:dni', component: EditarProfesionalComponent },
 

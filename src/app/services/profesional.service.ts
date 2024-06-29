@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ProfesionalDTO } from '../interfaces/profesional';
+import { ExistsResponse, ProfesionalDTO } from '../interfaces/profesional';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -33,5 +33,9 @@ export class ProfesionalService {
 
     updateProfesional(dni: string, profesional: ProfesionalDTO): Observable<String> {
         return this.http.put<String>(`${this.profesionalURL}update/${dni}`, profesional);
+    }
+
+    existsProfesional(dni: string): Observable<ExistsResponse> {
+        return this.http.get<ExistsResponse>(`${this.profesionalURL}exists/${dni}`);
     }
 }

@@ -29,8 +29,9 @@ export class NuevoProfesionalComponent implements OnInit {
         private router: Router,
     ) {
         this.dni = this.aRoute.snapshot.paramMap.get('dni') || '';
+        console.log(this.dni);
         this.profesional = {
-            dni: "",
+            dni: this.dni,
             nombre: "",
             apellido: "",
             email: "",
@@ -40,10 +41,10 @@ export class NuevoProfesionalComponent implements OnInit {
             activo: true,
             especialidadId: 0,
             tituloId: 0,
-            formacionesComplementarias: [""],
-            publicacionesRevistas: [""],
-            presentacionesCongresos: [""],
-            experienciaLaboral: [""],
+            formacionesComplementarias: [],
+            publicacionesRevistas: [],
+            presentacionesCongresos: [],
+            experienciaLaboral: [],
         }
     }
 
@@ -60,7 +61,6 @@ export class NuevoProfesionalComponent implements OnInit {
                 console.log(this.titulos);
             }
         });
-        console.log(this.dni)
     }
 
     // chequearProfesional(dni: string) {

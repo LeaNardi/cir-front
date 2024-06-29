@@ -15,3 +15,7 @@ export interface ProfesionalDTO {
     experienciaLaboral: string[];
 }
 
+export interface ExistsResponse{
+    exists: boolean;
+    active: boolean;
+}
