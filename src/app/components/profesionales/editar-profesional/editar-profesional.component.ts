@@ -36,12 +36,12 @@ export class EditarProfesionalComponent implements OnInit {
 
     ngOnInit(): void {
         this.profesionalForm = this.fb.group({
-            dni: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(8)]],
-            nombre: ['', [Validators.required]],
-            apellido: ['', [Validators.required]],
-            email: ['', [Validators.required]],
-            direccion: ['', [Validators.required]],
-            telefono: ['', [Validators.required]],
+            dni: ['', [Validators.required]],
+            nombre: ['', [Validators.required, Validators.minLength(2)]],
+            apellido: ['', [Validators.required, Validators.minLength(2)]],
+            email: ['', [Validators.required, Validators.email]],
+            direccion: ['', [Validators.required, Validators.minLength(4)]],
+            telefono: ['', [Validators.required, Validators.pattern('^[+]?[- ()0-9]{6,15}')]],
             fechaIngreso: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
             activo: [true, [Validators.required]],
             especialidadId: [1, [Validators.required]],

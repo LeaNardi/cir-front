@@ -23,7 +23,7 @@ export class NuevoProfesionalInicioComponent implements OnInit {
 
     ngOnInit(): void {
         this.profesionalForm = this.fb.group({
-            dni: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(8)]]
+            dni: ['', [Validators.required, Validators.pattern('[0-9]{7,10}')]]
         });
     }
 

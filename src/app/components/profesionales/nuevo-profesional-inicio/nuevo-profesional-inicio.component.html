@@ -14,8 +14,7 @@
                         <mat-error
                             *ngIf="profesionalForm.invalid">
                             <div *ngIf="profesionalForm.get('dni')?.errors?.['required']">El DNI es obligatorio</div>
-                            <div *ngIf="profesionalForm.get('dni')?.errors?.['minlength']">Minimo 7 caracteres</div>
-                            <div *ngIf="profesionalForm.get('dni')?.errors?.['maxlength']">Maximo 8 caracteres</div>
+                            <div *ngIf="profesionalForm.get('dni')?.errors?.['pattern']">DNI inválido</div>
                         </mat-error>
                     </mat-form-field>
                 </div>
