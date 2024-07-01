@@ -1,29 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfesionalDTO } from '../../../interfaces/profesional';
 import { ProfesionalService } from '../../../services/profesional.service';
-import { TituloService } from '../../../services/titulo.service';
-import { EspecialidadService } from '../../../services/especialidad.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-nuevo-profesional-inicio',
     templateUrl: './nuevo-profesional-inicio.component.html',
     styleUrl: './nuevo-profesional-inicio.component.css'
 })
-export class NuevoProfesionalInicioComponent {
-    dni: string;
+export class NuevoProfesionalInicioComponent implements OnInit {
+    // dni: string;
+    profesionalForm!: FormGroup;
 
     constructor(private profesionalService: ProfesionalService,
         private aRoute: ActivatedRoute,
         private router: Router,
+        private fb: FormBuilder,
     ) {
-        this.dni = '';
+        // this.dni = '';
+    }
+
+    ngOnInit(): void {
+        this.profesionalForm = this.fb.group({
+            dni: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(8)]]
+        });
     }
 
     siguiente(): void {
-        console.log(this.dni);
-        this.profesionalService.existsProfesional(this.dni).subscribe({
+        if (this.profesionalForm.invalid) {
+            this.profesionalForm.markAllAsTouched();
+            return;
+        }
+
+        const dni = this.profesionalForm.get('dni')?.value;
+        this.profesionalService.existsProfesional(dni).subscribe({
             next: response => {
                 if (response.exists) {
                     if (response.active) {
@@ -50,7 +61,7 @@ export class NuevoProfesionalInicioComponent {
                         })
                             .then((result) => {
                                 if (result.isConfirmed) {
-                                    this.router.navigate([`/navigation/editar-profesional/${this.dni}`]);
+                                    this.router.navigate([`/navigation/editar-profesional/${dni}`]);
                                 }
                                 if (result.isDismissed) {
                                     this.router.navigate(['/navigation/lista-profesionales']);
@@ -58,7 +69,7 @@ export class NuevoProfesionalInicioComponent {
                             })
                     }
                 } else {
-                    this.router.navigate([`/navigation/agregar-profesional/${this.dni}`]);
+                    this.router.navigate([`/navigation/agregar-profesional/${dni}`]);
                 }
 
             },

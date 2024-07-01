@@ -6,6 +6,8 @@ import { EspecialidadService } from '../../../services/especialidad.service';
 import { EspecialidadDTO } from '../../../interfaces/especialidad';
 import { TituloDTO } from '../../../interfaces/titulo';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 @Component({
     selector: 'app-editar-profesional',
@@ -14,8 +16,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditarProfesionalComponent implements OnInit {
     dni: string;
-    profesional: ProfesionalDTO;
-    editDisabled = false;
+    // profesional: ProfesionalDTO;
+    profesionalForm!: FormGroup;
     especialidades: EspecialidadDTO[] = [];
     titulos: TituloDTO[] = [];
     currentPage: number = 0;
@@ -26,27 +28,29 @@ export class EditarProfesionalComponent implements OnInit {
         private tituloService: TituloService,
         private aRoute: ActivatedRoute,
         private router: Router,
+        private fb: FormBuilder,
     ) {
         this.dni = this.aRoute.snapshot.paramMap.get('dni') || '';
-        this.profesional = {
-            dni: "",
-            nombre: "",
-            apellido: "",
-            email: "",
-            direccion: "",
-            telefono: "",
-            fechaIngreso: new Date(),
-            activo: true,
-            especialidadId: 0,
-            tituloId: 0,
-            formacionesComplementarias: [""],
-            publicacionesRevistas: [""],
-            presentacionesCongresos: [""],
-            experienciaLaboral: [""],
-        }
+
     }
 
     ngOnInit(): void {
+        this.profesionalForm = this.fb.group({
+            dni: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(8)]],
+            nombre: ['', [Validators.required]],
+            apellido: ['', [Validators.required]],
+            email: ['', [Validators.required]],
+            direccion: ['', [Validators.required]],
+            telefono: ['', [Validators.required]],
+            fechaIngreso: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
+            activo: [true, [Validators.required]],
+            especialidadId: [1, [Validators.required]],
+            tituloId: [1, [Validators.required]],
+            formacionesComplementarias: this.fb.array([]),
+            publicacionesRevistas: this.fb.array([]),
+            presentacionesCongresos: this.fb.array([]),
+            experienciaLaboral: this.fb.array([]),
+        });
         this.especialidadService.getEspecialidades().subscribe({
             next: especialidades => {
                 this.especialidades = especialidades;
@@ -61,13 +65,56 @@ export class EditarProfesionalComponent implements OnInit {
         });
         console.log(this.dni)
         this.cargarProfesional(this.dni);
+
+        this.profesionalForm.get('dni')?.disable();
     }
 
     cargarProfesional(dni: string) {
         this.profesionalService.getProfesional(dni).subscribe({
             next: prof => {
                 console.log(prof);
-                this.profesional = { ...prof };
+                this.profesionalForm.get('dni')?.setValue(prof.dni);
+                this.profesionalForm.get('nombre')?.setValue(prof.nombre);
+                this.profesionalForm.get('apellido')?.setValue(prof.apellido);
+                this.profesionalForm.get('email')?.setValue(prof.email);
+                this.profesionalForm.get('direccion')?.setValue(prof.direccion);
+                this.profesionalForm.get('telefono')?.setValue(prof.telefono);
+                this.profesionalForm.get('fechaIngreso')?.setValue(formatDate(prof.fechaIngreso, 'yyyy-MM-dd', 'en'));
+                this.profesionalForm.get('activo')?.setValue(prof.activo);
+                this.profesionalForm.get('especialidadId')?.setValue(prof.especialidadId);
+                this.profesionalForm.get('tituloId')?.setValue(prof.tituloId);
+                //this.profesionalForm.get('formacionesComplementarias')?.setValue(prof.formacionesComplementarias.map(item => ({ item })));
+                prof.formacionesComplementarias.forEach(element => {
+                    const item = this.fb.group({
+                        item: [element, Validators.required],
+                    });
+                    this.formacionesComplementariasForm.push(item);
+                });
+                //this.profesionalForm.get('publicacionesRevistas')?.setValue(prof.publicacionesRevistas.map(item => ({ item })));
+                prof.publicacionesRevistas.forEach(element => {
+                    const item = this.fb.group({
+                        item: [element, Validators.required],
+                    });
+                    this.publicacionesRevistasForm.push(item);
+                });
+                //this.profesionalForm.get('presentacionesCongresos')?.setValue(prof.presentacionesCongresos.map(item => ({ item })));
+                prof.presentacionesCongresos.forEach(element => {
+                    const item = this.fb.group({
+                        item: [element, Validators.required],
+                    });
+                    this.presentacionesCongresosForm.push(item);
+                });
+                //this.profesionalForm.get('experienciaLaboral')?.setValue(prof.experienciaLaboral.map(item => ({ item })));
+                prof.experienciaLaboral.forEach(element => {
+                    const item = this.fb.group({
+                        item: [element, Validators.required],
+                    });
+                    this.experienciaLaboralForm.push(item);
+                });
+
+                console.log('formacionesComplementarias:');
+                console.log(prof.formacionesComplementarias);
+                console.log(this.profesionalForm.get('formacionesComplementarias')?.value);
             },
             error: err => {
                 console.log(err);
@@ -76,60 +123,62 @@ export class EditarProfesionalComponent implements OnInit {
         })
     }
 
-    get formattedFechaIngreso(): string {
-        if (!(this.profesional.fechaIngreso instanceof Date)) {
-            this.profesional.fechaIngreso = new Date(this.profesional.fechaIngreso);
-        }
-        return this.profesional.fechaIngreso.toISOString().split('T')[0];
+    get formacionesComplementariasForm() {
+        return this.profesionalForm.controls['formacionesComplementarias'] as FormArray
     }
-
-    set formattedFechaIngreso(value: string) {
-        this.profesional.fechaIngreso = new Date(value);
-    }
-
     addFormacion(): void {
-        this.profesional.formacionesComplementarias.push("");
-    }
+        const formacionForm = this.fb.group({
+            item: ['', Validators.required],
+        });
 
+        this.formacionesComplementariasForm.push(formacionForm);
+    }
     removeFormacion(index: number): void {
-        if (this.profesional.formacionesComplementarias.length > 0) {
-            this.profesional.formacionesComplementarias.splice(index, 1);
-        }
+        this.formacionesComplementariasForm.removeAt(index);
     }
 
+    get publicacionesRevistasForm() {
+        return this.profesionalForm.controls['publicacionesRevistas'] as FormArray
+    }
     addPublicacion(): void {
-        this.profesional.publicacionesRevistas.push("");
-    }
+        const publicacionForm = this.fb.group({
+            item: ['', Validators.required],
+        });
 
+        this.publicacionesRevistasForm.push(publicacionForm);
+    }
     removePublicacion(index: number): void {
-        if (this.profesional.publicacionesRevistas.length > 0) {
-            this.profesional.publicacionesRevistas.splice(index, 1);
-        }
+        this.publicacionesRevistasForm.removeAt(index);
     }
 
+    get presentacionesCongresosForm() {
+        return this.profesionalForm.controls['presentacionesCongresos'] as FormArray
+    }
     addPresentacion(): void {
-        this.profesional.presentacionesCongresos.push("");
-    }
+        const presentacionForm = this.fb.group({
+            item: ['', Validators.required],
+        });
 
+        this.presentacionesCongresosForm.push(presentacionForm);
+    }
     removePresentacion(index: number): void {
-        if (this.profesional.presentacionesCongresos.length > 0) {
-            this.profesional.presentacionesCongresos.splice(index, 1);
-        }
+        this.presentacionesCongresosForm.removeAt(index);
     }
 
+    get experienciaLaboralForm() {
+        return this.profesionalForm.controls['experienciaLaboral'] as FormArray
+    }
     addExperiencia(): void {
-        this.profesional.experienciaLaboral.push("");
-    }
+        const experienciaForm = this.fb.group({
+            item: ['', Validators.required],
+        });
 
+        this.experienciaLaboralForm.push(experienciaForm);
+    }
     removeExperiencia(index: number): void {
-        if (this.profesional.experienciaLaboral.length > 0) {
-            this.profesional.experienciaLaboral.splice(index, 1);
-        }
+        this.experienciaLaboralForm.removeAt(index);
     }
 
-    trackByFn(index: number, item: string): any {
-        return index;
-    }
 
     changePage(increment: number): void {
         const newPage = this.currentPage + increment;
@@ -138,15 +187,36 @@ export class EditarProfesionalComponent implements OnInit {
         }
     }
 
+    get profesionalActivo() {
+        return this.profesionalForm.controls['activo']
+    }
     changeActivo(): void {
-        this.profesional.activo = !this.profesional.activo
+        this.profesionalForm.get('activo')?.setValue(!this.profesionalForm.get('activo'));
     }
 
     guardar(): void {
-        //this.editarUsuario();
-        //this.editDisabled = true;
-        console.log(this.profesional);
-        this.profesionalService.updateProfesional(this.profesional.dni, this.profesional).subscribe({
+
+        const profesional: ProfesionalDTO = {
+            dni: this.profesionalForm.get('dni')?.value,
+            nombre: this.profesionalForm.get('nombre')?.value,
+            apellido: this.profesionalForm.get('apellido')?.value,
+            email: this.profesionalForm.get('email')?.value,
+            direccion: this.profesionalForm.get('direccion')?.value,
+            telefono: this.profesionalForm.get('telefono')?.value,
+            fechaIngreso: this.profesionalForm.get('fechaIngreso')?.value,
+            activo: this.profesionalForm.get('activo')?.value,
+            especialidadId: this.profesionalForm.get('especialidadId')?.value,
+            tituloId: this.profesionalForm.get('tituloId')?.value,
+            formacionesComplementarias: (this.profesionalForm.get('formacionesComplementarias')?.value as { item: string }[]).map(obj => obj.item),
+            publicacionesRevistas: (this.profesionalForm.get('publicacionesRevistas')?.value as { item: string }[]).map(obj => obj.item),
+            presentacionesCongresos: (this.profesionalForm.get('presentacionesCongresos')?.value as { item: string }[]).map(obj => obj.item),
+            experienciaLaboral: (this.profesionalForm.get('experienciaLaboral')?.value as { item: string }[]).map(obj => obj.item),
+        }
+
+        
+
+
+        this.profesionalService.updateProfesional(profesional.dni, profesional).subscribe({
             next: res => {
                 console.log(res)
                 this.router.navigate(['/navigation/lista-profesionales']);

@@ -1,4 +1,14 @@
 .disabled {
     pointer-events: none;
     color: grey;
-  }
+}
+
+.mat-error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.container {
+    margin-bottom: 32px;
+}

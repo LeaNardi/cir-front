@@ -52,7 +52,7 @@
                     <mat-icon fontIcon="search" class="search" matTooltip="Ver" routerLink="../detalle-profesional/{{row.dni}}"></mat-icon>
                     <mat-icon fontIcon="edit" class="edit" matTooltip="Editar" routerLink="../editar-profesional/{{row.dni}}"></mat-icon>
                     <mat-icon fontIcon="delete" class="delete" matTooltip="Eliminar"
-                        (click)="deleteProfesional(row.userId)"></mat-icon>
+                        (click)="deleteProfesional(row.dni)"></mat-icon>
                 </td>
             </ng-container>
 

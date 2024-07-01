@@ -19,3 +19,8 @@ export interface ExistsResponse{
     exists: boolean;
     active: boolean;
 }
+
+export interface Item{
+    item: boolean;
+    text: boolean;
+}

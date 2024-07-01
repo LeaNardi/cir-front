@@ -3,12 +3,20 @@
 
     <div>
         <div class="container">
-            <form novalidate #f="ngForm">
+            <form [formGroup]="profesionalForm" novalidate>
                 <div class="form-group">
                     <mat-form-field appearance="outline">
                         <mat-label>DNI</mat-label>
-                        <input matInput type="text" class="form-control" id="dni" name="dni"
-                            [(ngModel)]="dni" required>
+                        <input matInput type="text" id="dni" formControlName="dni">
+                        <!-- <input matInput type="text" class="form-control" id="dni" name="dni"
+                            [(ngModel)]="dni" required> -->
+
+                        <mat-error
+                            *ngIf="profesionalForm.invalid">
+                            <div *ngIf="profesionalForm.get('dni')?.errors?.['required']">El DNI es obligatorio</div>
+                            <div *ngIf="profesionalForm.get('dni')?.errors?.['minlength']">Minimo 7 caracteres</div>
+                            <div *ngIf="profesionalForm.get('dni')?.errors?.['maxlength']">Maximo 8 caracteres</div>
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -18,7 +26,7 @@
     <div mat-dialog-actions>
         <div class="botones">
             <button mat-raised-button color="basic" routerLink="/navigation/lista-profesionales">Cancelar</button>
-            <button mat-raised-button color="primary" (click)="siguiente()">Siguiente</button>
+            <button mat-raised-button color="primary" (click)="siguiente()" [disabled]="profesionalForm.invalid">Siguiente</button>
         </div>
     </div>
 </div>

@@ -6,6 +6,7 @@ import { EspecialidadService } from '../../../services/especialidad.service';
 import { EspecialidadDTO } from '../../../interfaces/especialidad';
 import { TituloDTO } from '../../../interfaces/titulo';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-detalle-profesional',
@@ -15,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 export class DetalleProfesionalComponent implements OnInit {
     dni: string;
     profesional: ProfesionalDTO;
+    profesionalForm!: FormGroup;
     editDisabled = true;
     especialidades: EspecialidadDTO[] = [];
     titulos: TituloDTO[] = [];
@@ -24,6 +26,7 @@ export class DetalleProfesionalComponent implements OnInit {
         private especialidadService: EspecialidadService,
         private tituloService: TituloService,
         private aRoute: ActivatedRoute,
+        private fb: FormBuilder,
     ) {
         this.dni = this.aRoute.snapshot.paramMap.get('dni') || '';
         this.profesional = {    

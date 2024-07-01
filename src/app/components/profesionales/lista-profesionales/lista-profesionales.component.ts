@@ -42,13 +42,11 @@ export class ListaProfesionalesComponent implements OnInit {
         this.especialidadService.getEspecialidades().subscribe({
             next: especialidades => {
                 this.especialidades = especialidades;
-                console.log(this.especialidades);
             }
         });
         this.tituloService.getTitulos().subscribe({
             next: titulos => {
                 this.titulos = titulos;
-                console.log(this.titulos);
             }
         });
         this.cargarProfesionales();
@@ -72,7 +70,6 @@ export class ListaProfesionalesComponent implements OnInit {
         this.profesionalService.getProfesionales().subscribe(
             {
                 next: profesionales => {
-                    // this.dataSource.data = profesionales as ProfesionalDTO[];
                     console.log(profesionales);
                     this.dataSource.data = profesionales.map((profesional) => {
                         return {
@@ -90,12 +87,8 @@ export class ListaProfesionalesComponent implements OnInit {
                             publicacionesRevistas: profesional.publicacionesRevistas,
                             presentacionesCongresos: profesional.presentacionesCongresos,
                             experienciaLaboral: profesional.experienciaLaboral,
-
-                            // especialidad: this.especialidades.filter(x => x.especialidadId == profesional.especialidadId)[0].especialidad,
-                            // titulo: this.titulos.filter(x => x.tituloId == profesional.tituloId)[0].titulo,
                         };
                     })
-                    console.log(this.dataSource.data);
                 },
                 error: err => {
                     console.log(err);
