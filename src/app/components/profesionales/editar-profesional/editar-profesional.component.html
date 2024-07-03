@@ -6,9 +6,6 @@
             [disabled]="currentPage === 0">Anterior</button>
         <button mat-raised-button color="basic" type="button" (click)="changePage(1)"
             [disabled]="currentPage >= totalPages - 1">Siguiente</button>
-        <!-- <mat-icon fontIcon="arrow_back" (click)="changePage(-1)" [class.disabled]="currentPage === 0"></mat-icon>
-        <mat-icon fontIcon="arrow_forward" (click)="changePage(1)"
-            [class.disabled]="currentPage >= totalPages - 1"></mat-icon> -->
     </div>
     <div>
         <div class="container">
@@ -93,7 +90,6 @@
 
                 <div class="form-group" *ngIf="currentPage === 1">
                     <h2>Formaciones Complementarias</h2>
-
                     <div formArrayName="formacionesComplementarias">
                         <div *ngFor="let formacion of formacionesComplementariasForm.controls; let i = index"
                             [formGroupName]="i">
@@ -154,8 +150,6 @@
                     </div>
                     <mat-icon fontIcon="add" class="add" matTooltip="Agregar" (click)="addExperiencia()"></mat-icon>
                 </div>
-
-
 
             </form>
         </div>

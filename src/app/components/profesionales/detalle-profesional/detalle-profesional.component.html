@@ -1,78 +1,74 @@
 <div class="container mt-2">
     <h1>Profesional</h1>
 
-
+    <div>
+        <button mat-raised-button color="basic" type="button" (click)="changePage(-1)"
+            [disabled]="currentPage === 0">Anterior</button>
+        <button mat-raised-button color="basic" type="button" (click)="changePage(1)"
+            [disabled]="currentPage >= totalPages - 1">Siguiente</button>
+    </div>
     <div>
         <div class="container">
-            <form novalidate #f="ngForm">
-                <div class="form-group">
-                    <mat-form-field appearance="outline">
+            <form [formGroup]="profesionalForm" novalidate>
+                <div class="form-group" *ngIf="currentPage === 0">
+                    <mat-form-field appearance="outline" >
                         <mat-label>DNI</mat-label>
-                        <input matInput type="text" class="form-control" id="dni" name="dni"
-                            [(ngModel)]="profesional.dni" [readonly]="editDisabled" required>
+                        <input matInput type="text" id="dni" formControlName="dni">
                     </mat-form-field>
                 </div>
 
-
-
-                <div class="form-group">
+                <div class="form-group" *ngIf="currentPage === 0">
                     <mat-form-field appearance="outline">
                         <mat-label>Nombre</mat-label>
-                        <input matInput type="text" class="form-control" id="nombre" name="nombre"
-                            [(ngModel)]="profesional.nombre" [readonly]="editDisabled" required>
+                        <input matInput type="text" id="nombre" formControlName="nombre">
                     </mat-form-field>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" *ngIf="currentPage === 0">
                     <mat-form-field appearance="outline">
                         <mat-label>Apellido</mat-label>
-                        <input matInput type="text" class="form-control" id="apellido" name="apellido"
-                            [(ngModel)]="profesional.apellido" [readonly]="editDisabled" required>
+                        <input matInput type="text" id="apellido" formControlName="apellido">
                     </mat-form-field>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" *ngIf="currentPage === 0">
                     <mat-form-field appearance="outline">
                         <mat-label>Email</mat-label>
-                        <input matInput type="text" class="form-control" id="email" name="email"
-                            [(ngModel)]="profesional.email" [readonly]="editDisabled" required>
+                        <input matInput type="text" id="email" formControlName="email">
                     </mat-form-field>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" *ngIf="currentPage === 0">
                     <span>Activo: </span>
-                    <mat-checkbox [checked]="profesional.activo" [disabled]="editDisabled"></mat-checkbox>
+                    <mat-checkbox formControlName="activo" [checked]="profesionalActivo"></mat-checkbox>
                 </div>
 
-                <div class="form-group">
+
+                <div class="form-group" *ngIf="currentPage === 0">
                     <mat-form-field appearance="outline">
                         <mat-label>Dirección</mat-label>
-                        <input matInput type="text" class="form-control" id="direccion" name="direccion"
-                            [(ngModel)]="profesional.direccion" [readonly]="editDisabled" required>
+                        <input matInput type="text" id="direccion" formControlName="direccion">
                     </mat-form-field>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" *ngIf="currentPage === 0">
                     <mat-form-field appearance="outline">
                         <mat-label>Teléfono</mat-label>
-                        <input matInput type="text" class="form-control" id="telefono" name="telefono"
-                            [(ngModel)]="profesional.telefono" [readonly]="editDisabled" required>
+                        <input matInput type="text" id="telefono" formControlName="telefono">
                     </mat-form-field>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" *ngIf="currentPage === 0">
                     <mat-form-field appearance="outline">
                         <mat-label>Fecha de Ingreso</mat-label>
-                        <input matInput type="date" class="form-control" id="fechaIngreso" name="fechaIngreso"
-                            [(ngModel)]="formattedFechaIngreso" [readonly]="editDisabled" required>
+                        <input matInput type="date" id="fechaIngreso" formControlName="fechaIngreso">
                     </mat-form-field>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" *ngIf="currentPage === 1">
                     <mat-form-field appearance="outline">
                         <mat-label>Especialidad</mat-label>
-                        <mat-select [(ngModel)]="profesional.especialidadId" name="especialidad"
-                            [disabled]="editDisabled">
+                        <mat-select formControlName="especialidadId">
                             <mat-option *ngFor="let esp of especialidades" [value]="esp.especialidadId">
                                 {{ esp.especialidad }}
                             </mat-option>
@@ -80,10 +76,10 @@
                     </mat-form-field>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" *ngIf="currentPage === 1">
                     <mat-form-field appearance="outline">
                         <mat-label>Titulo</mat-label>
-                        <mat-select [(ngModel)]="profesional.tituloId" name="titulo" [disabled]="editDisabled">
+                        <mat-select formControlName="tituloId">
                             <mat-option *ngFor="let titulo of titulos" [value]="titulo.tituloId">
                                 {{ titulo.titulo }}
                             </mat-option>
@@ -91,55 +87,56 @@
                     </mat-form-field>
                 </div>
 
-                <div>
+                <div class="form-group" *ngIf="currentPage === 1">
                     <h2>Formaciones Complementarias</h2>
-
-                    <div *ngFor="let formacion of profesional.formacionesComplementarias">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Formacion complementaria</mat-label>
-                            <input matInput type="text" class="form-control" id="formacion" name="formacion"
-                                [value]="formacion" [readonly]="editDisabled" required>
-                        </mat-form-field>
+                    <div formArrayName="formacionesComplementarias">
+                        <div *ngFor="let formacion of formacionesComplementariasForm.controls; let i = index"
+                            [formGroupName]="i">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Formacion complementaria</mat-label>
+                                <input matInput type="text" formControlName="item">
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
 
-                <div>
+                <div class="form-group" *ngIf="currentPage === 1">
                     <h2>Publicaciones en Revistas</h2>
-
-                    <div *ngFor="let publicacion of profesional.publicacionesRevistas">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Publicacion</mat-label>
-                            <input matInput type="text" class="form-control" id="publicacion" name="publicacion"
-                                [value]="publicacion" [readonly]="editDisabled" required>
-                        </mat-form-field>
+                    <div formArrayName="publicacionesRevistas">
+                        <div *ngFor="let publicacion of publicacionesRevistasForm.controls; let i = index"
+                            [formGroupName]="i">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Publicación</mat-label>
+                                <input matInput type="text" formControlName="item">
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
 
-                <div>
+                <div class="form-group" *ngIf="currentPage === 1">
                     <h2>Presentaciones en Congresos</h2>
-                    <div *ngFor="let presentacion of profesional.presentacionesCongresos">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Presentación</mat-label>
-                            <input matInput type="text" class="form-control" id="presentacion" name="presentacion"
-                                [value]="presentacion" [readonly]="editDisabled" required>
-                        </mat-form-field>
+                    <div formArrayName="presentacionesCongresos">
+                        <div *ngFor="let presentacion of presentacionesCongresosForm.controls; let i = index"
+                            [formGroupName]="i">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Presentación</mat-label>
+                                <input matInput type="text" formControlName="item">
+                            </mat-form-field>
+                        </div>
                     </div>
-
                 </div>
 
-                <div>
+                <div class="form-group" *ngIf="currentPage === 1">
                     <h2>Experiencia Laboral</h2>
-                    <div *ngFor="let experiencia of profesional.experienciaLaboral">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Presentación</mat-label>
-                            <input matInput type="text" class="form-control" id="experiencia" name="experiencia"
-                                [value]="experiencia" [readonly]="editDisabled" required>
-                        </mat-form-field>
+                    <div formArrayName="experienciaLaboral">
+                        <div *ngFor="let experiencia of experienciaLaboralForm.controls; let i = index" [formGroupName]="i">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Experiencia</mat-label>
+                                <input matInput type="text" formControlName="item">
+                            </mat-form-field>
+                        </div>
                     </div>
-
                 </div>
-
-
 
             </form>
         </div>

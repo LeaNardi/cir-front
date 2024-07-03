@@ -63,7 +63,6 @@ export class EditarProfesionalComponent implements OnInit {
                 console.log(this.titulos);
             }
         });
-        console.log(this.dni)
         this.cargarProfesional(this.dni);
 
         this.profesionalForm.get('dni')?.disable();
@@ -83,43 +82,34 @@ export class EditarProfesionalComponent implements OnInit {
                 this.profesionalForm.get('activo')?.setValue(prof.activo);
                 this.profesionalForm.get('especialidadId')?.setValue(prof.especialidadId);
                 this.profesionalForm.get('tituloId')?.setValue(prof.tituloId);
-                //this.profesionalForm.get('formacionesComplementarias')?.setValue(prof.formacionesComplementarias.map(item => ({ item })));
                 prof.formacionesComplementarias.forEach(element => {
                     const item = this.fb.group({
                         item: [element, Validators.required],
                     });
                     this.formacionesComplementariasForm.push(item);
                 });
-                //this.profesionalForm.get('publicacionesRevistas')?.setValue(prof.publicacionesRevistas.map(item => ({ item })));
                 prof.publicacionesRevistas.forEach(element => {
                     const item = this.fb.group({
                         item: [element, Validators.required],
                     });
                     this.publicacionesRevistasForm.push(item);
                 });
-                //this.profesionalForm.get('presentacionesCongresos')?.setValue(prof.presentacionesCongresos.map(item => ({ item })));
                 prof.presentacionesCongresos.forEach(element => {
                     const item = this.fb.group({
                         item: [element, Validators.required],
                     });
                     this.presentacionesCongresosForm.push(item);
                 });
-                //this.profesionalForm.get('experienciaLaboral')?.setValue(prof.experienciaLaboral.map(item => ({ item })));
                 prof.experienciaLaboral.forEach(element => {
                     const item = this.fb.group({
                         item: [element, Validators.required],
                     });
                     this.experienciaLaboralForm.push(item);
                 });
-
-                console.log('formacionesComplementarias:');
-                console.log(prof.formacionesComplementarias);
-                console.log(this.profesionalForm.get('formacionesComplementarias')?.value);
             },
             error: err => {
                 console.log(err);
             }
-
         })
     }
 
