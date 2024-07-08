@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ExistsResponse, ProfesionalDTO } from '../interfaces/profesional';
+import { ExistsResponse, ProfesionalDTO, ProfesionalDTOSimp } from '../interfaces/profesional';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -16,6 +16,10 @@ export class ProfesionalService {
 
     getProfesionales(): Observable<ProfesionalDTO[]> {
         return this.http.get<ProfesionalDTO[]>(`${this.profesionalURL}getall`);
+    }
+
+    getProfesionalesSimplified(): Observable<ProfesionalDTOSimp[]> {
+        return this.http.get<ProfesionalDTOSimp[]>(`${this.profesionalURL}getallsimplified`);
     }
 
     getProfesional(dni: string): Observable<ProfesionalDTO> {

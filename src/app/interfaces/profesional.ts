@@ -24,3 +24,10 @@ export interface Item{
     item: boolean;
     text: boolean;
 }
+
+export interface ProfesionalDTOSimp {
+    dni: string;
+    nombre: string;
+    apellido: string;
+    especialidadId: number;
+}

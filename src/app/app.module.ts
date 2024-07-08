@@ -43,6 +43,8 @@ import { EditarProfesionalComponent } from './components/profesionales/editar-pr
 import { DetalleProfesionalComponent } from './components/profesionales/detalle-profesional/detalle-profesional.component';
 import { ListaEspecialidadesComponent } from './components/especialidades/lista-especialidades/lista-especialidades.component';
 import { NuevoProfesionalInicioComponent } from './components/profesionales/nuevo-profesional-inicio/nuevo-profesional-inicio.component';
+import { SolicitarTurnoComponent } from './components/turnos/solicitar-turno/solicitar-turno.component';
+import { GrillaTurnosComponent } from './components/turnos/grilla-turnos/grilla-turnos.component';
 
 
 
@@ -66,7 +68,9 @@ import { NuevoProfesionalInicioComponent } from './components/profesionales/nuev
         EditarProfesionalComponent,
         DetalleProfesionalComponent,
         ListaEspecialidadesComponent,
-        NuevoProfesionalInicioComponent
+        NuevoProfesionalInicioComponent,
+        SolicitarTurnoComponent,
+        GrillaTurnosComponent
     ],
     imports: [
         BrowserModule,
