@@ -14,6 +14,7 @@ import { EditarProfesionalComponent } from './components/profesionales/editar-pr
 import { ListaEspecialidadesComponent } from './components/especialidades/lista-especialidades/lista-especialidades.component';
 import { NuevoProfesionalInicioComponent } from './components/profesionales/nuevo-profesional-inicio/nuevo-profesional-inicio.component';
 import { SolicitarTurnoComponent } from './components/turnos/solicitar-turno/solicitar-turno.component';
+import { GrillaTurnosComponent } from './components/turnos/grilla-turnos/grilla-turnos.component';
 
 const routes: Routes = [
 
@@ -33,6 +34,7 @@ const routes: Routes = [
             { path: 'editar-profesional/:dni', component: EditarProfesionalComponent },
             { path: 'lista-turnos', component: ListaTurnosComponent },
             { path: 'solicitar-turno', component: SolicitarTurnoComponent },
+            { path: 'grilla-turnos', component: GrillaTurnosComponent },
 
             { path: 'lista-os', component: ListaOsComponent },
             //   { path: 'lista', component: ListaPacienteComponent },

@@ -1,0 +1,12 @@
+.turno-libre {
+    background-color: #00000000;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.turno-ocupado {
+    background-color: #0000005a;
+    text-align: center;
+}
+
