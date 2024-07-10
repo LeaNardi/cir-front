@@ -45,6 +45,7 @@ import { ListaEspecialidadesComponent } from './components/especialidades/lista-
 import { NuevoProfesionalInicioComponent } from './components/profesionales/nuevo-profesional-inicio/nuevo-profesional-inicio.component';
 import { SolicitarTurnoComponent } from './components/turnos/solicitar-turno/solicitar-turno.component';
 import { GrillaTurnosComponent } from './components/turnos/grilla-turnos/grilla-turnos.component';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -95,8 +96,9 @@ import { GrillaTurnosComponent } from './components/turnos/grilla-turnos/grilla-
         FormsModule,
         MatSelectModule,
         MatCheckboxModule,
+        DatePipe,
     ],
-    providers: [],
+    providers: [DatePipe],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

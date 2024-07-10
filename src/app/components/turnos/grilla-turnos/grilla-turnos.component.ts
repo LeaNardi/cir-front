@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { TurnosService } from '../../../services/turnos.service';
 import { TurnoDTO } from '../../../interfaces/turno';
 import { startOfWeek, addDays, format } from 'date-fns';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-grilla-turnos',
@@ -12,7 +13,7 @@ import { startOfWeek, addDays, format } from 'date-fns';
     styleUrl: './grilla-turnos.component.css'
 })
 export class GrillaTurnosComponent implements OnInit, AfterViewInit {
-    displayedColumns: string[] = ['hora', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+    displayedColumns: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
     dataSource = new MatTableDataSource<any>();
 
     fecha = '';
@@ -27,7 +28,7 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor(private turnosService: TurnosService) { }
+    constructor(private turnosService: TurnosService, private datePipe: DatePipe) { }
 
     ngOnInit(): void {
         this.loadTurnos('35584700'); // Puedes cambiar el DNI del profesional según sea necesario
@@ -89,5 +90,8 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
     solicitarTurno(hora: string, dia: string){
         console.log(`Solicitando turno para el ${dia} a las ${hora}`);
     }
-
+    
+    formatHora(hora: string): string {
+        return this.datePipe.transform(`1970-01-01T${hora}`, 'HH:mm') || hora;
+    }
 }
