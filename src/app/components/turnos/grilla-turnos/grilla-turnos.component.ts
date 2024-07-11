@@ -6,7 +6,7 @@ import { TurnosService } from '../../../services/turnos.service';
 import { TurnoDTO } from '../../../interfaces/turno';
 import { startOfWeek, addDays, format } from 'date-fns';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
@@ -40,29 +40,37 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort!: MatSort;
 
     obraSocialId!: number;
-    especialidadId: number;
-    profesionaldni: string;
+    especialidadId!: number;
+    profesionaldni!: string;
 
     constructor(
         private turnosService: TurnosService,
         private datePipe: DatePipe,
         private router: Router,
+        private aRoute: ActivatedRoute,
         private auth: AuthenticationService
+
     ) {
-        const navigation = this.router.getCurrentNavigation();
-        const state = navigation?.extras.state as { obraSocialId: number, especialidadId: number, profesionaldni: string };
-        
-        console.log(state);
-        this.obraSocialId = state.obraSocialId;
-        this.especialidadId = state.especialidadId;
-        this.profesionaldni = state.profesionaldni;
+        // const navigation = this.router.getCurrentNavigation();
+        // const state = navigation?.extras.state as { obraSocialId: number, especialidadId: number, profesionaldni: string };
+
+        // console.log(state);
+        // this.obraSocialId = state.obraSocialId;
+        // this.especialidadId = state.especialidadId;
+        // this.profesionaldni = state.profesionaldni;
 
         // if (state && state.data) {
         //     this.obraSocialId = state.data.obraSocialId;
         //     this.especialidadId = state.data.especialidadId;
         //     this.profesionaldni = state.data.profesionaldni;
         // }
+        this.aRoute.paramMap.subscribe(params => {
+            this.obraSocialId = Number(params.get('obraSocialId'));
+            this.especialidadId = Number(params.get('especialidadId'));
+            this.profesionaldni = params.get('profesionaldni') || '';
 
+            console.log(this.obraSocialId, this.especialidadId, this.profesionaldni);
+        });
 
     }
 
@@ -133,20 +141,24 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
         // console.log(`Solicitando turno para el ${dia} a las ${hora}`);
         console.log(`Solicitando turno para el id ${turnoId}`);
 
-        const userId = this.auth.getUserName();
+        const userId = this.auth.getUserId();
 
 
         const turno: TurnoDTO = {
             "turnoId": turnoId,
             "profesionalDni": "35584700", //this.profesionalDni;
-            "fecha": "2000-00-00",
+            "fecha": "2000-01-01",
             "hora": "00:00:00",
             "obraSocialId": this.obraSocialId,
-            "pacienteId": 0 //this.userId
+            "pacienteId": Number(userId),
         };
 
-
-        //this.turnosService.reservarTurno(turno);
+        console.log(turno);
+        this.turnosService.reservarTurno(turno).subscribe({
+            next: response => {
+                console.log(response);
+            }
+        });
 
     }
 

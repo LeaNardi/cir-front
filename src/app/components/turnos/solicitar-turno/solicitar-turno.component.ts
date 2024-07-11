@@ -59,16 +59,12 @@ export class SolicitarTurnoComponent implements OnInit {
 
 
     solicitar(): void {
-        const datos = {
-            obraSocialId: this.nuevoTurnoForm.get('obraSocialId')?.value,
-            especialidadId: this.nuevoTurnoForm.get('especialidadId')?.value,
-            profesionaldni: this.nuevoTurnoForm.get('profesionaldni')?.value,
-        }
-
-        console.log(datos);
+        const obraSocialId= this.nuevoTurnoForm.get('obraSocialId')?.value;
+        const especialidadId= this.nuevoTurnoForm.get('especialidadId')?.value;
+        const profesionaldni= this.nuevoTurnoForm.get('profesionaldni')?.value;
 
         // this.router.navigate(['/navigation/grilla-turnos'], datos);
-        this.router.navigate(['/navigation/grilla-turnos'], {state: datos}); // VER!!!!!!!
+        this.router.navigate(['/navigation/grilla-turnos', obraSocialId, especialidadId, profesionaldni]); // VER!!!!!!!
 
     }
 

@@ -30,11 +30,13 @@ export class AuthenticationService {
     const decodedToken = helper.decodeToken(token);
     console.log(decodedToken)
     const sub = decodedToken.sub;
+    const id = decodedToken.userid;
     const role = decodedToken.role;
 
     if (!token) return false;
     this.setSession(token);
     this.setUserName(sub);
+    this.setUserId(id);
     this.setUserRole(role);
     this.setIsLoggedIn();
     return true;
@@ -57,22 +59,29 @@ export class AuthenticationService {
   setUserName(username : string){
     localStorage.setItem('Username', username);
   }
+  getUserName(){
+    return localStorage.getItem('Username');
+  }
+
+  setUserId(userId : string){
+    localStorage.setItem('UserId', userId);
+  }
+  getUserId(){
+    return localStorage.getItem('UserId');
+  }
 
   setUserRole(role : string){
     localStorage.setItem('Role', role);
+  }
+  getUserRole(){
+    return localStorage.getItem('Role');
   }
 
   setIsLoggedIn(){
     localStorage.setItem('IsLoggedIn', "true");
   }
 
-  getUserRole(){
-    return localStorage.getItem('Role');
-  }
 
-  getUserName(){
-    return localStorage.getItem('Username');
-  }
 
   isAdmin(){
     return this.getUserRole() == 'Administrador'
@@ -103,6 +112,7 @@ export class AuthenticationService {
   resetSession() {
     localStorage.removeItem('session');
     localStorage.removeItem('Username');
+    localStorage.removeItem('UserId');
     localStorage.removeItem('Role');
     localStorage.removeItem('IsLoggedIn');
     this.loggedIn = false;

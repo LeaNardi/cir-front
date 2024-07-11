@@ -34,7 +34,7 @@ const routes: Routes = [
             { path: 'editar-profesional/:dni', component: EditarProfesionalComponent },
             { path: 'lista-turnos', component: ListaTurnosComponent },
             { path: 'solicitar-turno', component: SolicitarTurnoComponent },
-            { path: 'grilla-turnos', component: GrillaTurnosComponent },
+            { path: 'grilla-turnos/:obraSocialId/:especialidadId/:profesionaldni', component: GrillaTurnosComponent },
 
             { path: 'lista-os', component: ListaOsComponent },
             //   { path: 'lista', component: ListaPacienteComponent },
