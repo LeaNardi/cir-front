@@ -13,12 +13,19 @@ export class TurnosService {
     turnosURL = this.backendUrl + 'api/turnos/';
     constructor(private http: HttpClient) { }
 
+    // Posiblemente no se use
     getTurnosParaProfesional(dni: string, fecha: string): Observable<TurnoDTO[]> {
         return this.http.get<TurnoDTO[]>(`${this.turnosURL}get/${dni}?fecha=${fecha}`);
     }
 
     getTurnosDisponibles(dni: string, fecha: string): Observable<TurnoDTO[]> {
         return this.http.get<TurnoDTO[]>(`${this.turnosURL}getdisponibles/${dni}`);
+    }
+
+    
+
+    reservarTurno(turno: TurnoDTO): Observable<String> {
+        return this.http.put<String>(`${this.turnosURL}reservarturno`, turno);
     }
 
 }

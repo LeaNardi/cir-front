@@ -65,8 +65,10 @@ export class SolicitarTurnoComponent implements OnInit {
             profesionaldni: this.nuevoTurnoForm.get('profesionaldni')?.value,
         }
 
+        console.log(datos);
+
         // this.router.navigate(['/navigation/grilla-turnos'], datos);
-        this.router.navigate(['/navigation/grilla-turnos']); // VER!!!!!!!
+        this.router.navigate(['/navigation/grilla-turnos'], {state: datos}); // VER!!!!!!!
 
     }
 

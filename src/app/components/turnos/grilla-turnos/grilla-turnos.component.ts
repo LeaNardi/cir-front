@@ -6,6 +6,8 @@ import { TurnosService } from '../../../services/turnos.service';
 import { TurnoDTO } from '../../../interfaces/turno';
 import { startOfWeek, addDays, format } from 'date-fns';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
     selector: 'app-grilla-turnos',
@@ -13,7 +15,15 @@ import { DatePipe } from '@angular/common';
     styleUrl: './grilla-turnos.component.css'
 })
 export class GrillaTurnosComponent implements OnInit, AfterViewInit {
-    displayedColumns: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+    displayedColumns: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+    // columnNames: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+    dayLabels = new Map<string, string>([
+        ['monday', 'Lunes'],
+        ['tuesday', 'Martes'],
+        ['wednesday', 'Miércoles'],
+        ['thursday', 'Jueves'],
+        ['friday', 'Viernes']
+    ]);
     dataSource = new MatTableDataSource<any>();
 
     fecha = '';
@@ -23,16 +33,48 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
         '12:00:00', '12:15:00', '12:30:00', '12:45:00', '13:00:00', '13:15:00', '13:30:00', '13:45:00',
         '14:00:00', '14:15:00', '14:30:00', '14:45:00', '15:00:00', '15:15:00', '15:30:00', '15:45:00',
         '16:00:00', '16:15:00', '16:30:00', '16:45:00', '17:00:00', '17:15:00', '17:30:00', '17:45:00'
-      ]
+    ]
+
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor(private turnosService: TurnosService, private datePipe: DatePipe) { }
+    obraSocialId!: number;
+    especialidadId: number;
+    profesionaldni: string;
+
+    constructor(
+        private turnosService: TurnosService,
+        private datePipe: DatePipe,
+        private router: Router,
+        private auth: AuthenticationService
+    ) {
+        const navigation = this.router.getCurrentNavigation();
+        const state = navigation?.extras.state as { obraSocialId: number, especialidadId: number, profesionaldni: string };
+        
+        console.log(state);
+        this.obraSocialId = state.obraSocialId;
+        this.especialidadId = state.especialidadId;
+        this.profesionaldni = state.profesionaldni;
+
+        // if (state && state.data) {
+        //     this.obraSocialId = state.data.obraSocialId;
+        //     this.especialidadId = state.data.especialidadId;
+        //     this.profesionaldni = state.data.profesionaldni;
+        // }
+
+
+    }
 
     ngOnInit(): void {
         this.loadTurnos('35584700'); // Puedes cambiar el DNI del profesional según sea necesario
         this.fecha = '2024-07-10';
+
+
+        console.log(this.obraSocialId);
+        console.log(this.especialidadId);
+        console.log(this.profesionaldni);
+
 
     }
 
@@ -63,7 +105,7 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
 
         // const horarios = Array.from(new Set(turnos.map(t => t.hora))); // Obtener horarios únicos
         // console.log("horarios: ", horarios);
-        
+
 
         return this.horarios.map(hora => {
             const row: any = { hora };
@@ -71,13 +113,13 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
                 const dayStr = format(day, 'yyyy-MM-dd');
                 const turno = turnos.find(t => t.fecha === dayStr && t.hora === hora);
                 // console.log(turno);
-                if(typeof turno != "undefined"){
-                    row[format(day, 'eeee').toLowerCase()] = turno.pacienteId !== 0 ? 'Ocupado' : 'libre';
-                }else{
-                    row[format(day, 'eeee').toLowerCase()] = 'No existe';
+                if (typeof turno != "undefined") {
+                    row[format(day, 'eeee').toLowerCase()] = turno.pacienteId !== 0 ? 0 : turno.turnoId;
+                } else {
+                    row[format(day, 'eeee').toLowerCase()] = 0;
                 }
             });
-            
+
             return row;
         });
     }
@@ -87,10 +129,27 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;
     }
 
-    solicitarTurno(hora: string, dia: string){
-        console.log(`Solicitando turno para el ${dia} a las ${hora}`);
+    solicitarTurno(turnoId: number) {
+        // console.log(`Solicitando turno para el ${dia} a las ${hora}`);
+        console.log(`Solicitando turno para el id ${turnoId}`);
+
+        const userId = this.auth.getUserName();
+
+
+        const turno: TurnoDTO = {
+            "turnoId": turnoId,
+            "profesionalDni": "35584700", //this.profesionalDni;
+            "fecha": "2000-00-00",
+            "hora": "00:00:00",
+            "obraSocialId": this.obraSocialId,
+            "pacienteId": 0 //this.userId
+        };
+
+
+        //this.turnosService.reservarTurno(turno);
+
     }
-    
+
     formatHora(hora: string): string {
         return this.datePipe.transform(`1970-01-01T${hora}`, 'HH:mm') || hora;
     }
