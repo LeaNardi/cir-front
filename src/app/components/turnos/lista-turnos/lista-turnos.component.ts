@@ -5,6 +5,10 @@ import { MatSort } from '@angular/material/sort';import { MatTable, MatTableData
 import { TurnosService } from '../../../services/turnos.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import swal from 'sweetalert2';
+import { ProfesionalService } from '../../../services/profesional.service';
+import { EspecialidadService } from '../../../services/especialidad.service';
+import { EspecialidadDTO } from '../../../interfaces/especialidad';
+import { ProfesionalDTOSimp } from '../../../interfaces/profesional';
 
 @Component({
     selector: 'app-lista-turnos',
@@ -16,16 +20,32 @@ export class ListaTurnosComponent implements OnInit {
     displayedColumns = ['fecha', 'profesionalDni', 'Hora', 'Cancelar'];
     dataSource = new MatTableDataSource<TurnoDTO>(this.turnos);
 
+    especialidades: EspecialidadDTO[] = [];
+    profesionales: ProfesionalDTOSimp[] = [];
+
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
     constructor(
         private auth: AuthenticationService,
-        private turnosService: TurnosService,){
+        private turnosService: TurnosService,
+        private especialidadService: EspecialidadService,
+        private profesionalService: ProfesionalService,
+    ){
 
     }
 
     ngOnInit(): void {
+        this.especialidadService.getEspecialidades().subscribe({
+            next: especialidades => {
+                this.especialidades = especialidades;
+            }
+        });
+        this.profesionalService.getProfesionalesSimplified().subscribe({
+            next: profesionales => {
+                this.profesionales = profesionales;
+            }
+        });
         this.cargarMisTurnos();
     }
 
@@ -73,6 +93,11 @@ export class ListaTurnosComponent implements OnInit {
                     ); //subscribe  
                 }
             })
+    }
+
+    getProfesional(dni: string){
+        const profesional = this.profesionales.filter(p => p.dni === dni )[0];
+        return profesional;
     }
 
 }

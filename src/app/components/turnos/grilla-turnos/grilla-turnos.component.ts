@@ -17,6 +17,7 @@ import { ObraSocialDTO } from '../../../interfaces/obrasocial';
 import { ObraSocialService } from '../../../services/obrasocial.service';
 import { ProfesionalService } from '../../../services/profesional.service';
 import { ProfesionalDTOSimp } from '../../../interfaces/profesional';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -73,19 +74,6 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
         private obrasocialService: ObraSocialService,
         private profesionalService: ProfesionalService,
     ) {
-        // const navigation = this.router.getCurrentNavigation();
-        // const state = navigation?.extras.state as { obraSocialId: number, especialidadId: number, profesionaldni: string };
-
-        // console.log(state);
-        // this.obraSocialId = state.obraSocialId;
-        // this.especialidadId = state.especialidadId;
-        // this.profesionaldni = state.profesionaldni;
-
-        // if (state && state.data) {
-        //     this.obraSocialId = state.data.obraSocialId;
-        //     this.especialidadId = state.data.especialidadId;
-        //     this.profesionaldni = state.data.profesionaldni;
-        // }
         this.aRoute.paramMap.subscribe(params => {
             this.obraSocialId = Number(params.get('obraSocialId'));
             this.especialidadId = Number(params.get('especialidadId'));
@@ -129,10 +117,6 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
     loadTurnos(profesionalDni: string) {
         this.turnosService.getTurnosDisponibles(profesionalDni).subscribe({
             next: data => {
-                // console.log("data");
-                console.log(data);
-                console.log("transform(data)");
-                console.log(this.transformTurnos(data));
                 this.dataSource.data = this.transformTurnos(data);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
@@ -160,16 +144,12 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
             ['friday', format(addDays(startOfWeekDate, 4), 'EEEE dd/MM', { locale: es })]
         ]);
 
-        // const horarios = Array.from(new Set(turnos.map(t => t.hora))); // Obtener horarios únicos
-        // console.log("horarios: ", horarios);
-
 
         return this.horarios.map(hora => {
             const row: any = { hora };
             daysOfWeek.forEach(day => {
                 const dayStr = format(day, 'yyyy-MM-dd');
                 const turno = turnos.find(t => t.fecha === dayStr && t.hora === hora);
-                // console.log(turno);
                 if (typeof turno != "undefined") {
                     row[format(day, 'eeee').toLowerCase()] = turno.pacienteId !== 0 ? 0 : turno.turnoId;
                 } else {
@@ -187,9 +167,6 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
     }
 
     solicitarTurno(turnoId: number, dia: string | undefined, hora: string) {
-        // console.log(`Solicitando turno para el ${dia} a las ${hora}`);
-        console.log(`Solicitando turno para el id ${turnoId}`);
-
         const userId = this.auth.getUserId();
         const turno: TurnoDTO = {
             "turnoId": turnoId,
@@ -217,22 +194,52 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
             buttonsStyling: true
         }).then((result) => {
             if (result.isConfirmed) {
-                this.turnosService.reservarTurno(turno).subscribe({
-                    next: response => {
-                        console.log(response);
-                        this.router.navigate(['/navigation/lista-turnos']);
-                    }
+                let turnosExistentes;
+                this.turnosService.getMisTurnos(Number(this.auth.getUserId())).subscribe({
+                    next: turnos => {
+                        turnosExistentes = turnos.filter(t => t.profesionalDni === this.profesionaldni);
+                        const cantidad = turnosExistentes.length;
+                        if (cantidad > 0) {
+                            let htmlmessage = "";
+                            turnosExistentes.forEach(element => {
+                                htmlmessage += `${format(element.fecha, 'EEEE dd/MM', { locale: es })} - ${element.hora} <br>`
+                            });
+
+                            swal.fire({
+                                title: 'Turnos existentes',
+                                html: `Usted ya tiene turnos con el profesional ${this.profesionalSimp.nombre} ${this.profesionalSimp.apellido}:<br>
+                                ${htmlmessage}<br>
+                                ¿Desea reservar este turno igualmente?`,
+                                showCancelButton: true,
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Confirmar',
+                                cancelButtonText: 'Cancelar',
+                                buttonsStyling: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    this.turnosService.reservarTurno(turno).subscribe({
+                                        next: response => {
+                                            this.router.navigate(['/navigation/lista-turnos']);
+                                        }
+                                    });
+                                }
+                            })
+                        } else {
+                            this.turnosService.reservarTurno(turno).subscribe({
+                                next: response => {
+                                    this.router.navigate(['/navigation/lista-turnos']);
+                                }
+                            });
+                        }
+                    },
                 });
             }
             //if (result.isDismissed) {
             //this.router.navigate(['/navigation/lista-profesionales']);
             //}
         })
-
-
-
-
     }
+
 
     formatHora(hora: string): string {
         return this.datePipe.transform(`1970-01-01T${hora}`, 'HH:mm') || hora;
