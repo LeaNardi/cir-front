@@ -22,10 +22,16 @@ export class TurnosService {
         return this.http.get<TurnoDTO[]>(`${this.turnosURL}getdisponibles/${dni}`);
     }
 
-    
+    getMisTurnos(id: number): Observable<TurnoDTO[]> {
+        return this.http.get<TurnoDTO[]>(`${this.turnosURL}getmisturnos/${id}`);
+    }
 
     reservarTurno(turno: TurnoDTO): Observable<String> {
         return this.http.put<String>(`${this.turnosURL}reservarturno`, turno);
+    }
+
+    cancelarTurno(turno: TurnoDTO): Observable<String> {
+        return this.http.put<String>(`${this.turnosURL}cancelarturno`, turno);
     }
 
 }

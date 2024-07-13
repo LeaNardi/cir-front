@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { TurnoDTO } from '../../../interfaces/turno';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { TurnosService } from '../../../services/turnos.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-lista-turnos',
@@ -10,25 +13,66 @@ import { MatSort } from '@angular/material/sort';import { MatTable, MatTableData
 })
 export class ListaTurnosComponent implements OnInit {
     turnos: TurnoDTO[] = [];
-    displayedColumns = ['fecha', 'profesionalDni', 'Hora'];
+    displayedColumns = ['fecha', 'profesionalDni', 'Hora', 'Cancelar'];
     dataSource = new MatTableDataSource<TurnoDTO>(this.turnos);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
+    constructor(
+        private auth: AuthenticationService,
+        private turnosService: TurnosService,){
+
+    }
+
     ngOnInit(): void {
-        this.turnos = [
-            { "turnoId": 3, "profesionalDni": "35584700", "fecha": "2024-07-15", "hora": "08:00:00", "obraSocialId": 0, "pacienteId": 0 },
-            { "turnoId": 4, "profesionalDni": "35584700", "fecha": "2024-07-15", "hora": "08:15:00", "obraSocialId": 0, "pacienteId": 0 },
-            { "turnoId": 5, "profesionalDni": "35584700", "fecha": "2024-07-15", "hora": "08:30:00", "obraSocialId": 0, "pacienteId": 0 },
-            { "turnoId": 6, "profesionalDni": "35584700", "fecha": "2024-07-15", "hora": "08:45:00", "obraSocialId": 0, "pacienteId": 0 }
-        ];
-        this.dataSource.data = this.turnos;
+        this.cargarMisTurnos();
     }
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+    }
+
+    cargarMisTurnos(): void {
+        this.turnosService.getMisTurnos(Number(this.auth.getUserId())).subscribe(
+            {
+                next: turnos => {
+                    this.dataSource.data = turnos as TurnoDTO[];
+                },
+                error: err => {
+                    console.log(err);
+                }
+            }
+        );
+    }
+
+    cancelarTurno(turno: TurnoDTO) {
+        swal.fire({
+            title: '¿Esta seguro?',
+            text: "¿Confirma que desea cancelar el turno?",
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+            buttonsStyling: true
+        })
+            .then((result) => {
+                if (result.value) {
+                    console.log(turno);
+                    this.turnosService.cancelarTurno(turno).subscribe({
+                        next: data => {
+                            this.cargarMisTurnos();  //vuelve a cargar la lista luego de eliminar un paciente
+                            
+                        },
+
+                        error: err => {
+                            console.log(err);
+                        }//error
+                    } //service
+                    ); //subscribe  
+                }
+            })
     }
 
 }

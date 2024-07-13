@@ -25,6 +25,10 @@ export class ProfesionalService {
     getProfesional(dni: string): Observable<ProfesionalDTO> {
         return this.http.get<ProfesionalDTO>(`${this.profesionalURL}get/${dni}`);
     }
+
+    getProfesionalSimplified(dni: string): Observable<ProfesionalDTOSimp> {
+        return this.http.get<ProfesionalDTOSimp>(`${this.profesionalURL}getsimplified/${dni}`);
+    }
     
     addProfesional(profesional: ProfesionalDTO): Observable<String> {
         return this.http.post<String>(`${this.profesionalURL}add`, profesional);

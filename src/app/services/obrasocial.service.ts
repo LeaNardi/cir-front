@@ -14,7 +14,7 @@ export class ObraSocialService {
 
     constructor(private http: HttpClient) { }
 
-    getObraSociales(): Observable<ObraSocialDTO[]> {
+    getObrasSociales(): Observable<ObraSocialDTO[]> {
         return this.http.get<ObraSocialDTO[]>(`${this.obrasocialURL}getall`);
     }
 

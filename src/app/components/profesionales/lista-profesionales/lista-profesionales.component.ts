@@ -29,7 +29,8 @@ export class ListaProfesionalesComponent implements OnInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor(private profesionalService: ProfesionalService,
+    constructor(
+        private profesionalService: ProfesionalService,
         public dialog: MatDialog,
         private toast: NgToastService,
         private router: Router,

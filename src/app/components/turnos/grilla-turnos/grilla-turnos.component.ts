@@ -10,6 +10,13 @@ import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../../services/authentication.service';
 import swal from 'sweetalert2';
+import { UserService } from '../../../services/user.service';
+import { EspecialidadService } from '../../../services/especialidad.service';
+import { EspecialidadDTO } from '../../../interfaces/especialidad';
+import { ObraSocialDTO } from '../../../interfaces/obrasocial';
+import { ObraSocialService } from '../../../services/obrasocial.service';
+import { ProfesionalService } from '../../../services/profesional.service';
+import { ProfesionalDTOSimp } from '../../../interfaces/profesional';
 
 
 @Component({
@@ -47,13 +54,24 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
     especialidadId!: number;
     profesionaldni!: string;
 
+    nombre: string = "";
+    apellido: string = "";
+
+    especialidades: EspecialidadDTO[] = [];
+    obrassociales: ObraSocialDTO[] = [];
+    profesionalSimp!: ProfesionalDTOSimp;
+
+
     constructor(
         private turnosService: TurnosService,
         private datePipe: DatePipe,
         private router: Router,
         private aRoute: ActivatedRoute,
-        private auth: AuthenticationService
-
+        private auth: AuthenticationService,
+        private userService: UserService,
+        private especialidadService: EspecialidadService,
+        private obrasocialService: ObraSocialService,
+        private profesionalService: ProfesionalService,
     ) {
         // const navigation = this.router.getCurrentNavigation();
         // const state = navigation?.extras.state as { obraSocialId: number, especialidadId: number, profesionaldni: string };
@@ -80,6 +98,32 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.loadTurnos(this.profesionaldni);
+        const username = this.auth.getUserName();
+        if (username) {
+            this.userService.getMyUser(username).subscribe({
+                next: usuario => {
+                    this.nombre = usuario.name;
+                    this.apellido = usuario.surname;
+                }
+            })
+        }
+
+        this.especialidadService.getEspecialidades().subscribe({
+            next: especialidades => {
+                this.especialidades = especialidades;
+            }
+        });
+        this.obrasocialService.getObrasSociales().subscribe({
+            next: obrassociales => {
+                this.obrassociales = obrassociales;
+            }
+        });
+
+        this.profesionalService.getProfesionalSimplified(this.profesionaldni).subscribe({
+            next: prof => {
+                this.profesionalSimp = prof;
+            }
+        })
     }
 
     loadTurnos(profesionalDni: string) {
@@ -142,7 +186,7 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;
     }
 
-    solicitarTurno(turnoId: number) {
+    solicitarTurno(turnoId: number, dia: string | undefined, hora: string) {
         // console.log(`Solicitando turno para el ${dia} a las ${hora}`);
         console.log(`Solicitando turno para el id ${turnoId}`);
 
@@ -158,7 +202,14 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
 
         swal.fire({
             title: '¿Confirmar turno?',
-            text: "Está solicitando el siguiente turno:",
+            // text: "Está solicitando el siguiente turno:",
+            html: `Está solicitando el siguiente turno:<br>
+            Paciente: ${this.nombre} ${this.apellido}<br>
+            Obra Social: ${this.obrassociales.filter(x => x.obraSocialId == this.obraSocialId)[0].obraSocial}<br>
+            Profesional: ${this.profesionalSimp.nombre} ${this.profesionalSimp.apellido}<br>
+            Especialidad: ${this.especialidades.filter(x => x.especialidadId == this.especialidadId)[0].especialidad}<br>
+            Día: ${dia}<br>
+            Horario: ${hora}`,
             showCancelButton: true,
             cancelButtonColor: '#d33',
             confirmButtonText: 'Confirmar',

@@ -38,7 +38,7 @@ export class SolicitarTurnoComponent implements OnInit {
         });
 
 
-        this.obrasocialService.getObraSociales().subscribe({
+        this.obrasocialService.getObrasSociales().subscribe({
             next: obrassociales => {
                 this.obrassociales = obrassociales;
             }
