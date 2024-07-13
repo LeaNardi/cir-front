@@ -5,9 +5,12 @@ import { MatSort } from '@angular/material/sort';
 import { TurnosService } from '../../../services/turnos.service';
 import { TurnoDTO } from '../../../interfaces/turno';
 import { startOfWeek, addDays, format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../../services/authentication.service';
+import swal from 'sweetalert2';
+
 
 @Component({
     selector: 'app-grilla-turnos',
@@ -26,7 +29,6 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
     ]);
     dataSource = new MatTableDataSource<any>();
 
-    fecha = '';
     horarios = [
         '08:00:00', '08:15:00', '08:30:00', '08:45:00', '09:00:00', '09:15:00', '09:30:00', '09:45:00',
         '10:00:00', '10:15:00', '10:30:00', '10:45:00', '11:00:00', '11:15:00', '11:30:00', '11:45:00',
@@ -35,6 +37,8 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
         '16:00:00', '16:15:00', '16:30:00', '16:45:00', '17:00:00', '17:15:00', '17:30:00', '17:45:00'
     ]
 
+    currentPage: number = 0;
+    totalPages: number = 4;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -75,20 +79,11 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        this.loadTurnos('35584700'); // Puedes cambiar el DNI del profesional según sea necesario
-        this.fecha = '2024-07-10';
-
-
-        console.log(this.obraSocialId);
-        console.log(this.especialidadId);
-        console.log(this.profesionaldni);
-
-
+        this.loadTurnos(this.profesionaldni);
     }
 
     loadTurnos(profesionalDni: string) {
-        const fecha = '2024-07-10';
-        this.turnosService.getTurnosDisponibles(profesionalDni, fecha).subscribe({
+        this.turnosService.getTurnosDisponibles(profesionalDni).subscribe({
             next: data => {
                 // console.log("data");
                 console.log(data);
@@ -105,11 +100,21 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
     }
 
     transformTurnos(turnos: TurnoDTO[]): any[] {
-        const startOfWeekDate = startOfWeek(new Date(), { weekStartsOn: 1 }); // Semana empieza el lunes
-        // console.log("startOfWeekDate: ", startOfWeekDate.toISOString());
+        let startOfWeekDate = startOfWeek(new Date(), { weekStartsOn: 1 }); // Semana empieza el lunes
+        startOfWeekDate = addDays(startOfWeekDate, this.currentPage * 7);
+        console.log("startOfWeekDate: ", startOfWeekDate.toISOString());
+        const formattedDate = format(startOfWeekDate, 'EEEE dd/MM', { locale: es });
+        console.log("startOfWeekDate: ", formattedDate);
+
         const daysOfWeek = Array.from({ length: 7 }, (_, i) => addDays(startOfWeekDate, i));
         // console.log("daysOfWeek: ", daysOfWeek.map(x => x.toISOString()));
-
+        this.dayLabels = new Map<string, string>([
+            ['monday', format(startOfWeekDate, 'EEEE dd/MM', { locale: es })],
+            ['tuesday', format(addDays(startOfWeekDate, 1), 'EEEE dd/MM', { locale: es })],
+            ['wednesday', format(addDays(startOfWeekDate, 2), 'EEEE dd/MM', { locale: es })],
+            ['thursday', format(addDays(startOfWeekDate, 3), 'EEEE dd/MM', { locale: es })],
+            ['friday', format(addDays(startOfWeekDate, 4), 'EEEE dd/MM', { locale: es })]
+        ]);
 
         // const horarios = Array.from(new Set(turnos.map(t => t.hora))); // Obtener horarios únicos
         // console.log("horarios: ", horarios);
@@ -142,8 +147,6 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
         console.log(`Solicitando turno para el id ${turnoId}`);
 
         const userId = this.auth.getUserId();
-
-
         const turno: TurnoDTO = {
             "turnoId": turnoId,
             "profesionalDni": "35584700", //this.profesionalDni;
@@ -153,16 +156,42 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
             "pacienteId": Number(userId),
         };
 
-        console.log(turno);
-        this.turnosService.reservarTurno(turno).subscribe({
-            next: response => {
-                console.log(response);
+        swal.fire({
+            title: '¿Confirmar turno?',
+            text: "Está solicitando el siguiente turno:",
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
+            buttonsStyling: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.turnosService.reservarTurno(turno).subscribe({
+                    next: response => {
+                        console.log(response);
+                        this.router.navigate(['/navigation/lista-turnos']);
+                    }
+                });
             }
-        });
+            //if (result.isDismissed) {
+            //this.router.navigate(['/navigation/lista-profesionales']);
+            //}
+        })
+
+
+
 
     }
 
     formatHora(hora: string): string {
         return this.datePipe.transform(`1970-01-01T${hora}`, 'HH:mm') || hora;
+    }
+
+    changePage(increment: number): void {
+        const newPage = this.currentPage + increment;
+        if (newPage >= 0 && newPage < this.totalPages) {
+            this.currentPage = newPage;
+        }
+        this.loadTurnos(this.profesionaldni);
     }
 }
