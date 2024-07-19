@@ -22,6 +22,10 @@ export class TurnosService {
         return this.http.get<TurnoDTO[]>(`${this.turnosURL}getdisponibles/${dni}`);
     }
 
+    getCantidadTurnosOcupados(dni: string): Observable<number> {
+        return this.http.get<number>(`${this.turnosURL}getocupados/${dni}`);
+    }
+
     getMisTurnos(id: number): Observable<TurnoDTO[]> {
         return this.http.get<TurnoDTO[]>(`${this.turnosURL}getmisturnos/${id}`);
     }

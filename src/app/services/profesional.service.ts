@@ -43,6 +43,10 @@ export class ProfesionalService {
         return this.http.put<String>(`${this.profesionalURL}update/${dni}`, profesional);
     }
 
+    disableProfesional(dni: string, motivobaja: string): Observable<String> {
+        return this.http.put<String>(`${this.profesionalURL}disable/${dni}`, motivobaja);
+    }
+
     existsProfesional(dni: string): Observable<ExistsResponse> {
         return this.http.get<ExistsResponse>(`${this.profesionalURL}exists/${dni}`);
     }

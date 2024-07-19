@@ -40,7 +40,7 @@ export class NuevoProfesionalInicioComponent implements OnInit {
                     if (response.active) {
                         swal.fire({
                             title: 'Ya existe profesional',
-                            text: "El profesional ya existe en la base de datos",
+                            text: "El profesional ya existe en la base de datos y se encuentra activo",
                             confirmButtonText: 'Aceptar',
                             buttonsStyling: true
                         })

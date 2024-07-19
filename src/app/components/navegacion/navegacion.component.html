@@ -21,14 +21,14 @@
 
             <!--Item y subItems de Roles-->
 
-            <mat-list-item class="item" routerLink="/navigation/lista-roles" *ngIf="this.role == '1'">
+            <mat-list-item class="item" routerLink="/navigation/lista-roles" *ngIf="['1'].includes(this.role)">
                 <mat-icon mat-list-icon>group</mat-icon>
                 <a class="full-width"> Roles </a>
             </mat-list-item>
 
             <!--Item y subItems de Usuarios-->
 
-            <mat-list-item class="item" routerLink="/navigation/lista-usuarios" *ngIf="this.role == '1'">
+            <mat-list-item class="item" routerLink="/navigation/lista-usuarios" *ngIf="['1', '2'].includes(this.role)">
                 <mat-icon mat-list-icon>group</mat-icon>
                 <a class="full-width"> Usuarios </a>
             </mat-list-item>
@@ -41,21 +41,21 @@
                 <a class="full-width"> Turnos </a>
             </mat-list-item>
 
-            <mat-list-item class="item" routerLink="/navigation/lista-especialidades" *ngIf="this.role == '1'">
+            <mat-list-item class="item" routerLink="/navigation/lista-especialidades" *ngIf="['1', '2'].includes(this.role)">
                 <mat-icon mat-list-icon>group</mat-icon>
                 <a class="full-width"> Especialidades </a>
             </mat-list-item>
 
             <!--Item y subItems de profesionales-->
 
-            <mat-list-item class="item" routerLink="/navigation/lista-profesionales">
+            <mat-list-item class="item" routerLink="/navigation/lista-profesionales" *ngIf="['1', '2'].includes(this.role)">
                 <mat-icon mat-list-icon>group</mat-icon>
                 <a class="full-width"> Profesionales </a>
             </mat-list-item>
 
             <!--Item y subItems de obras sociales-->
 
-            <mat-list-item class="item" routerLink="/navigation/lista-os">
+            <mat-list-item class="item" routerLink="/navigation/lista-os" *ngIf="['1', '2'].includes(this.role)">
                 <mat-icon mat-list-icon>folder</mat-icon>
                 <a class="full-width"> Obras sociales </a>
             </mat-list-item>

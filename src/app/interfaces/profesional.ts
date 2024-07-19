@@ -7,6 +7,7 @@ export interface ProfesionalDTO {
     telefono: string;
     fechaIngreso: Date;
     activo: boolean;
+    motivobaja?: string;
     especialidadId: number;
     tituloId: number;
     formacionesComplementarias: string[];

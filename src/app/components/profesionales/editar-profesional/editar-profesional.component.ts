@@ -8,6 +8,9 @@ import { TituloDTO } from '../../../interfaces/titulo';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
+import { TurnosService } from '../../../services/turnos.service';
+import swal from 'sweetalert2';
+
 
 @Component({
     selector: 'app-editar-profesional',
@@ -22,6 +25,13 @@ export class EditarProfesionalComponent implements OnInit {
     titulos: TituloDTO[] = [];
     currentPage: number = 0;
     totalPages: number = 2;
+    activo: boolean = true;
+
+    motivosbaja: string[] = [
+        "Jubilación",
+        "Disconforme con la clínica",
+        "Otro"
+    ];
 
     constructor(private profesionalService: ProfesionalService,
         private especialidadService: EspecialidadService,
@@ -29,6 +39,7 @@ export class EditarProfesionalComponent implements OnInit {
         private aRoute: ActivatedRoute,
         private router: Router,
         private fb: FormBuilder,
+        private turnosService: TurnosService,
     ) {
         this.dni = this.aRoute.snapshot.paramMap.get('dni') || '';
 
@@ -43,7 +54,8 @@ export class EditarProfesionalComponent implements OnInit {
             direccion: ['', [Validators.required, Validators.minLength(4)]],
             telefono: ['', [Validators.required, Validators.pattern('^[+]?[- ()0-9]{6,15}')]],
             fechaIngreso: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
-            activo: [true, [Validators.required]],
+            // activo: [true, [Validators.required]],
+            motivobaja: [''],
             especialidadId: [1, [Validators.required]],
             tituloId: [1, [Validators.required]],
             formacionesComplementarias: this.fb.array([]),
@@ -79,7 +91,9 @@ export class EditarProfesionalComponent implements OnInit {
                 this.profesionalForm.get('direccion')?.setValue(prof.direccion);
                 this.profesionalForm.get('telefono')?.setValue(prof.telefono);
                 this.profesionalForm.get('fechaIngreso')?.setValue(formatDate(prof.fechaIngreso, 'yyyy-MM-dd', 'en'));
-                this.profesionalForm.get('activo')?.setValue(prof.activo);
+                // this.profesionalForm.get('activo')?.setValue(prof.activo);
+                this.activo = prof.activo;
+                this.profesionalForm.get('motivobaja')?.setValue(prof.motivobaja);
                 this.profesionalForm.get('especialidadId')?.setValue(prof.especialidadId);
                 this.profesionalForm.get('tituloId')?.setValue(prof.tituloId);
                 prof.formacionesComplementarias.forEach(element => {
@@ -177,14 +191,22 @@ export class EditarProfesionalComponent implements OnInit {
         }
     }
 
-    get profesionalActivo() {
-        return this.profesionalForm.controls['activo']
-    }
+    // get profesionalActivo() {
+    //     return this.profesionalForm.controls['activo']
+    // }
     changeActivo(): void {
-        this.profesionalForm.get('activo')?.setValue(!this.profesionalForm.get('activo'));
+        console.log(this.activo)
+        if (this.activo){
+            this.activo = false;
+        } else {
+
+            this.activo = true;
+            this.profesionalForm.get('motivobaja')?.setValue(null);
+        }
     }
 
     guardar(): void {
+        const activo = this.profesionalForm.get('activo')?.value;
 
         const profesional: ProfesionalDTO = {
             dni: this.profesionalForm.get('dni')?.value,
@@ -194,7 +216,8 @@ export class EditarProfesionalComponent implements OnInit {
             direccion: this.profesionalForm.get('direccion')?.value,
             telefono: this.profesionalForm.get('telefono')?.value,
             fechaIngreso: this.profesionalForm.get('fechaIngreso')?.value,
-            activo: this.profesionalForm.get('activo')?.value,
+            activo: this.activo,
+            motivobaja: activo ? null : this.profesionalForm.get('motivobaja')?.value,
             especialidadId: this.profesionalForm.get('especialidadId')?.value,
             tituloId: this.profesionalForm.get('tituloId')?.value,
             formacionesComplementarias: (this.profesionalForm.get('formacionesComplementarias')?.value as { item: string }[]).map(obj => obj.item),
@@ -203,18 +226,33 @@ export class EditarProfesionalComponent implements OnInit {
             experienciaLaboral: (this.profesionalForm.get('experienciaLaboral')?.value as { item: string }[]).map(obj => obj.item),
         }
 
-        
 
+        // MEJORA: Podría chequearse que el profesional no tiene turnos para dar de baja
+        this.turnosService.getCantidadTurnosOcupados(profesional.dni).subscribe({
+            next: cantidadturnos => {
+                console.log(`Cantidad de turnos: ${cantidadturnos}`);
+                console.log(`Activo?: ${profesional.activo}`);
+                if (cantidadturnos > 0 && profesional.activo === false) {
+                    swal.fire({
+                        title: 'No se puede dar de baja al profesional',
+                        html: `El profesional que intenta eliminar posee turnos asignados.<br>
+                        Por favor, cancelar todos los turnos antes de realizar esta acción.`,
+                        confirmButtonText: 'Aceptar',
+                        buttonsStyling: true
+                    })
+                } else {
+                    this.profesionalService.updateProfesional(profesional.dni, profesional).subscribe({
+                        next: res => {
+                            console.log(res)
+                            this.router.navigate(['/navigation/lista-profesionales']);
 
-        this.profesionalService.updateProfesional(profesional.dni, profesional).subscribe({
-            next: res => {
-                console.log(res)
-                this.router.navigate(['/navigation/lista-profesionales']);
+                        },
+                        error: err => {
+                        }
 
-            },
-            error: err => {
+                    })
+                }
             }
-
         })
     }
 

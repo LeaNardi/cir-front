@@ -152,7 +152,7 @@
     <div mat-dialog-actions>
         <div class="botones">
             <button mat-raised-button color="basic" routerLink="/navigation/lista-profesionales">Cancelar</button>
-            <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+            <button mat-raised-button color="primary" (click)="guardar()" [disabled]="profesionalForm.invalid">Guardar</button>
         </div>
     </div>
 </div>

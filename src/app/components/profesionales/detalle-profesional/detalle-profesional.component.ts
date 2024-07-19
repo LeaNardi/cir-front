@@ -44,6 +44,7 @@ export class DetalleProfesionalComponent implements OnInit {
             telefono: ['', [Validators.required, Validators.pattern('^[+]?[- ()0-9]{6,15}')]],
             fechaIngreso: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
             activo: [true, [Validators.required]],
+            motivobaja: [''],
             especialidadId: [1, [Validators.required]],
             tituloId: [1, [Validators.required]],
             formacionesComplementarias: this.fb.array([]),
@@ -87,6 +88,8 @@ export class DetalleProfesionalComponent implements OnInit {
                 this.profesionalForm.get('fechaIngreso')?.disable();
                 this.profesionalForm.get('activo')?.setValue(prof.activo);
                 this.profesionalForm.get('activo')?.disable();
+                this.profesionalForm.get('motivobaja')?.setValue(prof.motivobaja);
+                this.profesionalForm.get('motivobaja')?.disable();
                 this.profesionalForm.get('especialidadId')?.setValue(prof.especialidadId);
                 this.profesionalForm.get('especialidadId')?.disable();
                 this.profesionalForm.get('tituloId')?.setValue(prof.tituloId);

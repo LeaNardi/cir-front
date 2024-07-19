@@ -74,7 +74,7 @@ export class AuthenticationService {
     localStorage.setItem('Role', role);
   }
   getUserRole(){
-    return localStorage.getItem('Role');
+    return localStorage.getItem('Role') || "";
   }
 
   setIsLoggedIn(){

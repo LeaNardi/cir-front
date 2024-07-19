@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./navegacion.component.css']
 })
 export class NavegacionComponent implements OnInit {
-    role: String | null = "paciente";
+    role: string = "paciente";
 
     constructor(private auth: AuthenticationService, private router: Router) { }
 
