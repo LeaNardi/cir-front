@@ -65,6 +65,7 @@ export class SolicitarTurnoComponent implements OnInit {
         this.profesionalService.getProfesionalesSimplified().subscribe({
             next: profesionales => {
                 this.profesionales = profesionales;
+                this.filterProfesionalesByEspecialidad(this.especialidadId);
             }
         });
 

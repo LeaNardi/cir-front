@@ -44,8 +44,8 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
             <!-- Fila mostrada cuando no hay datos coincidentes -->
-            <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell p-5" colspan="8">No se han encontrado Turnos Disponibles</td>
+            <tr class="mat-no-data" *matNoDataRow>
+                <td class="mat-cell p-5" colspan="8">No hay turnos disponibles para esta semana</td>
             </tr>
         </table>
 

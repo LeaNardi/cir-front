@@ -26,15 +26,9 @@ import { Observable } from 'rxjs';
     styleUrl: './grilla-turnos.component.css'
 })
 export class GrillaTurnosComponent implements OnInit, AfterViewInit {
-    displayedColumns: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+    displayedColumns: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     // columnNames: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
-    dayLabels = new Map<string, string>([
-        ['monday', 'Lunes'],
-        ['tuesday', 'Martes'],
-        ['wednesday', 'Miércoles'],
-        ['thursday', 'Jueves'],
-        ['friday', 'Viernes']
-    ]);
+    dayLabels = new Map<string, string>([]);
     dataSource = new MatTableDataSource<any>();
 
     horarios = [
@@ -121,6 +115,7 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
                 console.log(this.dataSource.data.length);
+                console.log(this.dataSource.data);
             },
             error: err => {
                 console.error('Error al obtener los turnos disponibles', err);
@@ -135,18 +130,19 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
         const formattedDate = format(startOfWeekDate, 'EEEE dd/MM', { locale: es });
         console.log("startOfWeekDate: ", formattedDate);
 
-        const daysOfWeek = Array.from({ length: 7 }, (_, i) => addDays(startOfWeekDate, i));
+        const daysOfWeek = Array.from({ length: 6 }, (_, i) => addDays(startOfWeekDate, i));
         // console.log("daysOfWeek: ", daysOfWeek.map(x => x.toISOString()));
         this.dayLabels = new Map<string, string>([
             ['monday', format(startOfWeekDate, 'EEEE dd/MM', { locale: es })],
             ['tuesday', format(addDays(startOfWeekDate, 1), 'EEEE dd/MM', { locale: es })],
             ['wednesday', format(addDays(startOfWeekDate, 2), 'EEEE dd/MM', { locale: es })],
             ['thursday', format(addDays(startOfWeekDate, 3), 'EEEE dd/MM', { locale: es })],
-            ['friday', format(addDays(startOfWeekDate, 4), 'EEEE dd/MM', { locale: es })]
+            ['friday', format(addDays(startOfWeekDate, 4), 'EEEE dd/MM', { locale: es })],
+            ['saturday', format(addDays(startOfWeekDate, 5), 'EEEE dd/MM', { locale: es })]
         ]);
 
 
-        return this.horarios.map(hora => {
+        const horariosmap = this.horarios.map(hora => {
             const row: any = { hora };
             daysOfWeek.forEach(day => {
                 const dayStr = format(day, 'yyyy-MM-dd');
@@ -160,6 +156,27 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
 
             return row;
         });
+
+        // return horariosmap;
+
+        let firstIndex = -1;
+        let lastIndex = -1;
+
+        for (let i = 0; i < horariosmap.length; i++) {
+            for (let j = 0; j < daysOfWeek.length; j++) {
+                const dayStr = format(daysOfWeek[j], 'yyyy-MM-dd');
+                const turno = turnos.find(t => t.fecha === dayStr && t.hora === this.horarios[i]);
+                if (turno) {
+                    if (firstIndex === -1) firstIndex = i;
+                    lastIndex = i;
+                }
+            }
+        }
+
+        const filteredHorarios = horariosmap.slice(firstIndex, lastIndex + 1);
+
+        return filteredHorarios;
+
     }
 
     ngAfterViewInit() {
