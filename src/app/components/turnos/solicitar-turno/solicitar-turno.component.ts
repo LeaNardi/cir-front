@@ -11,15 +11,21 @@ import { ObraSocialDTO } from '../../../interfaces/obrasocial';
 import { ObraSocialService } from '../../../services/obrasocial.service';
 
 @Component({
-  selector: 'app-solicitar-turno',
-  templateUrl: './solicitar-turno.component.html',
-  styleUrl: './solicitar-turno.component.css'
+    selector: 'app-solicitar-turno',
+    templateUrl: './solicitar-turno.component.html',
+    styleUrl: './solicitar-turno.component.css'
 })
 export class SolicitarTurnoComponent implements OnInit {
     obrassociales: ObraSocialDTO[] = [];
     especialidades: EspecialidadDTO[] = [];
     profesionales: ProfesionalDTOSimp[] = [];
+    profesionalesFiltrados: ProfesionalDTOSimp[] = [];
+
     nuevoTurnoForm!: FormGroup;
+
+    obraSocialId!: number;
+    especialidadId!: number;
+    profesionaldni!: string;
 
     constructor(
         private obrasocialService: ObraSocialService,
@@ -28,13 +34,21 @@ export class SolicitarTurnoComponent implements OnInit {
         private aRoute: ActivatedRoute,
         private router: Router,
         private fb: FormBuilder,
-    ) { }
+    ) {
+        this.aRoute.paramMap.subscribe(params => {
+            this.obraSocialId = Number(params.get('obraSocialId'));
+            this.especialidadId = Number(params.get('especialidadId'));
+            this.profesionaldni = params.get('profesionaldni') || '';
+
+            console.log(this.obraSocialId, this.especialidadId, this.profesionaldni);
+        });
+    }
 
     ngOnInit(): void {
         this.nuevoTurnoForm = this.fb.group({
-            obraSocialId: [1, [Validators.required]],
-            especialidadId: [1, [Validators.required]],
-            profesionaldni: ['', [Validators.required]],
+            obraSocialId: [this.obraSocialId, [Validators.required]],
+            especialidadId: [this.especialidadId, [Validators.required]],
+            profesionaldni: [this.profesionaldni, [Validators.required]],
         });
 
 
@@ -53,15 +67,25 @@ export class SolicitarTurnoComponent implements OnInit {
                 this.profesionales = profesionales;
             }
         });
+
+        this.nuevoTurnoForm.get('especialidadId')?.valueChanges.subscribe({
+            next: (value) => {
+                this.filterProfesionalesByEspecialidad(value);
+            }
+        })
+    }
+
+
+    filterProfesionalesByEspecialidad(especialidadId: number): void {
+        this.profesionalesFiltrados = this.profesionales.filter(prof => prof.especialidadId === especialidadId);
     }
 
 
 
-
     solicitar(): void {
-        const obraSocialId= this.nuevoTurnoForm.get('obraSocialId')?.value;
-        const especialidadId= this.nuevoTurnoForm.get('especialidadId')?.value;
-        const profesionaldni= this.nuevoTurnoForm.get('profesionaldni')?.value;
+        const obraSocialId = this.nuevoTurnoForm.get('obraSocialId')?.value;
+        const especialidadId = this.nuevoTurnoForm.get('especialidadId')?.value;
+        const profesionaldni = this.nuevoTurnoForm.get('profesionaldni')?.value;
 
         // this.router.navigate(['/navigation/grilla-turnos'], datos);
         this.router.navigate(['/navigation/grilla-turnos', obraSocialId, especialidadId, profesionaldni]); // VER!!!!!!!

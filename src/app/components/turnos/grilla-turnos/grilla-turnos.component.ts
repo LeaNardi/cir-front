@@ -120,6 +120,7 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
                 this.dataSource.data = this.transformTurnos(data);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
+                console.log(this.dataSource.data.length);
             },
             error: err => {
                 console.error('Error al obtener los turnos disponibles', err);
@@ -251,5 +252,11 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
             this.currentPage = newPage;
         }
         this.loadTurnos(this.profesionaldni);
+    }
+
+    volver(): void {
+        // this.router.navigate(['/navigation/grilla-turnos'], datos);
+        this.router.navigate(['/navigation/solicitar-turno', this.obraSocialId, this.especialidadId, this.profesionaldni]); // VER!!!!!!!
+
     }
 }

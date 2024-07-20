@@ -32,10 +32,13 @@
                         <mat-label>Profesional</mat-label>
                         <!-- <input matInput type="text" id="dni" formControlName="dni"> -->
                         <mat-select formControlName="profesionaldni">
-                            <mat-option *ngFor="let prof of profesionales" [value]="prof.dni">
+                            <mat-option *ngFor="let prof of profesionalesFiltrados" [value]="prof.dni">
                                 {{ prof.nombre }} {{ prof.apellido }}
                             </mat-option>
                         </mat-select>
+                        @if (profesionalesFiltrados.length === 0) {
+                        <mat-error>No hay profesionales</mat-error>
+                        }
                     </mat-form-field>
                 </div>
 
