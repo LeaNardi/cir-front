@@ -36,6 +36,9 @@ export class ListaProfesionalesComponent implements OnInit {
         "Otro"
     ];
 
+    mostrartodos: boolean = false;
+    mostrarbutton: string = "Mostrar todos";
+
     constructor(
         private profesionalService: ProfesionalService,
         public dialog: MatDialog,
@@ -80,7 +83,7 @@ export class ListaProfesionalesComponent implements OnInit {
             {
                 next: profesionales => {
                     console.log(profesionales);
-                    this.dataSource.data = profesionales.map((profesional) => {
+                    this.elementProfesionales = profesionales.map((profesional) => {
                         return {
                             dni: profesional.dni,
                             nombre: profesional.nombre,
@@ -98,6 +101,7 @@ export class ListaProfesionalesComponent implements OnInit {
                             experienciaLaboral: profesional.experienciaLaboral,
                         };
                     })
+                    this.dataSource.data = this.elementProfesionales.filter(x => x.activo == true);
                 },
                 error: err => {
                     console.log(err);
@@ -155,27 +159,9 @@ export class ListaProfesionalesComponent implements OnInit {
                                 },
                             })
 
-
-
-
                         }
                     })
-
-
-
-
-
-
-
-
                 }
-
-
-
-
-
-
-
             }
         })
 
@@ -211,26 +197,17 @@ export class ListaProfesionalesComponent implements OnInit {
     }
 
 
-    // verUsuario(id: number) {
-    //     let dialogRef = this.dialog.open(DetalleUsuarioComponent, { data: { id: id }, width: '40%' })
-    //     dialogRef.afterClosed().subscribe(() => {
-    //         this.cargarProfesionales();
-    //     })
-    // }
-
-    // editarUsuario(id: number) {
-    //     let dialogRef = this.dialog.open(EditarUsuarioComponent, { data: { id: id }, width: '40%' })
-    //     dialogRef.afterClosed().subscribe(() => {
-    //         this.cargarProfesionales();
-    //     })
-    // }
-
-    // crearUsuario() {
-    //     let dialogRef = this.dialog.open(NuevoUsuarioComponent, { width: '40%' });
-    //     dialogRef.afterClosed().subscribe(() => {
-    //         this.cargarProfesionales();
-    //     })
-    // }
+    changefilter(): void{
+        if (this.mostrartodos){
+            this.mostrartodos = false;
+            this.mostrarbutton= "Mostrar todos";
+            this.dataSource.data = this.elementProfesionales.filter(x => x.activo == true);
+        } else {
+            this.mostrartodos = true;
+            this.mostrarbutton= "Solo activos";
+            this.dataSource.data = this.elementProfesionales;
+        }
+    }
 
 }
 
