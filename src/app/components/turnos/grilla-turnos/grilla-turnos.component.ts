@@ -73,7 +73,7 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
             this.especialidadId = Number(params.get('especialidadId'));
             this.profesionaldni = params.get('profesionaldni') || '';
 
-            console.log(this.obraSocialId, this.especialidadId, this.profesionaldni);
+            // console.log(this.obraSocialId, this.especialidadId, this.profesionaldni);
         });
 
     }
@@ -114,8 +114,6 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
                 this.dataSource.data = this.transformTurnos(data);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
-                console.log(this.dataSource.data.length);
-                console.log(this.dataSource.data);
             },
             error: err => {
                 console.error('Error al obtener los turnos disponibles', err);
@@ -126,9 +124,9 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
     transformTurnos(turnos: TurnoDTO[]): any[] {
         let startOfWeekDate = startOfWeek(new Date(), { weekStartsOn: 1 }); // Semana empieza el lunes
         startOfWeekDate = addDays(startOfWeekDate, this.currentPage * 7);
-        console.log("startOfWeekDate: ", startOfWeekDate.toISOString());
+        // console.log("startOfWeekDate: ", startOfWeekDate.toISOString());
         const formattedDate = format(startOfWeekDate, 'EEEE dd/MM', { locale: es });
-        console.log("startOfWeekDate: ", formattedDate);
+        // console.log("startOfWeekDate: ", formattedDate);
 
         const daysOfWeek = Array.from({ length: 6 }, (_, i) => addDays(startOfWeekDate, i));
         // console.log("daysOfWeek: ", daysOfWeek.map(x => x.toISOString()));
@@ -188,7 +186,7 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
         const userId = this.auth.getUserId();
         const turno: TurnoDTO = {
             "turnoId": turnoId,
-            "profesionalDni": "35584700", //this.profesionalDni;
+            "profesionalDni": this.profesionaldni,
             "fecha": "2000-01-01",
             "hora": "00:00:00",
             "obraSocialId": this.obraSocialId,
@@ -213,6 +211,7 @@ export class GrillaTurnosComponent implements OnInit, AfterViewInit {
         }).then((result) => {
             if (result.isConfirmed) {
                 let turnosExistentes;
+                console.log(turno);
                 this.turnosService.getMisTurnos(Number(this.auth.getUserId())).subscribe({
                     next: turnos => {
                         turnosExistentes = turnos.filter(t => t.profesionalDni === this.profesionaldni);
