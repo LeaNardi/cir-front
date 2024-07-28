@@ -28,7 +28,7 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar'
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgToastModule } from 'ng-angular-popup';
 import { FormsModule } from '@angular/forms';
 import { ListaUsuariosComponent } from './components/users/lista-usuarios/lista-usuarios.component';
@@ -46,9 +46,10 @@ import { NuevoProfesionalInicioComponent } from './components/profesionales/nuev
 import { SolicitarTurnoComponent } from './components/turnos/solicitar-turno/solicitar-turno.component';
 import { GrillaTurnosComponent } from './components/turnos/grilla-turnos/grilla-turnos.component';
 import { DatePipe } from '@angular/common';
-
-
-
+import { TurnosprofesionalComponent } from './components/profesionales/turnosprofesional/turnosprofesional.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -71,7 +72,8 @@ import { DatePipe } from '@angular/common';
         ListaEspecialidadesComponent,
         NuevoProfesionalInicioComponent,
         SolicitarTurnoComponent,
-        GrillaTurnosComponent
+        GrillaTurnosComponent,
+        TurnosprofesionalComponent,
     ],
     imports: [
         BrowserModule,
@@ -97,8 +99,25 @@ import { DatePipe } from '@angular/common';
         MatSelectModule,
         MatCheckboxModule,
         DatePipe,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
-    providers: [DatePipe],
+    providers: [
+        DatePipe,
+        provideNativeDateAdapter(),
+        { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+        { provide: MAT_DATE_FORMATS, useValue: {
+            parse: {
+              dateInput: 'DD/MM/YYYY',
+            },
+            display: {
+              dateInput: 'DD/MM/YYYY',
+              monthYearLabel: 'MMMM YYYY',
+              dateA11yLabel: 'DD/MM/YYYY',
+              monthYearA11yLabel: 'MMMM YYYY',
+            },
+          } },
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

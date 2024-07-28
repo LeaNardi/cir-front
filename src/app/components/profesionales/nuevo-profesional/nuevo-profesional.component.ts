@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ProfesionalDTO } from '../../../interfaces/profesional';
 import { ProfesionalService } from '../../../services/profesional.service';
 import { TituloService } from '../../../services/titulo.service';
@@ -12,7 +12,8 @@ import { formatDate } from '@angular/common';
 @Component({
     selector: 'app-nuevo-profesional',
     templateUrl: './nuevo-profesional.component.html',
-    styleUrl: './nuevo-profesional.component.css'
+    styleUrl: './nuevo-profesional.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NuevoProfesionalComponent implements OnInit {
     dni: string;
@@ -22,6 +23,8 @@ export class NuevoProfesionalComponent implements OnInit {
     titulos: TituloDTO[] = [];
     currentPage: number = 0;
     totalPages: number = 2;
+
+    allpagesvisited: boolean = false;
 
     constructor(private profesionalService: ProfesionalService,
         private especialidadService: EspecialidadService,
@@ -57,6 +60,7 @@ export class NuevoProfesionalComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             direccion: ['', [Validators.required, Validators.minLength(4)]],
             telefono: ['', [Validators.required, Validators.pattern('^[+]?[- ()0-9]{6,15}')]],
+            // fechaIngreso2: [formatDate(new Date().setDate(new Date().getDate() + 1), 'yyyy-MM-dd', 'en'), [Validators.required]],
             fechaIngreso: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
             activo: [true, [Validators.required]],
             especialidadId: [1, [Validators.required]],
@@ -151,18 +155,13 @@ export class NuevoProfesionalComponent implements OnInit {
     }
 
 
-    // trackByFn(index: number, item: string): any {
-    //     return index;
-    // }
-
-    // trackByFn2(item: any): any {
-    //     return item;
-    // }
-
     changePage(increment: number): void {
         const newPage = this.currentPage + increment;
         if (newPage >= 0 && newPage < this.totalPages) {
             this.currentPage = newPage;
+            if (newPage == (this.totalPages - 1) ){
+                this.allpagesvisited = true;
+            }
         }
     }
 
@@ -178,7 +177,7 @@ export class NuevoProfesionalComponent implements OnInit {
             email: this.profesionalForm.get('email')?.value,
             direccion: this.profesionalForm.get('direccion')?.value,
             telefono: this.profesionalForm.get('telefono')?.value,
-            fechaIngreso: this.profesionalForm.get('fechaIngreso')?.value,
+            fechaIngreso: this.profesionalForm.get('fechaIngreso2')?.value,
             activo: this.profesionalForm.get('activo')?.value,
             especialidadId: this.profesionalForm.get('especialidadId')?.value,
             tituloId: this.profesionalForm.get('tituloId')?.value,

@@ -15,6 +15,7 @@ import { ListaEspecialidadesComponent } from './components/especialidades/lista-
 import { NuevoProfesionalInicioComponent } from './components/profesionales/nuevo-profesional-inicio/nuevo-profesional-inicio.component';
 import { SolicitarTurnoComponent } from './components/turnos/solicitar-turno/solicitar-turno.component';
 import { GrillaTurnosComponent } from './components/turnos/grilla-turnos/grilla-turnos.component';
+import { TurnosprofesionalComponent } from './components/profesionales/turnosprofesional/turnosprofesional.component';
 
 const routes: Routes = [
 
@@ -32,6 +33,7 @@ const routes: Routes = [
             { path: 'agregar-profesional/:dni', component: NuevoProfesionalComponent },
             { path: 'detalle-profesional/:dni', component: DetalleProfesionalComponent },
             { path: 'editar-profesional/:dni', component: EditarProfesionalComponent },
+            { path: 'turnos-profesional/:dni', component: TurnosprofesionalComponent },
             { path: 'lista-turnos', component: ListaTurnosComponent },
             { path: 'solicitar-turno', component: SolicitarTurnoComponent },
             { path: 'solicitar-turno/:obraSocialId/:especialidadId/:profesionaldni', component: SolicitarTurnoComponent },

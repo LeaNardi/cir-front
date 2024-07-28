@@ -59,6 +59,8 @@
                         routerLink="../detalle-profesional/{{row.dni}}"></mat-icon>
                     <mat-icon fontIcon="edit" class="edit" matTooltip="Editar"
                         routerLink="../editar-profesional/{{row.dni}}"></mat-icon>
+                    <mat-icon fontIcon="calendar_month" class="material-symbols-outlined" matTooltip="Turnos"
+                        routerLink="../turnos-profesional/{{row.dni}}"></mat-icon>
                     <mat-icon fontIcon="cancel" class="delete" matTooltip="Baja"
                         (click)="deleteProfesional(row.dni)"></mat-icon>
                 </td>
