@@ -33,7 +33,7 @@ const routes: Routes = [
             { path: 'agregar-profesional/:dni', component: NuevoProfesionalComponent },
             { path: 'detalle-profesional/:dni', component: DetalleProfesionalComponent },
             { path: 'editar-profesional/:dni', component: EditarProfesionalComponent },
-            { path: 'turnos-profesional/:dni', component: TurnosprofesionalComponent },
+            { path: 'turnos-profesional/:profesionaldni', component: TurnosprofesionalComponent },
             { path: 'lista-turnos', component: ListaTurnosComponent },
             { path: 'solicitar-turno', component: SolicitarTurnoComponent },
             { path: 'solicitar-turno/:obraSocialId/:especialidadId/:profesionaldni', component: SolicitarTurnoComponent },

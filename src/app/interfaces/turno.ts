@@ -6,3 +6,11 @@ export interface TurnoDTO {
 	obraSocialId: number;
 	pacienteId: number;
 }
+
+export interface TurnosGenerateDTO {
+	profesionalDni: string;
+	fecha: string;
+	atencionInicio: string;
+	atencionFin: string;
+	duracion: number;
+}

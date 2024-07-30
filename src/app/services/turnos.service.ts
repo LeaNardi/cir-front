@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { TurnoDTO } from '../interfaces/turno';
+import { TurnoDTO, TurnosGenerateDTO } from '../interfaces/turno';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,11 +12,6 @@ export class TurnosService {
 
     turnosURL = this.backendUrl + 'api/turnos/';
     constructor(private http: HttpClient) { }
-
-    // Posiblemente no se use
-    // getTurnosParaProfesional(dni: string, fecha: string): Observable<TurnoDTO[]> {
-    //     return this.http.get<TurnoDTO[]>(`${this.turnosURL}get/${dni}?fecha=${fecha}`);
-    // }
 
     getTurnosDisponibles(dni: string): Observable<TurnoDTO[]> {
         return this.http.get<TurnoDTO[]>(`${this.turnosURL}getdisponibles/${dni}`);
@@ -36,6 +31,18 @@ export class TurnosService {
 
     cancelarTurno(turno: TurnoDTO): Observable<String> {
         return this.http.put<String>(`${this.turnosURL}cancelarturno`, turno);
+    }
+
+    generateTurnosParaProfesional(turnosGenerate: TurnosGenerateDTO): Observable<String> {
+        return this.http.post<String>(`${this.turnosURL}generateTurnosParaProfesional`, turnosGenerate);
+    }
+    
+    getTurnosParaProfesional(dni: string, fecha: string): Observable<TurnosGenerateDTO> {
+        return this.http.get<TurnosGenerateDTO>(`${this.turnosURL}getTurnosParaProfesional/${dni}?fecha=${fecha}`);
+    }
+
+    deleteTurnosParaProfesional(dni: string, fecha: string): Observable<number> {
+        return this.http.delete<number>(`${this.turnosURL}deleteTurnosParaProfesional/${dni}?fecha=${fecha}`);
     }
 
 }
