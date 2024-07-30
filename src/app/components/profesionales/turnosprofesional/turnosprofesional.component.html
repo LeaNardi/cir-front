@@ -1,5 +1,5 @@
 <div class="container mt-2">
-    <h1>Turnos profesional</h1>
+    <h1>Horarios {{profesionalSimp.nombre}} {{profesionalSimp.apellido}}</h1>
 
     <div>
         <button mat-raised-button color="basic" type="button" (click)="changePage(-1)"
@@ -11,8 +11,7 @@
     <div class="mat-elevation-z8 p-2">
         <table mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container  class = "containerday1" *ngFor="let day of displayedColumns; let i = index" [matColumnDef]="day">
-                <ng-container class = "containerday2" >
+            <ng-container  class = "containerday" *ngFor="let day of displayedColumns; let i = index" [matColumnDef]="day">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{dayLabels.get(day) |titlecase}}</th>
                     <td mat-cell *matCellDef="let row">
                         <ng-container class = "containerint" *ngIf="row[day]">
@@ -62,7 +61,6 @@
 
                         </ng-container>
                     </td>
-                </ng-container>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

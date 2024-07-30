@@ -11,6 +11,13 @@
     margin-right:5px;
 }
 
+.calendar_month {
+    cursor: pointer;
+    color: #072b1e;
+    margin-left:5px;
+    margin-right:5px;
+}
+
 .delete {
     cursor: pointer;
     color: #e4593e;

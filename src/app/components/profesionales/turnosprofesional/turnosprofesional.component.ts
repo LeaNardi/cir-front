@@ -10,11 +10,6 @@ import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../../services/authentication.service';
 import swal from 'sweetalert2';
-import { UserService } from '../../../services/user.service';
-import { EspecialidadService } from '../../../services/especialidad.service';
-import { EspecialidadDTO } from '../../../interfaces/especialidad';
-import { ObraSocialDTO } from '../../../interfaces/obrasocial';
-import { ObraSocialService } from '../../../services/obrasocial.service';
 import { ProfesionalService } from '../../../services/profesional.service';
 import { ProfesionalDTOSimp } from '../../../interfaces/profesional';
 import { Observable, forkJoin } from 'rxjs';
@@ -48,8 +43,8 @@ export class TurnosprofesionalComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort!: MatSort;
 
     profesionaldni!: string;
-    horarioForm: FormGroup;
     horarioFormArray: FormArray;
+    profesionalSimp!: ProfesionalDTOSimp;
 
     constructor(
         private turnosService: TurnosService,
@@ -61,11 +56,6 @@ export class TurnosprofesionalComponent implements OnInit, AfterViewInit {
     ) {
         this.aRoute.paramMap.subscribe(params => {
             this.profesionaldni = params.get('profesionaldni') || '';
-        });
-
-        this.horarioForm = this.fb.group({
-            inicio: [''],
-            fin: ['']
         });
 
         this.horarioFormArray = this.fb.array([]);
@@ -80,6 +70,12 @@ export class TurnosprofesionalComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
+        this.profesionalService.getProfesionalSimplified(this.profesionaldni).subscribe({
+            next: prof => {
+                this.profesionalSimp = prof;
+            }
+        })
+        
         this.obtenerTurnosPorDia();
 
     }
@@ -87,6 +83,10 @@ export class TurnosprofesionalComponent implements OnInit, AfterViewInit {
     getFormGroup(index: number): FormGroup {
         return this.horarioFormArray.at(index) as FormGroup;
     }
+
+    
+
+
 
     obtenerTurnosPorDia() {
         let startOfWeekDate = startOfWeek(new Date(), { weekStartsOn: 1 }); // Semana empieza el lunes

@@ -2,50 +2,52 @@
 .mat-elevation-z8 {
     display: flex;
     flex-direction: column;
-  }
-  
-  .mat-table {
+}
+
+.mat-table {
     width: 100%;
     align-items: center;
 
     display: flex;
-  }
-  
-  .mat-header-row, .mat-row {
+}
+
+.mat-header-row,
+.mat-row {
     display: flex;
     width: 100%;
     align-items: center;
 
-  }
-  
-  .mat-header-cell, .mat-cell {
+}
+
+.mat-header-cell,
+.mat-cell {
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-  }
-  
-  .mat-header-cell {
+}
+
+.mat-header-cell {
     font-weight: bold;
     text-align: center;
 
-  }
-  
-  .mat-form-field {
+}
+
+.mat-form-field {
     width: 16.666%;
     text-align: center;
 
-  }
+}
 
-  .containerday1, .containerday2  {
+.containerday {
     width: 16.666%;
     align-items: center;
     text-align: center;
-
+    justify-content: center;
     display: flex;
-  }
-  
-  button {
+}
+
+button {
     text-align: center;
     margin: auto;
-  }
+}
