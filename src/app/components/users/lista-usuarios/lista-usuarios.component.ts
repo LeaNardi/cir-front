@@ -13,7 +13,7 @@ import swal from 'sweetalert2';
 import { EditarUsuarioComponent } from '../editar-usuario/editar-usuario.component';
 import { RoleService } from '../../../services/role.service';
 import { RoleDTO } from '../../../interfaces/role';
-
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'app-lista-usuarios',
@@ -30,7 +30,8 @@ export class ListaUsuariosComponent implements OnInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor(private userService: UserService,
+    constructor(
+        private userService: UserService,
         public dialog: MatDialog,
         private toast: NgToastService,
         private router: Router,
@@ -39,13 +40,7 @@ export class ListaUsuariosComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.roleService.getRoles().subscribe({
-            next: roles => {
-                this.roles = roles;
-                console.log(this.roles);
-            }
-        });
-        this.cargarPacientes();
+        this.cargarDatos();
     }
 
     // Paginacion de la tabla y filtrado
@@ -62,30 +57,32 @@ export class ListaUsuariosComponent implements OnInit {
 
     // Cargar pacientes desde bdd
 
-    cargarPacientes(): void {
-        this.userService.getUsers().subscribe(
-            {
-                next: users => {
-                    // this.dataSource.data = users as User[];
-                    console.log(users);
-                    this.dataSource.data = users.map((user) => {
-                        return {
-                            userId: user.userId,
-                            username: user.username, 
-                            email: user.email,
-                            name: user.name,
-                            surname: user.surname,
-                            dni: user.dni,
-                            role: this.roles.filter(x => x.roleId == user.role_id)[0].role,
-                        };
-                    })
-                    console.log(this.dataSource.data);
-                },
-                error: err => {
-                    console.log(err);
-                }
+    cargarDatos(): void {
+        forkJoin({
+            roles: this.roleService.getRoles(),
+            users: this.userService.getUsers()
+        }).subscribe({
+            next: ({ roles, users }) => {
+                this.roles = roles;
+                console.log(this.roles);
+                
+                this.dataSource.data = users.map((user) => {
+                    return {
+                        userId: user.userId,
+                        username: user.username,
+                        email: user.email,
+                        name: user.name,
+                        surname: user.surname,
+                        dni: user.dni,
+                        role: this.roles.find(x => x.roleId === user.role_id)?.role || 'N/A',
+                    };
+                });
+                console.log(this.dataSource.data);
+            },
+            error: err => {
+                console.log(err);
             }
-        );
+        });
     }
 
 
@@ -105,7 +102,7 @@ export class ListaUsuariosComponent implements OnInit {
                     this.userService.deleteUser(id).subscribe({
                         next: data => {
                             console.log(data);
-                            this.cargarPacientes();  //vuelve a cargar la lista luego de eliminar un paciente
+                            this.cargarDatos();  //vuelve a cargar la lista luego de eliminar un paciente
                             this.toast.success({ detail: "Mensaje exitoso", summary: "Usuario eliminado con exito", duration: 3000 });
                         },
 
@@ -123,21 +120,21 @@ export class ListaUsuariosComponent implements OnInit {
     verUsuario(id: number) {
         let dialogRef = this.dialog.open(DetalleUsuarioComponent, { data: { id: id }, width: '40%' })
         dialogRef.afterClosed().subscribe(() => {
-            this.cargarPacientes();
+            this.cargarDatos();
         })
     }
 
     editarUsuario(id: number) {
         let dialogRef = this.dialog.open(EditarUsuarioComponent, { data: { id: id }, width: '40%' })
         dialogRef.afterClosed().subscribe(() => {
-            this.cargarPacientes();
+            this.cargarDatos();
         })
     }
 
     crearUsuario() {
         let dialogRef = this.dialog.open(NuevoUsuarioComponent, { width: '40%' });
         dialogRef.afterClosed().subscribe(() => {
-            this.cargarPacientes();
+            this.cargarDatos();
         })
     }
 
