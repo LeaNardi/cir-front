@@ -6,9 +6,7 @@
 
 .mat-table {
     width: 100%;
-    align-items: center;
-
-    display: flex;
+    text-align: center !important;
 }
 
 .mat-header-row,
@@ -16,6 +14,7 @@
     display: flex;
     width: 100%;
     align-items: center;
+    text-align: center;
 
 }
 
@@ -25,29 +24,44 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    flex: 1 0 16.666%;
 }
 
 .mat-header-cell {
+    display:block;
     font-weight: bold;
     text-align: center;
-
+    justify-content: center;
 }
 
 .mat-form-field {
-    width: 16.666%;
+    width: 100%;
     text-align: center;
 
 }
 
 .containerday {
-    width: 16.666%;
+    flex: 1 0 16.666%;
     align-items: center;
     text-align: center;
     justify-content: center;
     display: flex;
 }
 
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 button {
     text-align: center;
-    margin: auto;
+    justify-content: center;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }

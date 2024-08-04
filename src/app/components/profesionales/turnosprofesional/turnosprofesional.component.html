@@ -9,36 +9,15 @@
     </div>
 
     <div class="mat-elevation-z8 p-2">
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table class="mat-table" mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container  class = "containerday" *ngFor="let day of displayedColumns; let i = index" [matColumnDef]="day">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{dayLabels.get(day) |titlecase}}</th>
-                    <td mat-cell *matCellDef="let row">
-                        <ng-container class = "containerint" *ngIf="row[day]">
-                            <form [formGroup]="getFormGroup(i)">
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Horario Inicio</mat-label>
-                                    <mat-select formControlName="inicio">
-                                        <mat-option *ngFor="let hora of horarios" [value]="hora">
-                                            {{formatHora(hora)}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Horario Fin</mat-label>
-                                    <mat-select formControlName="fin">
-                                        <mat-option *ngFor="let hora of horarios" [value]="hora">
-                                            {{formatHora(hora)}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </form>
-
-                            <button mat-raised-button color="accent" (click)="borrarTurnos(day)" >Borrar Turnos</button>
-
-                        </ng-container>
-                        <ng-container class = "containerint" *ngIf="!row[day]">
-                            <form [formGroup]="getFormGroup(i) ">
+            <ng-container class="containerday" *ngFor="let day of displayedColumns; let i = index" [matColumnDef]="day">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+                        {{dayLabels.get(day) |titlecase}}
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <ng-container class="containerint" *ngIf="row[day]">
+                        <form class="form" [formGroup]="getFormGroup(i)">
                             <mat-form-field appearance="outline">
                                 <mat-label>Horario Inicio</mat-label>
                                 <mat-select formControlName="inicio">
@@ -55,12 +34,39 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <button mat-raised-button color="primary" (click)="generarTurnos(i, day)" >Generar Turnos</button>
+                        </form>
+                        <div class="button-group">
+                            <button mat-raised-button color="accent" (click)="borrarTurnos(day)">Borrar Turnos</button>
+                        </div>
+                    </ng-container>
+                    <ng-container class="containerint" *ngIf="!row[day]">
+                        <form [formGroup]="getFormGroup(i) ">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Horario Inicio</mat-label>
+                                <mat-select formControlName="inicio">
+                                    <mat-option *ngFor="let hora of horarios" [value]="hora">
+                                        {{formatHora(hora)}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Horario Fin</mat-label>
+                                <mat-select formControlName="fin">
+                                    <mat-option *ngFor="let hora of horarios" [value]="hora">
+                                        {{formatHora(hora)}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div class="button-group">
+
+                                <button mat-raised-button color="primary" (click)="generarTurnos(i, day)">Generar
+                                    Turnos</button>
+                            </div>
                         </form>
 
 
-                        </ng-container>
-                    </td>
+                    </ng-container>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
